@@ -5,8 +5,22 @@
 
 #include "HmCppInvoke.h"
 
+class B {
+public:
+    static long abc(std::wstring b) {
+        return 1;
+    }
+};
+
 int main()
 {
+    B ee = B();
+    std::any e = nullptr;
+    long c = 1000000000L;
+    Hidemaru::MacroScopeMethodPointer p = ee.abc;
+    Hm.Macro.Exec.doMethod(L"abc", ee.abc);
+
+    auto pos = Hm.Edit.getMousePos();
     std::cout << "Hello World!\n";
 }
 
