@@ -609,16 +609,14 @@ THm::TFile::IHidemaruStreamReader THm::TFile::open(std::wstring filepath, int hm
 
 
 
-HMODULE CSelfDllInfo::hModule = NULL;
+HMODULE THm::CSelfDllInfo::hModule = NULL;
 
-wchar_t CSelfDllInfo::szSelfModuleFullPath[MAX_PATH] = L"";
-wchar_t CSelfDllInfo::szSelfModuleDirPath[MAX_PATH] = L"";
+wchar_t THm::CSelfDllInfo::szSelfModuleFullPath[MAX_PATH] = L"";
+wchar_t THm::CSelfDllInfo::szSelfModuleDirPath[MAX_PATH] = L"";
 
-int CSelfDllInfo::iSelfBindedType = 0;
+int THm::CSelfDllInfo::iSelfBindedType = 0;
 
-void CSelfDllInfo::InitializeHandle(HMODULE hModule) {
-
-	Hm = THm();
+void THm::CSelfDllInfo::InitializeHandle(HMODULE hModule) {
 
 	CSelfDllInfo::hModule = hModule;
 	GetModuleFileName(hModule, CSelfDllInfo::szSelfModuleFullPath, _countof(CSelfDllInfo::szSelfModuleFullPath));
@@ -626,11 +624,11 @@ void CSelfDllInfo::InitializeHandle(HMODULE hModule) {
 	PathRemoveFileSpec(CSelfDllInfo::szSelfModuleDirPath);
 }
 
-int CSelfDllInfo::GetBindDllType() {
+int THm::CSelfDllInfo::GetBindDllType() {
 	return iSelfBindedType;
 }
 
-BOOL CSelfDllInfo::SetBindDllHandle() {
+BOOL THm::CSelfDllInfo::SetBindDllHandle() {
 
 	// èGä€8.66à»è„
 	if (Hm.Hidemaru_GetDllFuncCalledType) {
@@ -648,7 +646,7 @@ BOOL CSelfDllInfo::SetBindDllHandle() {
 
 }
 
-wstring CSelfDllInfo::GetInvocantString() {
+wstring THm::CSelfDllInfo::GetInvocantString() {
 	if (iSelfBindedType == -1) {
 		return L"";
 	}
@@ -657,11 +655,11 @@ wstring CSelfDllInfo::GetInvocantString() {
 	}
 }
 
-wstring CSelfDllInfo::GetSelfModuleFullPath() {
+wstring THm::CSelfDllInfo::GetSelfModuleFullPath() {
 	return szSelfModuleFullPath;
 }
 
-wstring CSelfDllInfo::GetSelfModuleDir() {
+wstring THm::CSelfDllInfo::GetSelfModuleDir() {
 	return szSelfModuleDirPath;
 }
 
