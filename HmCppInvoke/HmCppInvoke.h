@@ -2,6 +2,8 @@
 
 #include <windows.h>
 #include <string>
+#include <exception>
+#include <stdexcept>
 #include <vector>
 #include <any>
 
@@ -290,7 +292,7 @@ namespace Hidemaru {
         // dll自身のハンドルやフスパスの情報の保持
         //-------------------------------------------------------------------------
     private:
-        class CSelfDllInfo {
+        class SelfDllInfo {
 
             //-------------------------------------------------------------------------
             // 自分自身(hmPerl.dll)のモジュールインスタンスハンドル
@@ -323,14 +325,17 @@ namespace Hidemaru {
 
         public:
             void InitializeSelfDllHandle(HMODULE handle) {
-                CSelfDllInfo::InitializeHandle(handle);
+                SelfDllInfo::InitializeHandle(handle);
             }
     };
+
+    extern std::any TestDynamicVar;
 };
 
 
 
 extern Hidemaru::THm Hm;
+
 
 #pragma once
 

@@ -147,8 +147,13 @@
   <ItemGroup>
     <ClCompile Include="ConsoleApplication10.cpp" />
     <ClCompile Include="HmCppInvoke.cpp" />
-    <ClCompile Include="HmCppInvokeData.cpp" />
+    <ClCompile Include="HmCppInvokeEdit.cpp" />
+    <ClCompile Include="HmCppInvokeFile.cpp" />
+    <ClCompile Include="HmCppInvokeMacro.cpp" />
+    <ClCompile Include="HmCppInvokeOriginalEncode.cpp" />
     <ClCompile Include="HmCppInvokeDllMain.cpp" />
+    <ClCompile Include="HmCppInvokePane.cpp" />
+    <ClCompile Include="HmCppInvokeSelfDllInfo.cpp" />
     <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>

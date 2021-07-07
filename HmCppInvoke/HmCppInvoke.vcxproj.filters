@@ -6,10 +6,25 @@
     <ClCompile Include="HmCppInvoke.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
-    <ClCompile Include="HmCppInvokeData.cpp">
+    <ClCompile Include="HmCppInvokeOriginalEncode.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
     <ClCompile Include="HmCppInvokeDllMain.cpp">
+      <Filter>hidemaru</Filter>
+    </ClCompile>
+    <ClCompile Include="HmCppInvokePane.cpp">
+      <Filter>hidemaru</Filter>
+    </ClCompile>
+    <ClCompile Include="HmCppInvokeEdit.cpp">
+      <Filter>hidemaru</Filter>
+    </ClCompile>
+    <ClCompile Include="HmCppInvokeFile.cpp">
+      <Filter>hidemaru</Filter>
+    </ClCompile>
+    <ClCompile Include="HmCppInvokeMacro.cpp">
+      <Filter>hidemaru</Filter>
+    </ClCompile>
+    <ClCompile Include="HmCppInvokeSelfDllInfo.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
   </ItemGroup>
