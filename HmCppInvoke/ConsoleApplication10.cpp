@@ -5,6 +5,8 @@
 
 #include "HmCppInvoke.h"
 
+using namespace Hidemaru;
+
 class B {
 public:
     static long abc(std::wstring b) {
@@ -18,7 +20,6 @@ int main()
     std::any e = nullptr;
     long c = 1000000000L;
     Hidemaru::MacroScopeMethodPointer p = ee.abc;
-    Hm.Macro.Exec.doMethod(L"abc", ee.abc);
 
     auto pos = Hm.Edit.getMousePos();
     std::cout << "Hello World!\n";

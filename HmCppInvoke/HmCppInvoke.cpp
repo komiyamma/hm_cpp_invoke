@@ -605,3 +605,114 @@ THm::TFile::IHidemaruStreamReader THm::TFile::open(std::wstring filepath, int hm
 {
 	return IHidemaruStreamReader();
 }
+
+
+
+
+HMODULE CSelfDllInfo::hModule = NULL;
+
+wchar_t CSelfDllInfo::szSelfModuleFullPath[MAX_PATH] = L"";
+wchar_t CSelfDllInfo::szSelfModuleDirPath[MAX_PATH] = L"";
+
+int CSelfDllInfo::iSelfBindedType = 0;
+
+void CSelfDllInfo::InitializeHandle(HMODULE hModule) {
+
+	Hm = THm();
+
+	CSelfDllInfo::hModule = hModule;
+	GetModuleFileName(hModule, CSelfDllInfo::szSelfModuleFullPath, _countof(CSelfDllInfo::szSelfModuleFullPath));
+	wcscpy_s(CSelfDllInfo::szSelfModuleDirPath, CSelfDllInfo::szSelfModuleFullPath);
+	PathRemoveFileSpec(CSelfDllInfo::szSelfModuleDirPath);
+}
+
+int CSelfDllInfo::GetBindDllType() {
+	return iSelfBindedType;
+}
+
+BOOL CSelfDllInfo::SetBindDllHandle() {
+
+	// 秀丸8.66以上
+	if (Hm.Hidemaru_GetDllFuncCalledType) {
+		int dll = Hm.Hidemaru_GetDllFuncCalledType(-1); // 自分のdllの呼ばれ方をチェック
+		CSelfDllInfo::iSelfBindedType = dll;
+		return TRUE;
+	}
+	else {
+		MessageBox(NULL, L"loadllのパターンが認識出来ませんでした。", L"loadllのパターンが認識出来ませんでした。", MB_ICONERROR);
+	}
+
+
+
+	return FALSE;
+
+}
+
+wstring CSelfDllInfo::GetInvocantString() {
+	if (iSelfBindedType == -1) {
+		return L"";
+	}
+	else {
+		return to_wstring(iSelfBindedType) + L",";
+	}
+}
+
+wstring CSelfDllInfo::GetSelfModuleFullPath() {
+	return szSelfModuleFullPath;
+}
+
+wstring CSelfDllInfo::GetSelfModuleDir() {
+	return szSelfModuleDirPath;
+}
+
+
+
+
+
+
+
+
+
+
+std::any TestDynamicVar;
+
+
+// 秀丸の変数が文字列か数値かの判定用
+extern "C" __declspec(dllexport) intptr_t SetDynamicVar(const void* dynamic_value) {
+
+	auto param_type = (THm::DLLFUNCPARAM)THm::Hidemaru_GetDllFuncCalledType(1);
+	if (param_type == THm::DLLFUNCPARAM::WCHAR_PTR) {
+		TestDynamicVar = wstring((wchar_t*)dynamic_value);
+		return 1;
+	}
+	else {
+		TestDynamicVar = (intptr_t)dynamic_value;
+		return 1;
+	}
+}
+
+
+intptr_t popnumvar = 0;
+// スタックした変数を秀丸マクロから取り出す。内部処理用
+extern "C" __declspec(dllexport) intptr_t PopNumVar() {
+	return popnumvar;
+}
+
+// 変数を秀丸マクロから取り出すためにスタック。内部処理用
+extern "C" __declspec(dllexport) intptr_t PushNumVar(intptr_t i_tmp_num) {
+	popnumvar = i_tmp_num;
+	return 1;
+}
+
+// スタックした変数を秀丸マクロから取り出す。内部処理用
+static wstring popstrvar;
+extern "C" __declspec(dllexport) const wchar_t* PopStrVar() {
+	return popstrvar.data();
+}
+
+// 変数を秀丸マクロから取り出すためにスタック。内部処理用
+extern "C" __declspec(dllexport) intptr_t PushStrVar(const wchar_t* sz_tmp_str) {
+	popstrvar = sz_tmp_str;
+	return 1;
+}
+
