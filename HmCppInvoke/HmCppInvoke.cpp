@@ -2,17 +2,46 @@
 
 #include <exception>
 #include <stdexcept>
+#include <windows.h>
+#include <shlwapi.h>
+#include <string>
 
+#pragma comment(lib, "version.lib")
+#pragma comment(lib, "shlwapi.lib")
+
+using namespace std;
 using namespace Hidemaru;
+
 
 THm Hm = THm();
 
+double THm::hm_version = 0;
+THm::PFNGetDllFuncCalledType THm::Hidemaru_GetDllFuncCalledType = NULL;
+THm::PFNGetCurrentWindowHandle THm::Hidemaru_GetCurrentWindowHandle = NULL;
+
+HMODULE THm::hHideExeHandle = NULL;
+wchar_t THm::szHidemaruFullPath[MAX_PATH] = L"";
+
+HMODULE THm::TOutputPane::hHmOutputPaneDLL = NULL;
+HMODULE THm::TExplorerPane::hHmExplorerPaneDLL = NULL;
+
+
 THm::THm()
 {
+	GetModuleFileName(NULL, szHidemaruFullPath, _countof(szHidemaruFullPath));
+
 	bool success = setVersion();
 	if (success)
 	{
 		if (this->getVersion() >= 8.66) {
+
+			// 秀丸本体に関数があるのは 8.66以上
+			hHideExeHandle = LoadLibrary(szHidemaruFullPath);
+			if (hHideExeHandle) {
+				Hidemaru_GetDllFuncCalledType = (PFNGetDllFuncCalledType)GetProcAddress(hHideExeHandle, "Hidemaru_GetDllFuncCalledType");
+				Hidemaru_GetCurrentWindowHandle = (PFNGetCurrentWindowHandle)GetProcAddress(hHideExeHandle, "Hidemaru_GetCurrentWindowHandle");
+			}
+
 			this->Edit = TEdit();
 			this->Macro = TMacro();
 			this->OutputPane = TOutputPane();
@@ -24,19 +53,51 @@ THm::THm()
 	}
 }
 
+
+double THm::QueryFileVersion(wchar_t* path)
+{
+	VS_FIXEDFILEINFO* v;
+	DWORD dwZero = 0;
+	UINT len;
+	DWORD sz = GetFileVersionInfoSize(path, &dwZero);
+	if (sz) {
+		void* buf = new char[sz];
+		GetFileVersionInfo(path, 0, sz, buf);
+
+		if (VerQueryValue(buf, L"\\", (LPVOID*)&v, &len)) {
+			double ret = 0;
+			ret = double(HIWORD(v->dwFileVersionMS)) * 100 +
+				double(LOWORD(v->dwFileVersionMS)) * 10 +
+				double(HIWORD(v->dwFileVersionLS)) +
+				double(LOWORD(v->dwFileVersionLS)) * 0.01;
+			delete[] buf;
+			return ret;
+		}
+		else {
+			delete[] buf;
+		}
+	}
+
+	return 0;
+}
+
 double THm::getVersion()
 {
 	// ★
-	return 0.0;
+	return hm_version;
 }
 
 HWND THm::getWindowHandle()
 {
-	return HWND();
+	return Hidemaru_GetCurrentWindowHandle();
 }
 
 bool THm::setVersion()
 {
+	hm_version = QueryFileVersion(szHidemaruFullPath);
+	if (hm_version > 0.0) {
+		return true;
+	}
 	// ★
 	return false;
 }
@@ -55,10 +116,41 @@ bool THm::setVersion()
 
 
 
+// アウトプットパネル
+THm::TOutputPane::PFNHmOutputPane_Output THm::TOutputPane::HmOutputPane_Output = NULL;
+THm::TOutputPane::PFNHmOutputPane_Push THm::TOutputPane::HmOutputPane_Push = NULL;
+THm::TOutputPane::PFNHmOutputPane_Pop THm::TOutputPane::HmOutputPane_Pop = NULL;
+THm::TOutputPane::PFNHmOutputPane_GetWindowHandle THm::TOutputPane::HmOutputPane_GetWindowHandle = NULL;
+THm::TOutputPane::PFNHmOutputPane_SetBaseDir THm::TOutputPane::HmOutputPane_SetBaseDir = NULL;
 
 
 THm::TOutputPane::TOutputPane()
 {
+	// 少なくともGetWindowsCurrentHandleが無いと、役に立たない
+	if (Hidemaru_GetCurrentWindowHandle) {
+		// hidemaru.exeのディレクトリを求める
+		wchar_t hidemarudir[512] = L"";
+		wcscpy_s(hidemarudir, szHidemaruFullPath);
+		PathRemoveFileSpec(hidemarudir);
+
+		// ディレクトリある？ （まぁあるよね）
+		if (PathFileExists(hidemarudir)) {
+			// HmOutputPane.dllがあるかどうか。
+			wstring hmoutputpane_fullpath = wstring(hidemarudir) + wstring(L"\\HmOutputPane.dll");
+			hHmOutputPaneDLL = LoadLibrary(hmoutputpane_fullpath.data());
+
+			// あれば、Output関数をセッティングしておく
+			if (hHmOutputPaneDLL) {
+				HmOutputPane_Output = (PFNHmOutputPane_Output)GetProcAddress(hHmOutputPaneDLL, "Output");
+				HmOutputPane_Push = (PFNHmOutputPane_Push)GetProcAddress(hHmOutputPaneDLL, "Push");
+				HmOutputPane_Pop = (PFNHmOutputPane_Pop)GetProcAddress(hHmOutputPaneDLL, "Pop");
+				HmOutputPane_GetWindowHandle = (PFNHmOutputPane_GetWindowHandle)GetProcAddress(hHmOutputPaneDLL, "GetWindowHandle");
+				if (hm_version > 877) {
+					HmOutputPane_SetBaseDir = (PFNHmOutputPane_SetBaseDir)GetProcAddress(hHmOutputPaneDLL, "SetBaseDir");
+				}
+			}
+		}
+	}
 }
 
 bool THm::TOutputPane::output(std::wstring message)
@@ -99,9 +191,47 @@ HWND THm::TOutputPane::getWindowHandle()
 }
 
 
+// ファイルマネージャパネル
+THm::TExplorerPane::PFNHmExplorerPane_SetMode THm::TExplorerPane::HmExplorerPane_SetMode = NULL;
+THm::TExplorerPane::PFNHmExplorerPane_GetMode THm::TExplorerPane::HmExplorerPane_GetMode = NULL;
+THm::TExplorerPane::PFNHmExplorerPane_LoadProject THm::TExplorerPane::HmExplorerPane_LoadProject = NULL;
+THm::TExplorerPane::PFNHmExplorerPane_SaveProject THm::TExplorerPane::HmExplorerPane_SaveProject = NULL;
+THm::TExplorerPane::PFNHmExplorerPane_GetProject THm::TExplorerPane::HmExplorerPane_GetProject = NULL;
+THm::TExplorerPane::PFNHmExplorerPane_GetWindowHandle THm::TExplorerPane::HmExplorerPane_GetWindowHandle = NULL;
+THm::TExplorerPane::PFNHmExplorerPane_GetUpdated THm::TExplorerPane::HmExplorerPane_GetUpdated = NULL;
+THm::TExplorerPane::PFNHmExplorerPane_GetCurrentDir THm::TExplorerPane::HmExplorerPane_GetCurrentDir = NULL;
 
 THm::TExplorerPane::TExplorerPane()
 {
+	// 少なくともGetWindowsCurrentHandleが無いと、役に立たない
+	if (Hidemaru_GetCurrentWindowHandle) {
+		// hidemaru.exeのディレクトリを求める
+		wchar_t hidemarudir[512] = L"";
+		wcscpy_s(hidemarudir, szHidemaruFullPath);
+		PathRemoveFileSpec(hidemarudir);
+
+		// ディレクトリある？ （まぁあるよね）
+		if (PathFileExists(hidemarudir)) {
+			// HmOutputPane.dllがあるかどうか。
+			wstring hmoutputpane_fullpath = wstring(hidemarudir) + wstring(L"\\HmOutputPane.dll");
+			hHmExplorerPaneDLL = LoadLibrary(hmoutputpane_fullpath.data());
+
+			// あれば、ExplorerPane関数をセッティングしておく
+			if (hHmExplorerPaneDLL) {
+				HmExplorerPane_SetMode = (PFNHmExplorerPane_SetMode)GetProcAddress(hHmExplorerPaneDLL, "SetMode");
+				HmExplorerPane_GetMode = (PFNHmExplorerPane_GetMode)GetProcAddress(hHmExplorerPaneDLL, "GetMode");
+				HmExplorerPane_LoadProject = (PFNHmExplorerPane_LoadProject)GetProcAddress(hHmExplorerPaneDLL, "LoadProject");
+				HmExplorerPane_SaveProject = (PFNHmExplorerPane_SaveProject)GetProcAddress(hHmExplorerPaneDLL, "SaveProject");
+				HmExplorerPane_GetProject = (PFNHmExplorerPane_GetProject)GetProcAddress(hHmExplorerPaneDLL, "GetProject");
+				HmExplorerPane_GetWindowHandle = (PFNHmExplorerPane_GetWindowHandle)GetProcAddress(hHmExplorerPaneDLL, "GetWindowHandle");
+				HmExplorerPane_GetUpdated = (PFNHmExplorerPane_GetUpdated)GetProcAddress(hHmExplorerPaneDLL, "GetUpdated");
+				if (hm_version > 885) {
+					HmExplorerPane_GetCurrentDir = (PFNHmExplorerPane_GetCurrentDir)GetProcAddress(hHmExplorerPaneDLL, "GetCurrentDir");
+				}
+			}
+		}
+	}
+
 }
 
 bool THm::TExplorerPane::setMode(int mode)
