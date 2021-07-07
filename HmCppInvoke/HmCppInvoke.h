@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Windows.h"
+#include <windows.h>
 #include <string>
 #include <vector>
 #include <any>
+
 
 
 namespace Hidemaru {
@@ -35,9 +36,27 @@ namespace Hidemaru {
         using PFNGetCurrentWindowHandle = HWND(WINAPI*)();
         static PFNGetCurrentWindowHandle Hidemaru_GetCurrentWindowHandle;
 
+        // この結果のバイト列(vector.data())を HmOutputPane.dllのOutput関数になげれば、Unicodeでも再現できる
+        std::vector<BYTE> EncodeWStringToOriginalEncodeVector(std::wstring original_string);
 
     public:
         class TEdit {
+            // 現在編集中の全てのテキストを得る
+            using PFNGetTotalTextUnicode = HGLOBAL(WINAPI*)(void);
+            static PFNGetTotalTextUnicode Hidemaru_GetTotalTextUnicode;
+            // 現在編集中の選択テキストを得る(単純選択のみ)
+            using PFNGetSelectedTextUnicode = HGLOBAL(WINAPI*)(void);
+            static PFNGetSelectedTextUnicode Hidemaru_GetSelectedTextUnicode;
+            // 現在編集中のテキストのカーソルがある行のテキストを得る
+            using PFNGetLineTextUnicode = HGLOBAL(WINAPI*)(int nLineNo);
+            static PFNGetLineTextUnicode Hidemaru_GetLineTextUnicode;
+            // 現在編集中のテキストのカーソルの位置を取得する。マクロのcolumnとlineno相当(厳密には異なる)
+            using PFNGetCursorPosUnicode = BOOL(WINAPI*)(int* pnLineNo, int* pnColumn);
+            static PFNGetCursorPosUnicode Hidemaru_GetCursorPosUnicode;
+            // 現在編集中のテキストのマウスの位置に対応するカーソルの位置を取得する。
+            using PFNGetCursorPosUnicodeFromMousePos = BOOL(WINAPI*)(POINT* ppt, int* pnLineNo, int* pnColumn);
+            static PFNGetCursorPosUnicodeFromMousePos Hidemaru_GetCursorPosUnicodeFromMousePos;
+
         public:
             TEdit();
         public:
@@ -76,6 +95,9 @@ namespace Hidemaru {
 
     public:
         class TMacro {
+            // dllの中から秀丸マクロを実行する
+            using PFNEvalMacro = BOOL(WINAPI*)(const wchar_t* pwsz);
+            static PFNEvalMacro Hidemaru_EvalMacro;
         public:
             TMacro();
         public:
@@ -130,6 +152,41 @@ namespace Hidemaru {
 
     public:
         TMacro Macro;
+
+
+    public:
+        class TFile {
+            // 何のエンコードで開かれるのかを取得する機能となる。
+            using PFNAnalyzeEncoding = int(WINAPI*)(const WCHAR* pwszFileName, DWORD_PTR lParam1, DWORD_PTR lParam2);
+            static PFNAnalyzeEncoding Hidemaru_AnalyzeEncoding;
+
+            // 指定の秀丸のencodeを指定して、ファイル内容を読み込む
+            using PFNLoadFileUnicode = HGLOBAL(WINAPI*)(const WCHAR* pwszFileName, int nEncode, UINT* pcwchOut, DWORD_PTR lParam1, DWORD_PTR lParam2);
+            static PFNLoadFileUnicode Hidemaru_LoadFileUnicode;
+        public:
+            TFile();
+
+            class IEncoding {
+            public:
+                int getHmEncode();
+                int getMsCodePage();
+            };
+
+            IEncoding getEncoding();
+
+            class IHidemaruStreamReader {
+            public:
+                IEncoding getEncoding();
+                std::wstring read();
+                std::wstring getFilePath();
+                void close();
+            };
+
+            IHidemaruStreamReader open(std::wstring filepath, int hm_encode = -1);
+        };
+
+    public:
+        TFile File;
 
 
     public:

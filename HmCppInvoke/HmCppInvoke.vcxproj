@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="ConsoleApplication10.cpp" />
     <ClCompile Include="HmCppInvoke.cpp" />
+    <ClCompile Include="HmCppInvokeData.cpp" />
     <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>

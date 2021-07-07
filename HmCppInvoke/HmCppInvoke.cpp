@@ -102,10 +102,152 @@ bool THm::setVersion()
 	return false;
 }
 
+extern unsigned int hidemaru_encode_map[];
+std::vector<BYTE> THm::EncodeWStringToOriginalEncodeVector(std::wstring original_string)
+{
+
+	// この結果のバイト列(vector.data())を HmOutputPane.dllのOutput関数になげれば、Unicodeでも再現できる
+	vector<BYTE> r;
+	for (wchar_t ch : original_string) {
+		int ix = ch;
+
+		// 変換後のコードの数値が、255以下なら
+		unsigned int encode_code = hidemaru_encode_map[ix];
+		if (encode_code <= 0xFF) { // １文字で収まる
+			r.push_back(encode_code);
+		}
+		else {
+			union EncodeCodeUnion {
+				unsigned int code;
+				BYTE ch[4];
+			};
+
+			EncodeCodeUnion ecu;
+			ecu.code = encode_code;
+			for (BYTE b : ecu.ch) {
+				if (b == 0) {
+					break;
+				}
+				r.push_back(b);
+			}
+		}
+	}
+
+	r.push_back(0);
+	return r;
+}
 
 
 
+THm::TEdit::PFNGetTotalTextUnicode THm::TEdit::Hidemaru_GetTotalTextUnicode = NULL;
+THm::TEdit::PFNGetSelectedTextUnicode THm::TEdit::Hidemaru_GetSelectedTextUnicode = NULL;
+THm::TEdit::PFNGetLineTextUnicode THm::TEdit::Hidemaru_GetLineTextUnicode = NULL;
+THm::TEdit::PFNGetCursorPosUnicode THm::TEdit::Hidemaru_GetCursorPosUnicode = NULL;
+THm::TEdit::PFNGetCursorPosUnicodeFromMousePos THm::TEdit::Hidemaru_GetCursorPosUnicodeFromMousePos = NULL;
 
+
+THm::TEdit::TEdit()
+{
+	if (hHideExeHandle) {
+		Hidemaru_GetDllFuncCalledType = (PFNGetDllFuncCalledType)GetProcAddress(hHideExeHandle, "Hidemaru_GetDllFuncCalledType");
+		Hidemaru_GetTotalTextUnicode = (PFNGetTotalTextUnicode)GetProcAddress(hHideExeHandle, "Hidemaru_GetTotalTextUnicode");
+		Hidemaru_GetSelectedTextUnicode = (PFNGetSelectedTextUnicode)GetProcAddress(hHideExeHandle, "Hidemaru_GetSelectedTextUnicode");
+		Hidemaru_GetLineTextUnicode = (PFNGetLineTextUnicode)GetProcAddress(hHideExeHandle, "Hidemaru_GetLineTextUnicode");
+		Hidemaru_GetCursorPosUnicode = (PFNGetCursorPosUnicode)GetProcAddress(hHideExeHandle, "Hidemaru_GetCursorPosUnicode");
+		Hidemaru_GetCursorPosUnicodeFromMousePos = (PFNGetCursorPosUnicodeFromMousePos)GetProcAddress(hHideExeHandle, "Hidemaru_GetCursorPosUnicodeFromMousePos");
+	}
+}
+
+std::wstring THm::TEdit::getFilePath()
+{
+	return std::wstring();
+}
+
+std::wstring THm::TEdit::getTotalText()
+{
+	return std::wstring();
+}
+
+bool THm::TEdit::setTotalText(std::wstring text)
+{
+	return false;
+}
+
+std::wstring THm::TEdit::getSelectedText()
+{
+	return std::wstring();
+}
+
+bool THm::TEdit::setSelectedText(std::wstring text)
+{
+	return false;
+}
+
+std::wstring THm::TEdit::getLineText()
+{
+	return std::wstring();
+}
+
+bool THm::TEdit::setLineText(std::wstring text)
+{
+	return false;
+}
+
+bool THm::TEdit::isQueueStatus()
+{
+	return false;
+}
+
+THm::TEdit::ICursorPos THm::TEdit::getCursorPos()
+{
+	ICursorPos pos = ICursorPos(0, 0);
+	return pos;
+}
+
+THm::TEdit::IMousePos THm::TEdit::getMousePos()
+{
+	IMousePos pos = IMousePos(0, 0, 0, 0);
+	return pos;
+}
+
+
+int THm::TEdit::ICursorPos::getLineNo()
+{
+	return 0;
+}
+
+int THm::TEdit::ICursorPos::getColumn()
+{
+	return 0;
+}
+
+THm::TEdit::ICursorPos::ICursorPos(int lineno, int column)
+{
+}
+
+int THm::TEdit::IMousePos::getLineNo()
+{
+	return 0;
+}
+
+int THm::TEdit::IMousePos::getColumn()
+{
+	return 0;
+}
+
+int THm::TEdit::IMousePos::getX()
+{
+	return 0;
+}
+
+int THm::TEdit::IMousePos::getY()
+{
+	return 0;
+}
+
+THm::TEdit::IMousePos::IMousePos(int lineno, int column, int x, int y)
+{
+}
 
 
 
@@ -274,108 +416,18 @@ bool THm::TExplorerPane::getUpdated()
 	return false;
 }
 
-THm::TEdit::TEdit()
-{
-}
-
-std::wstring THm::TEdit::getFilePath()
-{
-	return std::wstring();
-}
-
-std::wstring THm::TEdit::getTotalText()
-{
-	return std::wstring();
-}
-
-bool THm::TEdit::setTotalText(std::wstring text)
-{
-	return false;
-}
-
-std::wstring THm::TEdit::getSelectedText()
-{
-	return std::wstring();
-}
-
-bool THm::TEdit::setSelectedText(std::wstring text)
-{
-	return false;
-}
-
-std::wstring THm::TEdit::getLineText()
-{
-	return std::wstring();
-}
-
-bool THm::TEdit::setLineText(std::wstring text)
-{
-	return false;
-}
-
-bool THm::TEdit::isQueueStatus()
-{
-	return false;
-}
-
-THm::TEdit::ICursorPos THm::TEdit::getCursorPos()
-{
-	ICursorPos pos = ICursorPos(0, 0);
-	return pos;
-}
-
-THm::TEdit::IMousePos THm::TEdit::getMousePos()
-{
-	IMousePos pos = IMousePos(0, 0, 0, 0);
-	return pos;
-}
 
 
 
 
-
-
-
-int THm::TEdit::ICursorPos::getLineNo()
-{
-	return 0;
-}
-
-int THm::TEdit::ICursorPos::getColumn()
-{
-	return 0;
-}
-
-THm::TEdit::ICursorPos::ICursorPos(int lineno, int column)
-{
-}
-
-int THm::TEdit::IMousePos::getLineNo()
-{
-	return 0;
-}
-
-int THm::TEdit::IMousePos::getColumn()
-{
-	return 0;
-}
-
-int THm::TEdit::IMousePos::getX()
-{
-	return 0;
-}
-
-int THm::TEdit::IMousePos::getY()
-{
-	return 0;
-}
-
-THm::TEdit::IMousePos::IMousePos(int lineno, int column, int x, int y)
-{
-}
+THm::TMacro::PFNEvalMacro THm::TMacro::Hidemaru_EvalMacro = NULL;
 
 THm::TMacro::TMacro()
 {
+	if (hHideExeHandle) {
+		Hidemaru_EvalMacro = (PFNEvalMacro)GetProcAddress(hHideExeHandle, "Hidemaru_EvalMacro");
+	}
+
 	this->Exec = TExec();
 }
 
@@ -502,4 +554,54 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstri
 	std::exception e = std::exception();
 	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
 	return r;
+}
+
+THm::TFile::PFNAnalyzeEncoding THm::TFile::Hidemaru_AnalyzeEncoding = NULL;
+THm::TFile::PFNLoadFileUnicode THm::TFile::Hidemaru_LoadFileUnicode = NULL;
+
+THm::TFile::TFile()
+{
+	if (hHideExeHandle) {
+		Hidemaru_AnalyzeEncoding = (PFNAnalyzeEncoding)GetProcAddress(hHideExeHandle, "Hidemaru_AnalyzeEncoding");
+		Hidemaru_LoadFileUnicode = (PFNLoadFileUnicode)GetProcAddress(hHideExeHandle, "Hidemaru_LoadFileUnicode");
+	}
+}
+
+int THm::TFile::IEncoding::getHmEncode()
+{
+	return 0;
+}
+
+int THm::TFile::IEncoding::getMsCodePage()
+{
+	return 0;
+}
+
+THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding()
+{
+	return IEncoding();
+}
+
+THm::TFile::IEncoding THm::TFile::IHidemaruStreamReader::getEncoding()
+{
+	return IEncoding();
+}
+
+wstring THm::TFile::IHidemaruStreamReader::read()
+{
+	return wstring();
+}
+
+wstring THm::TFile::IHidemaruStreamReader::getFilePath()
+{
+	return wstring();
+}
+
+void THm::TFile::IHidemaruStreamReader::close()
+{
+}
+
+THm::TFile::IHidemaruStreamReader THm::TFile::open(std::wstring filepath, int hm_encode)
+{
+	return IHidemaruStreamReader();
 }
