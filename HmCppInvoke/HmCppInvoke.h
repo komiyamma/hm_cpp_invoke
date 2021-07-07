@@ -16,6 +16,10 @@ namespace Hidemaru {
     class THm {
     public:
         THm();
+    // Hm をコピー禁止にしておく。
+    private:
+        THm(const THm& src) {}
+        void operator =(const THm& src);
     private:
         static double hm_version;
         static double QueryFileVersion(wchar_t* path);

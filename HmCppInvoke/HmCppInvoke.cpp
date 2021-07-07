@@ -50,6 +50,10 @@ THm::THm()
 	}
 }
 
+void Hidemaru::THm::operator=(const THm& src)
+{
+}
+
 
 double THm::QueryFileVersion(wchar_t* path)
 {
