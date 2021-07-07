@@ -19,24 +19,93 @@ THm::TMacro::TMacro()
 
 bool THm::TMacro::isExecuting()
 {
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		const int WM_ISMACROEXECUTING = WM_USER + 167;
+		LRESULT r = SendMessageW(hHidemaruWindow, WM_ISMACROEXECUTING, 0, 0);
+		return (bool)r;
+	}
+
 	return false;
 }
 
 THm::TMacro::IResult THm::TMacro::doEval(std::wstring expression)
 {
-	std::exception e = std::exception();
-	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
-	return r;
+	BOOL success = Hidemaru_EvalMacro(expression.c_str());
+	if (success) {
+		std::exception e = std::exception();
+		THm::TMacro::IResult r = THm::TMacro::IResult(success, e, L"");
+		return r;
+	}
+	else {
+		OutputDebugString(L"マクロの実行に失敗しました。\n");
+		OutputDebugString(L"マクロ内容:\n");
+		OutputDebugString(expression.c_str());
+		std::exception e = std::runtime_error("HidemaruMacroEvalException");
+		THm::TMacro::IResult r = THm::TMacro::IResult(success, e, L"");
+		return r;
+	}
 }
 
 std::any THm::TMacro::getVar(std::wstring varname)
 {
-	return std::any();
+	TestDynamicVar = nullptr;
+	auto dll_invocant = SelfDllInfo::GetInvocantString();
+	wstring cmd =
+		L"##_tmp_dll_id_ret = dllfuncw( " + dll_invocant + L"\"SetDynamicVar\", " + varname + L");\n"
+		L"##_tmp_dll_id_ret = 0;\n";
+	BOOL success = Hidemaru_EvalMacro(cmd.c_str());
+
+	return TestDynamicVar;
 }
 
-bool THm::TMacro::setVar(std::wstring varname, std::any)
+
+
+
+
+
+
+// 秀丸の変数が文字列か数値かの判定用
+extern "C" __declspec(dllexport) intptr_t SetDynamicVar(const void* dynamic_value);
+extern "C" __declspec(dllexport) intptr_t PopNumVar();
+extern "C" __declspec(dllexport) intptr_t PushNumVar(intptr_t i_tmp_num);
+extern "C" __declspec(dllexport) const wchar_t* PopStrVar();
+extern "C" __declspec(dllexport) intptr_t PushStrVar(const wchar_t* sz_tmp_str);
+
+
+bool THm::TMacro::setVar(std::wstring varname, std::any value)
 {
-	return false;
+	BOOL success = 0;
+
+	auto dll_invocant = SelfDllInfo::GetInvocantString();
+
+	wchar_t start = varname[0];
+	if (start == L'#') {
+
+		// 数字を数値にトライ。ダメなら0だよ。
+		intptr_t n = 0;
+		try {
+			n = std::any_cast<intptr_t>(value);
+
+			PushNumVar(n);
+			wstring cmd = L" = dllfuncw( " + dll_invocant + L"\"PopNumVar\" );\n";
+			cmd = varname + cmd;
+			success = Hidemaru_EvalMacro(cmd.c_str());
+		}
+		catch (...) {}
+	}
+	else if (start == L'$') {
+		try {
+			wstring s = std::any_cast<wstring>(value);
+			PushStrVar(s.data());
+			wstring cmd = L" = dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n";
+			cmd = varname + cmd;
+			success = Hidemaru_EvalMacro(cmd.c_str());
+		}
+		catch (...) {}
+	}
+
+	return success;
 }
 
 THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func_name, std::any args0, std::any args1, std::any args2, std::any args3, std::any args4, std::any args5, std::any args6, std::any args7, std::any args8, std::any args9)

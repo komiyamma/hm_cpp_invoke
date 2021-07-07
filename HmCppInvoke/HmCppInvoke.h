@@ -105,6 +105,8 @@ namespace Hidemaru {
 
         public:
             class ICursorPos {
+                int lineno;
+                int column;
             public:
                 int getLineNo();
                 int getColumn();
@@ -112,6 +114,10 @@ namespace Hidemaru {
             };
 
             class IMousePos {
+                int lineno;
+                int column;
+                int x;
+                int y;
             public:
                 int getLineNo();
                 int getColumn();
@@ -149,7 +155,7 @@ namespace Hidemaru {
             IResult doEval(std::wstring expression);
 
             std::any getVar(std::wstring varname);
-            bool setVar(std::wstring varname, std::any);
+            bool setVar(std::wstring varname, std::any value);
 
             class IFunctionResult {
             public:
@@ -321,7 +327,7 @@ namespace Hidemaru {
             static int iSelfBindedType;
         public:
             static void InitializeHandle(HMODULE handle);
-        private:
+        public:
             static int GetBindDllType();
             static BOOL SetBindDllHandle();
             static std::wstring GetInvocantString();

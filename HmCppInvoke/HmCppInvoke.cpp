@@ -99,7 +99,6 @@ bool THm::setVersion()
 	if (hm_version > 0.0) {
 		return true;
 	}
-	// š
 	return false;
 }
 
