@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021 Akitsugu Komiyama
+ * under the MIT License
+ */
 
 #include "HmCppInvoke.h"
 

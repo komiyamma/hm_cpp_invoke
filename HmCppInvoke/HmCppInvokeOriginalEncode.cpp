@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021 Akitsugu Komiyama
+ * under the MIT License
+ */
 
 unsigned int hidemaru_encode_map[] = {
 	0,
