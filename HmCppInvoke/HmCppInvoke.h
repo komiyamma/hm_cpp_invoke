@@ -311,17 +311,7 @@ namespace Hidemaru {
     public:
         void initDllHandle(HMODULE handle);
 
-        std::vector<THmMacroVariable> updateBindInformation(
-            THmMacroVariable arg0 = nullptr,
-            THmMacroVariable arg1 = nullptr,
-            THmMacroVariable arg2 = nullptr,
-            THmMacroVariable arg3 = nullptr,
-            THmMacroVariable arg4 = nullptr,
-            THmMacroVariable arg5 = nullptr,
-            THmMacroVariable arg6 = nullptr,
-            THmMacroVariable arg7 = nullptr,
-            THmMacroVariable arg8 = nullptr
-        );
+        bool updateBindInformation();
     };
 
     extern THmMacroVariable TestDynamicVar;
