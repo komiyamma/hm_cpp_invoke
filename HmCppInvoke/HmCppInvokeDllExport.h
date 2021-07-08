@@ -38,32 +38,5 @@ namespace Hidemaru {
             DOUBLE = 0x0400   //double‚Ìƒpƒ‰ƒ[ƒ^
         };
     };
-
-#pragma pack(1)
-    union THmDllParamNumber {
-        BYTE bin[64];
-        long nint;
-        wchar_t* pwstr;
-        double f64;
-
-        inline operator double() {
-            return f64;
-        }
-
-        inline operator long() {
-            return nint;
-        }
-
-        inline operator wchar_t* () {
-            return pwstr;
-        }
-
-        inline operator std::wstring() {
-            return pwstr;
-        }
-    };
-#pragma pack()
-
-    using THmDllParamVariable = std::variant<nullptr_t, THmDllParamNumber, std::wstring>;
 }
 

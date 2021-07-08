@@ -6,9 +6,9 @@ using namespace Hidemaru;
 
 
 // GŠÛ‚Ì•Ï”‚ª•¶š—ñ‚©”’l‚©‚Ì”»’è—p
-HM_DLLEXPORT long SetDynamicVar(THmDllParamNumber dynamic_value);
-HM_DLLEXPORT THmMacroNumber PopNumVar();
-HM_DLLEXPORT long PushNumVar(THmMacroNumber i_tmp_num);
+HM_DLLEXPORT long SetDynamicVar(const void* dynamic_value);
+HM_DLLEXPORT long PopNumVar();
+HM_DLLEXPORT long PushNumVar(long i_tmp_num);
 HM_DLLEXPORT const wchar_t* PopStrVar();
 HM_DLLEXPORT long PushStrVar(const wchar_t* sz_tmp_str);
 

@@ -10,20 +10,14 @@ using namespace Hidemaru;
 
 class B {
 public:
-    static THmMacroNumber abc(std::wstring b) {
+    static long abc(std::wstring b) {
         return 1;
     }
 };
 
-long abc(THmDllParamNumber b, THmDllParamNumber p) {
+long abc(long b, long p) {
     auto args = Hm.updateBindInformation(b, p);
     auto v = args[0];
-    if ( std::holds_alternative<std::wstring>(v) ) {
-
-    }
-    if (std::holds_alternative<THmMacroNumber>(v)) {
-
-    }
 
     return (long)args.size();
 }

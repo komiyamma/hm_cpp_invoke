@@ -62,9 +62,9 @@ THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 
 
 // 秀丸の変数が文字列か数値かの判定用
-HM_DLLEXPORT long SetDynamicVar(THmDllParamNumber dynamic_value);
-HM_DLLEXPORT THmMacroNumber PopNumVar();
-HM_DLLEXPORT long PushNumVar(THmMacroNumber i_tmp_num);
+HM_DLLEXPORT long SetDynamicVar(const void *dynamic_value);
+HM_DLLEXPORT long PopNumVar();
+HM_DLLEXPORT long PushNumVar(long i_tmp_num);
 HM_DLLEXPORT const wchar_t* PopStrVar();
 HM_DLLEXPORT long PushStrVar(const wchar_t* sz_tmp_str);
 
@@ -79,9 +79,9 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 	if (start == L'#') {
 
 		// 数字を数値にトライ。ダメなら0だよ。
-		THmMacroNumber n = 0;
+		long n = 0;
 		try {
-			n = std::get<THmMacroNumber>(value);
+			n = std::get<long>(value);
 
 			PushNumVar(n);
 			wstring cmd = L" = dllfuncw( " + dll_invocant + L"\"PopNumVar\" );\n";

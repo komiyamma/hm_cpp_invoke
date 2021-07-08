@@ -11,15 +11,10 @@
 
 
 namespace Hidemaru {
-#ifdef USE_FLOATMACRO
-    using THmMacroNumber = double;
-#else
-    using THmMacroNumber = long;
-#endif
-    using THmMacroVariable = std::variant<nullptr_t, THmMacroNumber, std::wstring>;
+    using THmMacroVariable = std::variant<nullptr_t, long, std::wstring>;
     using THmMacroResultError = std::variant<nullptr_t, std::exception>;
 
-    using THmMacroScopeMethodPointer = THmMacroNumber (*)(std::wstring message_parameter);
+    using THmMacroScopeMethodPointer = long (*)(std::wstring message_parameter);
 
     class THm : public THmDllExport {
     public:
@@ -317,15 +312,15 @@ namespace Hidemaru {
         void initDllHandle(HMODULE handle);
 
         std::vector<THmMacroVariable> updateBindInformation(
-            THmDllParamVariable arg0 = nullptr,
-            THmDllParamVariable arg1 = nullptr,
-            THmDllParamVariable arg2 = nullptr,
-            THmDllParamVariable arg3 = nullptr,
-            THmDllParamVariable arg4 = nullptr,
-            THmDllParamVariable arg5 = nullptr,
-            THmDllParamVariable arg6 = nullptr,
-            THmDllParamVariable arg7 = nullptr,
-            THmDllParamVariable arg8 = nullptr
+            THmMacroVariable arg0 = nullptr,
+            THmMacroVariable arg1 = nullptr,
+            THmMacroVariable arg2 = nullptr,
+            THmMacroVariable arg3 = nullptr,
+            THmMacroVariable arg4 = nullptr,
+            THmMacroVariable arg5 = nullptr,
+            THmMacroVariable arg6 = nullptr,
+            THmMacroVariable arg7 = nullptr,
+            THmMacroVariable arg8 = nullptr
         );
     };
 
