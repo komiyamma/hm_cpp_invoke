@@ -88,7 +88,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -149,6 +149,7 @@
     <ClCompile Include="ConsoleApplication10.cpp" />
     <ClCompile Include="HmCppInvoke.cpp" />
     <ClCompile Include="HmCppInvokeEdit.cpp" />
+    <ClCompile Include="HmCppInvokeDllExport.cpp" />
     <ClCompile Include="HmCppInvokeFile.cpp" />
     <ClCompile Include="HmCppInvokeMacro.cpp" />
     <ClCompile Include="HmCppInvokeOriginalEncode.cpp" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HmCppInvoke.h" />
+    <ClInclude Include="HmCppInvokeDllExport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

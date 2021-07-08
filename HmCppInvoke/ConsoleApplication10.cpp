@@ -18,7 +18,6 @@ int main()
 {
     THm& HM3 = Hm;
     B ee = B();
-    std::any e = nullptr;
     long c = 1000000000L;
     Hidemaru::THmMacroScopeMethodPointer p = ee.abc;
 

@@ -12,7 +12,6 @@ using namespace Hidemaru;
 THm Hm = THm();
 
 double THm::hm_version = 0;
-THm::PFNGetDllFuncCalledType THm::Hidemaru_GetDllFuncCalledType = NULL;
 THm::PFNGetCurrentWindowHandle THm::Hidemaru_GetCurrentWindowHandle = NULL;
 
 HMODULE THm::hHideExeHandle = NULL;
@@ -120,28 +119,28 @@ THmMacroVariable Hidemaru::TestDynamicVar = nullptr;
 
 
 // 秀丸の変数が文字列か数値かの判定用
-extern "C" __declspec(dllexport) long SetDynamicVar(const void* dynamic_value) {
+extern "C" __declspec(dllexport) long SetDynamicVar(const THmNumberType dynamic_value) {
 
 	auto param_type = (THm::DLLFUNCPARAM)THm::Hidemaru_GetDllFuncCalledType(1);
 	if (param_type == THm::DLLFUNCPARAM::WCHAR_PTR) {
-		Hidemaru::TestDynamicVar = wstring((wchar_t*)dynamic_value);
+		Hidemaru::TestDynamicVar = wstring((wchar_t*)(long)dynamic_value);
 		return 1;
 	}
 	else {
-		Hidemaru::TestDynamicVar = (long)dynamic_value;
+		Hidemaru::TestDynamicVar = (THmNumberType)dynamic_value;
 		return 1;
 	}
 }
 
 
-long popnumvar = 0;
+THmNumberType popnumvar = 0;
 // スタックした変数を秀丸マクロから取り出す。内部処理用
-extern "C" __declspec(dllexport) long PopNumVar() {
+extern "C" __declspec(dllexport) THmNumberType PopNumVar() {
 	return popnumvar;
 }
 
 // 変数を秀丸マクロから取り出すためにスタック。内部処理用
-extern "C" __declspec(dllexport) long PushNumVar(long i_tmp_num) {
+extern "C" __declspec(dllexport) long PushNumVar(THmNumberType i_tmp_num) {
 	popnumvar = i_tmp_num;
 	return 1;
 }

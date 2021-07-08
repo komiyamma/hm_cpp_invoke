@@ -67,8 +67,8 @@ THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 
 // 秀丸の変数が文字列か数値かの判定用
 extern "C" __declspec(dllexport) long SetDynamicVar(const void* dynamic_value);
-extern "C" __declspec(dllexport) long PopNumVar();
-extern "C" __declspec(dllexport) long PushNumVar(long i_tmp_num);
+extern "C" __declspec(dllexport) THmNumberType PopNumVar();
+extern "C" __declspec(dllexport) long PushNumVar(THmNumberType i_tmp_num);
 extern "C" __declspec(dllexport) const wchar_t* PopStrVar();
 extern "C" __declspec(dllexport) long PushStrVar(const wchar_t* sz_tmp_str);
 
@@ -83,9 +83,9 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 	if (start == L'#') {
 
 		// 数字を数値にトライ。ダメなら0だよ。
-		long n = 0;
+		THmNumberType n = 0;
 		try {
-			n = std::get<long>(value);
+			n = std::get<THmNumberType>(value);
 
 			PushNumVar(n);
 			wstring cmd = L" = dllfuncw( " + dll_invocant + L"\"PopNumVar\" );\n";
