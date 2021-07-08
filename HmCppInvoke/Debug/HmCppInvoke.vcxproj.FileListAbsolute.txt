@@ -1,0 +1,2 @@
+G:\repogitory\hidemaru_cpp_invoke\Debug\HmCppInvoke.exe.lastcodeanalysissucceeded
+G:\repogitory\hidemaru_cpp_invoke\HmCppInvoke\Debug\NativeCodeAnalysis.read.1.tlog
