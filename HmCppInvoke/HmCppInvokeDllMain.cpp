@@ -10,15 +10,14 @@
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
+	//-------------------------------------------------------------------------
+	// DllMain から Hm.DllMainの呼び出しが必須
+	//-------------------------------------------------------------------------
+	Hm.DllMain(hModule, ul_reason_for_call, lpReserved);
+
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-
-		//-------------------------------------------------------------------------
-		// 自分自身のdllのハンドルやフルパスを保存しておく
-		//-------------------------------------------------------------------------
-		Hm.initDllHandle(hModule);
-
 		break;
 	case DLL_THREAD_ATTACH:
 		break;
