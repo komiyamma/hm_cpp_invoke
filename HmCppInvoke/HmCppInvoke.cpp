@@ -117,7 +117,7 @@ THmMacroVariable Hidemaru::TestDynamicVar = nullptr;
 
 
 // 秀丸の変数が文字列か数値かの判定用
-extern "C" __declspec(dllexport) long SetDynamicVar(THmDllParamNumber dynamic_value) {
+HM_DLLEXPORT long SetDynamicVar(THmDllParamNumber dynamic_value) {
 
 	auto param_type = (THm::DLLFUNCPARAM)THm::Hidemaru_GetDllFuncCalledType(1);
 	if (param_type == THm::DLLFUNCPARAM::WCHAR_PTR) {
@@ -137,24 +137,24 @@ extern "C" __declspec(dllexport) long SetDynamicVar(THmDllParamNumber dynamic_va
 
 THmMacroNumber popnumvar = 0;
 // スタックした変数を秀丸マクロから取り出す。内部処理用
-extern "C" __declspec(dllexport) THmMacroNumber PopNumVar() {
+HM_DLLEXPORT THmMacroNumber PopNumVar() {
 	return popnumvar;
 }
 
 // 変数を秀丸マクロから取り出すためにスタック。内部処理用
-extern "C" __declspec(dllexport) long PushNumVar(THmMacroNumber i_tmp_num) {
+HM_DLLEXPORT long PushNumVar(THmMacroNumber i_tmp_num) {
 	popnumvar = i_tmp_num;
 	return 1;
 }
 
 // スタックした変数を秀丸マクロから取り出す。内部処理用
 static wstring popstrvar;
-extern "C" __declspec(dllexport) const wchar_t* PopStrVar() {
+HM_DLLEXPORT const wchar_t* PopStrVar() {
 	return popstrvar.data();
 }
 
 // 変数を秀丸マクロから取り出すためにスタック。内部処理用
-extern "C" __declspec(dllexport) long PushStrVar(const wchar_t* sz_tmp_str) {
+HM_DLLEXPORT long PushStrVar(const wchar_t* sz_tmp_str) {
 	popstrvar = sz_tmp_str;
 	return 1;
 }

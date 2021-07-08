@@ -6,7 +6,7 @@ using namespace Hidemaru;
 THm::PFNGetDllFuncCalledType THmDllExport::Hidemaru_GetDllFuncCalledType = NULL;
 
 #ifdef USE_FLOATMACRO
-extern "C" __declspec(dllexport) void FLOATMACRO() {}
+HM_DLLEXPORT void FLOATMACRO() {}
 #else
 
 #endif

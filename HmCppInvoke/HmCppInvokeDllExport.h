@@ -2,6 +2,8 @@
 
 #include <windows.h>
 
+#define HM_DLLEXPORT extern "C" __declspec(dllexport)
+
 namespace Hidemaru {
     class THmDllExport {
     public:

@@ -10,7 +10,6 @@
 #include "HmCppInvokeDllExport.h"
 
 
-
 namespace Hidemaru {
 #ifdef USE_FLOATMACRO
     using THmMacroNumber = double;

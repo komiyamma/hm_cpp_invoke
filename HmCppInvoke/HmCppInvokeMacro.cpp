@@ -62,11 +62,11 @@ THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 
 
 // GŠÛ‚Ì•Ï”‚ª•¶š—ñ‚©”’l‚©‚Ì”»’è—p
-extern "C" __declspec(dllexport) long SetDynamicVar(THmDllParamNumber dynamic_value);
-extern "C" __declspec(dllexport) THmMacroNumber PopNumVar();
-extern "C" __declspec(dllexport) long PushNumVar(THmMacroNumber i_tmp_num);
-extern "C" __declspec(dllexport) const wchar_t* PopStrVar();
-extern "C" __declspec(dllexport) long PushStrVar(const wchar_t* sz_tmp_str);
+HM_DLLEXPORT long SetDynamicVar(THmDllParamNumber dynamic_value);
+HM_DLLEXPORT THmMacroNumber PopNumVar();
+HM_DLLEXPORT long PushNumVar(THmMacroNumber i_tmp_num);
+HM_DLLEXPORT const wchar_t* PopStrVar();
+HM_DLLEXPORT long PushStrVar(const wchar_t* sz_tmp_str);
 
 
 bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
