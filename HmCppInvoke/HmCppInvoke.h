@@ -6,13 +6,15 @@
 #include <stdexcept>
 #include <vector>
 #include <any>
+#include <variant>
 
 
 
 namespace Hidemaru {
 
-    using MacroScopeMethodPointer = long (*)(std::wstring message_parameter);
-
+    using THmMacroScopeMethodPointer = long (*)(std::wstring message_parameter);
+    using THmMacroVariable = std::variant<intptr_t, std::wstring>;
+    using THmMacroResultError = std::variant<std::exception, nullptr_t>;
     class THm {
     public:
         THm();
@@ -147,44 +149,44 @@ namespace Hidemaru {
             class IResult {
             public:
                 int getResult();
-                std::any getException();
+                THmMacroResultError getException();
                 std::wstring getMessage();
-                IResult(int result, std::any error, std::wstring message);
+                IResult(int result, THmMacroResultError error, std::wstring message);
             };
 
             IResult doEval(std::wstring expression);
 
-            std::any getVar(std::wstring varname);
-            bool setVar(std::wstring varname, std::any value);
+            THmMacroVariable getVar(std::wstring varname);
+            bool setVar(std::wstring varname, THmMacroVariable value);
 
             class IFunctionResult {
             public:
-                std::any getResult();
-                std::vector<std::any> getArgs();
-                std::any getException();
+                THmMacroVariable getResult();
+                std::vector<THmMacroVariable> getArgs();
+                THmMacroResultError getException();
                 std::wstring getMessage();
-                IFunctionResult(std::any result, std::vector<std::any> args, std::any error, std::wstring message);
+                IFunctionResult(THmMacroVariable result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message);
             };
 
-            IFunctionResult doFunction(std::wstring func_name, std::any args0 = nullptr, std::any args1 = nullptr, std::any args2 = nullptr, std::any args3 = nullptr, std::any args4 = nullptr, std::any args5 = nullptr, std::any args6 = nullptr, std::any args7 = nullptr, std::any args8 = nullptr, std::any args9 = nullptr);
+            IFunctionResult doFunction(std::wstring func_name, THmMacroVariable args0 = nullptr, THmMacroVariable args1 = nullptr, THmMacroVariable args2 = nullptr, THmMacroVariable args3 = nullptr, THmMacroVariable args4 = nullptr, THmMacroVariable args5 = nullptr, THmMacroVariable args6 = nullptr, THmMacroVariable args7 = nullptr, THmMacroVariable args8 = nullptr, THmMacroVariable args9 = nullptr);
 
             class IStatementResult {
             public:
                 int getResult();
-                std::vector<std::any> getArgs();
-                std::any getException();
+                std::vector<THmMacroVariable> getArgs();
+                THmMacroResultError getException();
                 std::wstring getMessage();
-                IStatementResult(int result, std::vector<std::any> args, std::any error, std::wstring message);
+                IStatementResult(int result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message);
             };
 
-            IStatementResult doStatement(std::wstring statement_name, std::any args0 = nullptr, std::any args1 = nullptr, std::any args2 = nullptr, std::any args3 = nullptr, std::any args4 = nullptr, std::any args5 = nullptr, std::any args6 = nullptr, std::any args7 = nullptr, std::any args8 = nullptr, std::any args9 = nullptr);
+            IStatementResult doStatement(std::wstring statement_name, THmMacroVariable args0 = nullptr, THmMacroVariable args1 = nullptr, THmMacroVariable args2 = nullptr, THmMacroVariable args3 = nullptr, THmMacroVariable args4 = nullptr, THmMacroVariable args5 = nullptr, THmMacroVariable args6 = nullptr, THmMacroVariable args7 = nullptr, THmMacroVariable args8 = nullptr, THmMacroVariable args9 = nullptr);
 
         public:
             class TExec {
             public:
                 IResult doEval(std::wstring expression);
                 IResult doFile(std::wstring filepath);
-                IResult doMethod(std::wstring message_parameter, MacroScopeMethodPointer callback_method);
+                IResult doMethod(std::wstring message_parameter, THmMacroScopeMethodPointer callback_method);
             };
 
             TExec Exec;
@@ -341,7 +343,7 @@ namespace Hidemaru {
             }
     };
 
-    extern std::any TestDynamicVar;
+    extern THmMacroVariable TestDynamicVar;
 };
 
 

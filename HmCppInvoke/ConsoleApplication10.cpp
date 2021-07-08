@@ -20,7 +20,7 @@ int main()
     B ee = B();
     std::any e = nullptr;
     long c = 1000000000L;
-    Hidemaru::MacroScopeMethodPointer p = ee.abc;
+    Hidemaru::THmMacroScopeMethodPointer p = ee.abc;
 
     auto pos = Hm.Edit.getMousePos();
     std::cout << "Hello World!\n";

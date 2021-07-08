@@ -116,7 +116,7 @@ bool THm::setVersion()
 
 
 
-std::any Hidemaru::TestDynamicVar = nullptr;
+THmMacroVariable Hidemaru::TestDynamicVar = nullptr;
 
 
 // GŠÛ‚Ì•Ï”‚ª•¶š—ñ‚©”’l‚©‚Ì”»’è—p

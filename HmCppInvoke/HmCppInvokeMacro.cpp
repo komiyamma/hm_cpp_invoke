@@ -47,7 +47,7 @@ THm::TMacro::IResult THm::TMacro::doEval(std::wstring expression)
 	}
 }
 
-std::any THm::TMacro::getVar(std::wstring varname)
+THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 {
 	TestDynamicVar = nullptr;
 	auto dll_invocant = SelfDllInfo::GetInvocantString();
@@ -73,7 +73,7 @@ extern "C" __declspec(dllexport) const wchar_t* PopStrVar();
 extern "C" __declspec(dllexport) intptr_t PushStrVar(const wchar_t* sz_tmp_str);
 
 
-bool THm::TMacro::setVar(std::wstring varname, std::any value)
+bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 {
 	BOOL success = 0;
 
@@ -108,16 +108,16 @@ bool THm::TMacro::setVar(std::wstring varname, std::any value)
 	return success;
 }
 
-THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func_name, std::any args0, std::any args1, std::any args2, std::any args3, std::any args4, std::any args5, std::any args6, std::any args7, std::any args8, std::any args9)
+THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)
 {
-	std::vector<std::any> v;
+	std::vector<THmMacroVariable> v;
 	IFunctionResult r = IFunctionResult(0, v, nullptr, L"");
 	return r;
 }
 
-THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring statement_name, std::any args0, std::any args1, std::any args2, std::any args3, std::any args4, std::any args5, std::any args6, std::any args7, std::any args8, std::any args9)
+THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring statement_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)
 {
-	std::vector<std::any> v;
+	std::vector<THmMacroVariable> v;
 	IStatementResult r = IStatementResult(0, v, nullptr, L"");
 	return r;
 }
@@ -128,7 +128,7 @@ int THm::TMacro::IResult::getResult()
 	return 0;
 }
 
-std::any THm::TMacro::IResult::getException()
+THmMacroResultError THm::TMacro::IResult::getException()
 {
 	return std::exception();
 }
@@ -138,23 +138,23 @@ std::wstring THm::TMacro::IResult::getMessage()
 	return std::wstring();
 }
 
-THm::TMacro::IResult::IResult(int result, std::any error, std::wstring message)
+THm::TMacro::IResult::IResult(int result, THmMacroResultError error, std::wstring message)
 {
 }
 
-std::any THm::TMacro::IFunctionResult::getResult()
+THmMacroVariable THm::TMacro::IFunctionResult::getResult()
 {
 	return 0;
 }
 
-std::vector<std::any> THm::TMacro::IFunctionResult::getArgs()
+std::vector<THmMacroVariable> THm::TMacro::IFunctionResult::getArgs()
 {
-	return std::vector<std::any>();
+	return std::vector<THmMacroVariable>();
 }
 
-std::any THm::TMacro::IFunctionResult::getException()
+THmMacroResultError THm::TMacro::IFunctionResult::getException()
 {
-	return std::any();
+	return std::exception();
 }
 
 std::wstring THm::TMacro::IFunctionResult::getMessage()
@@ -162,7 +162,7 @@ std::wstring THm::TMacro::IFunctionResult::getMessage()
 	return std::wstring();
 }
 
-Hidemaru::THm::TMacro::IFunctionResult::IFunctionResult(std::any result, std::vector<std::any> args, std::any error, std::wstring message)
+Hidemaru::THm::TMacro::IFunctionResult::IFunctionResult(THmMacroVariable result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message)
 {
 }
 
@@ -171,14 +171,14 @@ int Hidemaru::THm::TMacro::IStatementResult::getResult()
 	return 0;
 }
 
-std::vector<std::any> Hidemaru::THm::TMacro::IStatementResult::getArgs()
+std::vector<THmMacroVariable> Hidemaru::THm::TMacro::IStatementResult::getArgs()
 {
-	return std::vector<std::any>();
+	return std::vector<THmMacroVariable>();
 }
 
-std::any Hidemaru::THm::TMacro::IStatementResult::getException()
+THmMacroResultError Hidemaru::THm::TMacro::IStatementResult::getException()
 {
-	return std::any();
+	return std::exception();
 }
 
 std::wstring Hidemaru::THm::TMacro::IStatementResult::getMessage()
@@ -186,7 +186,7 @@ std::wstring Hidemaru::THm::TMacro::IStatementResult::getMessage()
 	return std::wstring();
 }
 
-Hidemaru::THm::TMacro::IStatementResult::IStatementResult(int result, std::vector<std::any> args, std::any error, std::wstring message)
+Hidemaru::THm::TMacro::IStatementResult::IStatementResult(int result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message)
 {
 }
 
@@ -204,7 +204,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 	return r;
 }
 
-Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, MacroScopeMethodPointer callback_method)
+Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, THmMacroScopeMethodPointer callback_method)
 {
 	std::exception e = std::exception();
 	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
