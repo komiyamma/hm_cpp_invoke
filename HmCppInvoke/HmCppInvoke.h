@@ -12,8 +12,11 @@
 
 
 namespace Hidemaru {
-
+#ifdef USE_FLOATMACRO
+    using THmMacroNumberType = double;
+#else
     using THmMacroNumberType = long;
+#endif
     using THmMacroVariable = std::variant<nullptr_t, THmMacroNumberType, std::wstring>;
     using THmMacroResultError = std::variant<nullptr_t, std::exception>;
 

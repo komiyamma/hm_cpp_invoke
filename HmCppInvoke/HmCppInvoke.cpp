@@ -11,6 +11,7 @@ using namespace Hidemaru;
 
 THm Hm = THm();
 
+
 double THm::hm_version = 0;
 THm::PFNGetCurrentWindowHandle THm::Hidemaru_GetCurrentWindowHandle = NULL;
 
@@ -119,15 +120,19 @@ THmMacroVariable Hidemaru::TestDynamicVar = nullptr;
 
 
 // GŠÛ‚Ì•Ï”‚ª•¶š—ñ‚©”’l‚©‚Ì”»’è—p
-extern "C" __declspec(dllexport) long SetDynamicVar(const void* dynamic_value) {
+extern "C" __declspec(dllexport) long SetDynamicVar(THmNumber dynamic_value) {
 
 	auto param_type = (THm::DLLFUNCPARAM)THm::Hidemaru_GetDllFuncCalledType(1);
 	if (param_type == THm::DLLFUNCPARAM::WCHAR_PTR) {
-		Hidemaru::TestDynamicVar = wstring((wchar_t*)dynamic_value);
+		Hidemaru::TestDynamicVar = wstring(dynamic_value.pwstr);
 		return 1;
 	}
 	else {
-		Hidemaru::TestDynamicVar = (THmMacroNumberType)dynamic_value;
+#ifdef USE_FLOATMACRO
+		Hidemaru::TestDynamicVar = dynamic_value.f64;
+#else
+		Hidemaru::TestDynamicVar = dynamic_value.nint;
+#endif
 		return 1;
 	}
 }
