@@ -79,9 +79,15 @@ bool THm::TEdit::setTotalText(std::wstring text)
 		L"selectall;\n"
 		L"insert dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n"
 		L"endgroupundo;\n";
-	auto ret = Hm.Macro.doEval(cmd.c_str());
+	if (Hm.Macro.isExecuting()) {
+		auto ret = Hm.Macro.doEval(cmd.c_str());
+		return (bool)ret.getResult();
+	}
+	else {
+		auto ret = Hm.Macro.Exec.doEval(cmd.c_str());
+		return (bool)ret.getResult();
+	}
 
-	return (bool)ret.getResult();
 }
 
 std::wstring THm::TEdit::getSelectedText()
@@ -114,9 +120,14 @@ bool THm::TEdit::setSelectedText(std::wstring text)
 		L"if (selecting) {\n"
 		L"insert dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n"
 		L"};\n";
-	auto ret = Hm.Macro.doEval(cmd.c_str());
-
-	return (bool)ret.getResult();
+	if (Hm.Macro.isExecuting()) {
+		auto ret = Hm.Macro.doEval(cmd.c_str());
+		return (bool)ret.getResult();
+	}
+	else {
+		auto ret = Hm.Macro.Exec.doEval(cmd.c_str());
+		return (bool)ret.getResult();
+	}
 }
 
 std::wstring THm::TEdit::getLineText()
@@ -157,9 +168,14 @@ bool THm::TEdit::setLineText(std::wstring text)
 		L"insert dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n"
 		L"moveto2 " + std::to_wstring(pos.getColumn()) + L", " + std::to_wstring(pos.getLineNo()) + L";\n" +
 		L"endgroupundo;\n";
-	auto ret = Hm.Macro.doEval(cmd.c_str());
-
-	return (bool)ret.getResult();
+	if (Hm.Macro.isExecuting()) {
+		auto ret = Hm.Macro.doEval(cmd.c_str());
+		(bool)ret.getResult();
+	}
+	else {
+		auto ret = Hm.Macro.Exec.doEval(cmd.c_str());
+		(bool)ret.getResult();
+	}
 }
 
 bool THm::TEdit::isQueueStatus()

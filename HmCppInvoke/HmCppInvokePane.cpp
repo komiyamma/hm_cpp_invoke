@@ -245,7 +245,17 @@ bool THm::TExplorerPane::saveProject(std::wstring filepath)
 
 std::wstring THm::TExplorerPane::getProject()
 {
-	return std::wstring();
+	if (HmExplorerPane_GetProject) {
+		if (Hm.Macro.isExecuting()) {
+			auto ret = Hm.Macro.getVar(LR"RAW(dllfuncstr(loaddll("HmExplorerPane"), "GetProject", hidemaruhandle(0)))RAW");
+			wstring project_name = std::get<wstring>(ret);
+			return project_name;
+		}
+		else {
+			auto ret = Hm.Macro.Exec.doEval(LR"RAW(endmacro dllfuncstr(loaddll("HmExplorerPane"), "GetProject", hidemaruhandle(0));)RAW");
+			return ret.getMessage();
+		}
+	}
 }
 
 long THm::TExplorerPane::sendMessage(int command_id)
