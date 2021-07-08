@@ -113,14 +113,11 @@ bool THm::setVersion()
 
 
 
-
-
-
 THmMacroVariable Hidemaru::TestDynamicVar = nullptr;
 
 
 // 秀丸の変数が文字列か数値かの判定用
-extern "C" __declspec(dllexport) long SetDynamicVar(THmNumber dynamic_value) {
+extern "C" __declspec(dllexport) long SetDynamicVar(THmDllParamNumber dynamic_value) {
 
 	auto param_type = (THm::DLLFUNCPARAM)THm::Hidemaru_GetDllFuncCalledType(1);
 	if (param_type == THm::DLLFUNCPARAM::WCHAR_PTR) {
@@ -138,14 +135,14 @@ extern "C" __declspec(dllexport) long SetDynamicVar(THmNumber dynamic_value) {
 }
 
 
-THmMacroNumberType popnumvar = 0;
+THmMacroNumber popnumvar = 0;
 // スタックした変数を秀丸マクロから取り出す。内部処理用
-extern "C" __declspec(dllexport) THmMacroNumberType PopNumVar() {
+extern "C" __declspec(dllexport) THmMacroNumber PopNumVar() {
 	return popnumvar;
 }
 
 // 変数を秀丸マクロから取り出すためにスタック。内部処理用
-extern "C" __declspec(dllexport) long PushNumVar(THmMacroNumberType i_tmp_num) {
+extern "C" __declspec(dllexport) long PushNumVar(THmMacroNumber i_tmp_num) {
 	popnumvar = i_tmp_num;
 	return 1;
 }

@@ -15,6 +15,13 @@ public:
     }
 };
 
+long abc(THmDllParamNumber b, wchar_t* p) {
+    auto args = Hm.updateBindInformation(b, p);
+    auto a = args[0];
+
+    return (long)args.size();
+}
+
 int main()
 {
     THm& HM3 = Hm;

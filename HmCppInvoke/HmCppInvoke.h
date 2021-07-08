@@ -13,14 +13,14 @@
 
 namespace Hidemaru {
 #ifdef USE_FLOATMACRO
-    using THmMacroNumberType = double;
+    using THmMacroNumber = double;
 #else
-    using THmMacroNumberType = long;
+    using THmMacroNumber = long;
 #endif
-    using THmMacroVariable = std::variant<nullptr_t, THmMacroNumberType, std::wstring>;
+    using THmMacroVariable = std::variant<nullptr_t, THmMacroNumber, std::wstring>;
     using THmMacroResultError = std::variant<nullptr_t, std::exception>;
 
-    using THmMacroScopeMethodPointer = THmMacroNumberType (*)(std::wstring message_parameter);
+    using THmMacroScopeMethodPointer = THmMacroNumber (*)(std::wstring message_parameter);
 
     class THm : public THmDllExport {
     public:
@@ -304,19 +304,29 @@ namespace Hidemaru {
         private:
             static int iSelfBindedType;
         public:
-            static void InitializeHandle(HMODULE handle);
+            static void initHandle(HMODULE handle);
         public:
-            static int GetBindDllType();
-            static BOOL SetBindDllHandle();
-            static std::wstring GetInvocantString();
-            static std::wstring GetSelfModuleFullPath();
-            static std::wstring GetSelfModuleDir();
+            static int getBindDllType();
+            static BOOL setBindDllType();
+            static std::wstring getInvocantString();
+            static std::wstring getSelfModuleFullPath();
+            static std::wstring getSelfModuleDir();
         };
 
     public:
-        void InitializeSelfDllHandle(HMODULE handle) {
-            SelfDllInfo::InitializeHandle(handle);
-        }
+        void initDllHandle(HMODULE handle);
+
+        std::vector<THmMacroVariable> updateBindInformation(
+            THmDllParamVariable arg0 = nullptr,
+            THmDllParamVariable arg1 = nullptr,
+            THmDllParamVariable arg2 = nullptr,
+            THmDllParamVariable arg3 = nullptr,
+            THmDllParamVariable arg4 = nullptr,
+            THmDllParamVariable arg5 = nullptr,
+            THmDllParamVariable arg6 = nullptr,
+            THmDllParamVariable arg7 = nullptr,
+            THmDllParamVariable arg8 = nullptr
+        );
     };
 
     extern THmMacroVariable TestDynamicVar;

@@ -38,7 +38,7 @@ namespace Hidemaru {
     };
 
 #pragma pack(1)
-    union THmNumber {
+    union THmDllParamNumber {
         BYTE bin[64];
         long nint;
         wchar_t* pwstr;
@@ -48,11 +48,7 @@ namespace Hidemaru {
             return f64;
         }
 
-        inline operator int64_t() {
-            return nint;
-        }
-
-        inline operator int32_t() {
+        inline operator long() {
             return nint;
         }
 
@@ -66,5 +62,5 @@ namespace Hidemaru {
     };
 #pragma pack()
 
-
+    using THmDllParamVariable = std::variant<nullptr_t, THmDllParamNumber, std::wstring>;
 }

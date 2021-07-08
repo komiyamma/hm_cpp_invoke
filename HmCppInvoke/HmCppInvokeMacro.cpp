@@ -50,7 +50,7 @@ THm::TMacro::IResult THm::TMacro::doEval(std::wstring expression)
 THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 {
 	TestDynamicVar = nullptr;
-	auto dll_invocant = SelfDllInfo::GetInvocantString();
+	auto dll_invocant = SelfDllInfo::getInvocantString();
 	wstring cmd =
 		L"##_tmp_dll_id_ret = dllfuncw( " + dll_invocant + L"\"SetDynamicVar\", " + varname + L");\n"
 		L"##_tmp_dll_id_ret = 0;\n";
@@ -67,8 +67,8 @@ THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 
 // 秀丸の変数が文字列か数値かの判定用
 extern "C" __declspec(dllexport) long SetDynamicVar(const void* dynamic_value);
-extern "C" __declspec(dllexport) THmMacroNumberType PopNumVar();
-extern "C" __declspec(dllexport) long PushNumVar(THmMacroNumberType i_tmp_num);
+extern "C" __declspec(dllexport) THmMacroNumber PopNumVar();
+extern "C" __declspec(dllexport) long PushNumVar(THmMacroNumber i_tmp_num);
 extern "C" __declspec(dllexport) const wchar_t* PopStrVar();
 extern "C" __declspec(dllexport) long PushStrVar(const wchar_t* sz_tmp_str);
 
@@ -77,15 +77,15 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 {
 	BOOL success = 0;
 
-	auto dll_invocant = SelfDllInfo::GetInvocantString();
+	auto dll_invocant = SelfDllInfo::getInvocantString();
 
 	wchar_t start = varname[0];
 	if (start == L'#') {
 
 		// 数字を数値にトライ。ダメなら0だよ。
-		THmMacroNumberType n = 0;
+		THmMacroNumber n = 0;
 		try {
-			n = std::get<THmMacroNumberType>(value);
+			n = std::get<THmMacroNumber>(value);
 
 			PushNumVar(n);
 			wstring cmd = L" = dllfuncw( " + dll_invocant + L"\"PopNumVar\" );\n";

@@ -15,7 +15,7 @@ wchar_t THm::SelfDllInfo::szSelfModuleDirPath[MAX_PATH] = L"";
 
 int THm::SelfDllInfo::iSelfBindedType = 0;
 
-void THm::SelfDllInfo::InitializeHandle(HMODULE hModule) {
+void THm::SelfDllInfo::initHandle(HMODULE hModule) {
 
 	SelfDllInfo::hModule = hModule;
 	GetModuleFileName(hModule, SelfDllInfo::szSelfModuleFullPath, _countof(SelfDllInfo::szSelfModuleFullPath));
@@ -23,11 +23,11 @@ void THm::SelfDllInfo::InitializeHandle(HMODULE hModule) {
 	PathRemoveFileSpec(SelfDllInfo::szSelfModuleDirPath);
 }
 
-int THm::SelfDllInfo::GetBindDllType() {
+int THm::SelfDllInfo::getBindDllType() {
 	return iSelfBindedType;
 }
 
-BOOL THm::SelfDllInfo::SetBindDllHandle() {
+BOOL THm::SelfDllInfo::setBindDllType() {
 
 	// 秀丸8.66以上
 	if (Hm.Hidemaru_GetDllFuncCalledType) {
@@ -39,13 +39,10 @@ BOOL THm::SelfDllInfo::SetBindDllHandle() {
 		MessageBox(NULL, L"loadllのパターンが認識出来ませんでした。", L"loadllのパターンが認識出来ませんでした。", MB_ICONERROR);
 	}
 
-
-
 	return FALSE;
-
 }
 
-wstring THm::SelfDllInfo::GetInvocantString() {
+wstring THm::SelfDllInfo::getInvocantString() {
 	if (iSelfBindedType == -1) {
 		return L"";
 	}
@@ -54,11 +51,11 @@ wstring THm::SelfDllInfo::GetInvocantString() {
 	}
 }
 
-wstring THm::SelfDllInfo::GetSelfModuleFullPath() {
+wstring THm::SelfDllInfo::getSelfModuleFullPath() {
 	return szSelfModuleFullPath;
 }
 
-wstring THm::SelfDllInfo::GetSelfModuleDir() {
+wstring THm::SelfDllInfo::getSelfModuleDir() {
 	return szSelfModuleDirPath;
 }
 
