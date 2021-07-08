@@ -311,7 +311,7 @@ namespace Hidemaru {
     public:
         void initDllHandle(HMODULE handle);
 
-        bool updateBindInformation();
+        bool rebindParameters();
     };
 
     extern THmMacroVariable TestDynamicVar;

@@ -9,7 +9,7 @@ void THm::initDllHandle(HMODULE handle) {
 	SelfDllInfo::initHandle(handle);
 }
 
-bool THm::updateBindInformation() {
+bool THm::rebindParameters() {
 	// これ重要。loadllの形態を保持する。関数が呼ばれる度に更新しておく。
 	return SelfDllInfo::setBindDllType();
 }
