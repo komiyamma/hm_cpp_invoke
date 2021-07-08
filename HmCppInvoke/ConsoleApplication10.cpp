@@ -7,6 +7,7 @@
 
 using namespace Hidemaru;
 
+
 class B {
 public:
     static long abc(std::wstring b) {

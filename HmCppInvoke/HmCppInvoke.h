@@ -12,14 +12,12 @@
 
 
 namespace Hidemaru {
-#ifdef USE_FLOATMACRO
-    using THmNumberType = double;
-#else
-    using THmNumberType = long;
-#endif
-    using THmMacroScopeMethodPointer = long (*)(std::wstring message_parameter);
-    using THmMacroVariable = std::variant<nullptr_t, THmNumberType, std::wstring>;
+
+    using THmMacroNumberType = long;
+    using THmMacroVariable = std::variant<nullptr_t, THmMacroNumberType, std::wstring>;
     using THmMacroResultError = std::variant<nullptr_t, std::exception>;
+
+    using THmMacroScopeMethodPointer = THmMacroNumberType (*)(std::wstring message_parameter);
 
     class THm : public THmDllExport {
     public:
