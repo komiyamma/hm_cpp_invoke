@@ -66,11 +66,11 @@ THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 
 
 // 秀丸の変数が文字列か数値かの判定用
-extern "C" __declspec(dllexport) intptr_t SetDynamicVar(const void* dynamic_value);
-extern "C" __declspec(dllexport) intptr_t PopNumVar();
-extern "C" __declspec(dllexport) intptr_t PushNumVar(intptr_t i_tmp_num);
+extern "C" __declspec(dllexport) long SetDynamicVar(const void* dynamic_value);
+extern "C" __declspec(dllexport) long PopNumVar();
+extern "C" __declspec(dllexport) long PushNumVar(long i_tmp_num);
 extern "C" __declspec(dllexport) const wchar_t* PopStrVar();
-extern "C" __declspec(dllexport) intptr_t PushStrVar(const wchar_t* sz_tmp_str);
+extern "C" __declspec(dllexport) long PushStrVar(const wchar_t* sz_tmp_str);
 
 
 bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
@@ -83,26 +83,30 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 	if (start == L'#') {
 
 		// 数字を数値にトライ。ダメなら0だよ。
-		intptr_t n = 0;
+		long n = 0;
 		try {
-			n = std::any_cast<intptr_t>(value);
+			n = std::get<long>(value);
 
 			PushNumVar(n);
 			wstring cmd = L" = dllfuncw( " + dll_invocant + L"\"PopNumVar\" );\n";
 			cmd = varname + cmd;
 			success = Hidemaru_EvalMacro(cmd.c_str());
 		}
-		catch (...) {}
+		catch (exception& e) {
+			OutputDebugStringA(e.what());
+		}
 	}
 	else if (start == L'$') {
 		try {
-			wstring s = std::any_cast<wstring>(value);
+			wstring s = std::get<wstring>(value);
 			PushStrVar(s.data());
 			wstring cmd = L" = dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n";
 			cmd = varname + cmd;
 			success = Hidemaru_EvalMacro(cmd.c_str());
 		}
-		catch (...) {}
+		catch (exception& e) {
+			OutputDebugStringA(e.what());
+		}
 	}
 
 	return success;

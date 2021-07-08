@@ -13,8 +13,8 @@
 namespace Hidemaru {
 
     using THmMacroScopeMethodPointer = long (*)(std::wstring message_parameter);
-    using THmMacroVariable = std::variant<intptr_t, std::wstring>;
-    using THmMacroResultError = std::variant<std::exception, nullptr_t>;
+    using THmMacroVariable = std::variant<nullptr_t, long, std::wstring>;
+    using THmMacroResultError = std::variant<nullptr_t, std::exception>;
     class THm {
     public:
         THm();
@@ -270,7 +270,7 @@ namespace Hidemaru {
             //-------------------------------------------------------------------------
             // ファイルマネージャパネル
             //-------------------------------------------------------------------------
-            using PFNHmExplorerPane_SetMode = int(_cdecl*)(HWND hwnd, intptr_t);
+            using PFNHmExplorerPane_SetMode = int(_cdecl*)(HWND hwnd, long);
             static PFNHmExplorerPane_SetMode HmExplorerPane_SetMode;
             using PFNHmExplorerPane_GetMode = int(_cdecl*)(HWND hwnd);
             static PFNHmExplorerPane_GetMode HmExplorerPane_GetMode;
