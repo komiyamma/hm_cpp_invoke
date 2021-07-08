@@ -123,7 +123,7 @@ extern "C" __declspec(dllexport) long SetDynamicVar(const void* dynamic_value) {
 
 	auto param_type = (THm::DLLFUNCPARAM)THm::Hidemaru_GetDllFuncCalledType(1);
 	if (param_type == THm::DLLFUNCPARAM::WCHAR_PTR) {
-		Hidemaru::TestDynamicVar = wstring((wchar_t*)(long)dynamic_value);
+		Hidemaru::TestDynamicVar = wstring((wchar_t*)dynamic_value);
 		return 1;
 	}
 	else {
