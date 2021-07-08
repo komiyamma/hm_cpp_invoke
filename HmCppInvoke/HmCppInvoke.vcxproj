@@ -146,7 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleApplication10.cpp" />
     <ClCompile Include="HmCppInvoke.cpp" />
     <ClCompile Include="HmCppInvokeEdit.cpp" />
     <ClCompile Include="HmCppInvokeDllExport.cpp" />
@@ -156,7 +155,6 @@
     <ClCompile Include="HmCppInvokeDllMain.cpp" />
     <ClCompile Include="HmCppInvokePane.cpp" />
     <ClCompile Include="HmCppInvokeSelfDllInfo.cpp" />
-    <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HmCppInvoke.h" />
