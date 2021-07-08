@@ -114,11 +114,14 @@ namespace Hidemaru {
 
         public:
             class IResult {
+                long result;
+                THmMacroResultError error;
+                std::wstring message;
             public:
-                int getResult();
+                long getResult();
                 THmMacroResultError getException();
                 std::wstring getMessage();
-                IResult(int result, THmMacroResultError error, std::wstring message);
+                IResult(long result, THmMacroResultError error, std::wstring message);
             };
 
             IResult doEval(std::wstring expression);
@@ -127,6 +130,10 @@ namespace Hidemaru {
             bool setVar(std::wstring varname, THmMacroVariable value);
 
             class IFunctionResult {
+                THmMacroVariable result;
+                THmMacroResultError error;
+                std::wstring message;
+                std::vector<THmMacroVariable> args;
             public:
                 THmMacroVariable getResult();
                 std::vector<THmMacroVariable> getArgs();
@@ -138,12 +145,16 @@ namespace Hidemaru {
             IFunctionResult doFunction(std::wstring func_name, THmMacroVariable args0 = nullptr, THmMacroVariable args1 = nullptr, THmMacroVariable args2 = nullptr, THmMacroVariable args3 = nullptr, THmMacroVariable args4 = nullptr, THmMacroVariable args5 = nullptr, THmMacroVariable args6 = nullptr, THmMacroVariable args7 = nullptr, THmMacroVariable args8 = nullptr, THmMacroVariable args9 = nullptr);
 
             class IStatementResult {
+                long result;
+                THmMacroResultError error;
+                std::wstring message;
+                std::vector<THmMacroVariable> args;
             public:
-                int getResult();
+                long getResult();
                 std::vector<THmMacroVariable> getArgs();
                 THmMacroResultError getException();
                 std::wstring getMessage();
-                IStatementResult(int result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message);
+                IStatementResult(long result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message);
             };
 
             IStatementResult doStatement(std::wstring statement_name, THmMacroVariable args0 = nullptr, THmMacroVariable args1 = nullptr, THmMacroVariable args2 = nullptr, THmMacroVariable args3 = nullptr, THmMacroVariable args4 = nullptr, THmMacroVariable args5 = nullptr, THmMacroVariable args6 = nullptr, THmMacroVariable args7 = nullptr, THmMacroVariable args8 = nullptr, THmMacroVariable args9 = nullptr);

@@ -125,84 +125,143 @@ THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring st
 }
 
 
-int THm::TMacro::IResult::getResult()
+long THm::TMacro::IResult::getResult()
 {
-	return 0;
+	return this->result;
 }
 
 THmMacroResultError THm::TMacro::IResult::getException()
 {
-	return std::exception();
+	return this->error;
 }
 
 std::wstring THm::TMacro::IResult::getMessage()
 {
-	return std::wstring();
+	return this->message;
 }
 
-THm::TMacro::IResult::IResult(int result, THmMacroResultError error, std::wstring message)
+THm::TMacro::IResult::IResult(long result, THmMacroResultError error, std::wstring message)
 {
+	this->result = result;
+	this->error = error;
+	this->message = message;
 }
 
 THmMacroVariable THm::TMacro::IFunctionResult::getResult()
 {
-	return 0;
+	return this->result;
 }
 
 std::vector<THmMacroVariable> THm::TMacro::IFunctionResult::getArgs()
 {
-	return std::vector<THmMacroVariable>();
+	return this->args;
 }
 
 THmMacroResultError THm::TMacro::IFunctionResult::getException()
 {
-	return std::exception();
+	return this->error;
 }
 
 std::wstring THm::TMacro::IFunctionResult::getMessage()
 {
-	return std::wstring();
+	return this->message;
 }
 
 Hidemaru::THm::TMacro::IFunctionResult::IFunctionResult(THmMacroVariable result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message)
 {
+	this->result = result;
+	this->args = args;
+	this->error = error;
+	this->message = message;
 }
 
-int Hidemaru::THm::TMacro::IStatementResult::getResult()
+long Hidemaru::THm::TMacro::IStatementResult::getResult()
 {
-	return 0;
+	return this->result;
 }
 
 std::vector<THmMacroVariable> Hidemaru::THm::TMacro::IStatementResult::getArgs()
 {
-	return std::vector<THmMacroVariable>();
+	return this->args;
 }
 
 THmMacroResultError Hidemaru::THm::TMacro::IStatementResult::getException()
 {
-	return std::exception();
+	return this->error;
 }
 
 std::wstring Hidemaru::THm::TMacro::IStatementResult::getMessage()
 {
-	return std::wstring();
+	return this->message;
 }
 
-Hidemaru::THm::TMacro::IStatementResult::IStatementResult(int result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message)
+Hidemaru::THm::TMacro::IStatementResult::IStatementResult(long result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message)
 {
+	this->result = result;
+	this->args = args;
+	this->error = error;
+	this->message = message;
 }
 
 Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring expression)
 {
-	std::exception e = std::exception();
-	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
+	if (Hidemaru_GetCurrentWindowHandle) {
+
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		const int WM_REMOTE_EXECMACRO_MEMORY = WM_USER + 272;
+
+		wchar_t wszReturn[65535];
+		*(WORD*)wszReturn = sizeof(wszReturn) / sizeof(wszReturn[0]); // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
+		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_MEMORY, (WPARAM)wszReturn, (LPARAM)expression.c_str());
+		if (lRet) {
+			wstring wstrreturn = wszReturn;
+			std::exception e = std::exception();
+			THm::TMacro::IResult r = THm::TMacro::IResult(lRet, nullptr, L"");
+			return r;
+		}
+		else {
+			OutputDebugString(L"マクロの実行に失敗しました。\n");
+			OutputDebugString(L"マクロ内容:\n");
+			OutputDebugString(expression.c_str());
+			std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
+			THm::TMacro::IResult r = THm::TMacro::IResult(lRet, nullptr, L"");
+			return r;
+		}
+	}
+
+	std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
+	THm::TMacro::IResult r = THm::TMacro::IResult(0, nullptr, L"");
 	return r;
 }
 
 Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring filepath)
 {
-	std::exception e = std::exception();
-	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
+	if (Hidemaru_GetCurrentWindowHandle) {
+
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		const int WM_REMOTE_EXECMACRO_FILE = WM_USER + 271;
+
+		wchar_t wszReturn[65535];
+		*(WORD*)wszReturn = sizeof(wszReturn) / sizeof(wszReturn[0]); // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
+		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_FILE, (WPARAM)wszReturn, (LPARAM)filepath.c_str());
+		if (lRet) {
+			wstring wstrreturn = wszReturn;
+			std::exception e = std::exception();
+			THm::TMacro::IResult r = THm::TMacro::IResult(lRet, nullptr, L"");
+			return r;
+		}
+		else {
+			OutputDebugString(L"マクロの実行に失敗しました。\n");
+			OutputDebugString(L"マクロ内容:\n");
+			OutputDebugString(filepath.c_str());
+			std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
+			THm::TMacro::IResult r = THm::TMacro::IResult(lRet, nullptr, L"");
+			return r;
+		}
+	}
+
+	std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
+	THm::TMacro::IResult r = THm::TMacro::IResult(0, nullptr, L"");
 	return r;
 }
 

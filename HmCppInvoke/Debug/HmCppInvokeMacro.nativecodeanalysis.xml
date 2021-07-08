@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DEFECTS></DEFECTS>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>G:\repogitory\hidemaru_cpp_invoke\HmCppInvoke\</FILEPATH>
+      <FILENAME>HmCppInvokeMacro.cpp</FILENAME>
+      <LINE>195</LINE>
+      <COLUMN>61</COLUMN>
+    </SFA>
+    <DEFECTCODE>6262</DEFECTCODE>
+    <DESCRIPTION>関数はスタックの '131192' バイトを使用します: /analyze:stacksize '16384' を超えています。 データの一部をヒープに移動することを考慮してください。</DESCRIPTION>
+    <FUNCTION>Hidemaru::THm::TMacro::TExec::doEval</FUNCTION>
+    <DECORATED>?doEval@TExec@TMacro@THm@Hidemaru@@QAE?AVIResult@234@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@Z</DECORATED>
+    <FUNCLINE>195</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>G:\repogitory\hidemaru_cpp_invoke\HmCppInvoke\</FILEPATH>
+      <FILENAME>HmCppInvokeMacro.cpp</FILENAME>
+      <LINE>229</LINE>
+      <COLUMN>61</COLUMN>
+    </SFA>
+    <DEFECTCODE>6262</DEFECTCODE>
+    <DESCRIPTION>関数はスタックの '131192' バイトを使用します: /analyze:stacksize '16384' を超えています。 データの一部をヒープに移動することを考慮してください。</DESCRIPTION>
+    <FUNCTION>Hidemaru::THm::TMacro::TExec::doFile</FUNCTION>
+    <DECORATED>?doFile@TExec@TMacro@THm@Hidemaru@@QAE?AVIResult@234@V?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@Z</DECORATED>
+    <FUNCLINE>229</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
