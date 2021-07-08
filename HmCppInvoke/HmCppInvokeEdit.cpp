@@ -5,6 +5,12 @@ using namespace std;
 using namespace Hidemaru;
 
 
+// èGä€ÇÃïœêîÇ™ï∂éöóÒÇ©êîílÇ©ÇÃîªíËóp
+extern "C" __declspec(dllexport) long SetDynamicVar(THmDllParamNumber dynamic_value);
+extern "C" __declspec(dllexport) THmMacroNumber PopNumVar();
+extern "C" __declspec(dllexport) long PushNumVar(THmMacroNumber i_tmp_num);
+extern "C" __declspec(dllexport) const wchar_t* PopStrVar();
+extern "C" __declspec(dllexport) long PushStrVar(const wchar_t* sz_tmp_str);
 
 THm::TEdit::PFNGetTotalTextUnicode THm::TEdit::Hidemaru_GetTotalTextUnicode = NULL;
 THm::TEdit::PFNGetSelectedTextUnicode THm::TEdit::Hidemaru_GetSelectedTextUnicode = NULL;
@@ -26,7 +32,20 @@ THm::TEdit::TEdit()
 
 std::wstring THm::TEdit::getFilePath()
 {
-	return std::wstring();
+	const int WM_HIDEMARUINFO = WM_USER + 181;
+	const int HIDEMARUINFO_GETFILEFULLPATH = 4;
+	if (!Hidemaru_GetCurrentWindowHandle) {
+		return L"";
+	}
+
+	HWND hWndHidemaru = Hidemaru_GetCurrentWindowHandle();
+	if (hWndHidemaru) {
+		wchar_t filepath[MAX_PATH * 3] = L"";
+		LRESULT cwch = SendMessageW(hWndHidemaru, WM_HIDEMARUINFO, HIDEMARUINFO_GETFILEFULLPATH, (LPARAM)filepath);
+		return filepath;
+	}
+
+	return L"";
 }
 
 std::wstring THm::TEdit::getTotalText()
@@ -50,7 +69,19 @@ std::wstring THm::TEdit::getTotalText()
 
 bool THm::TEdit::setTotalText(std::wstring text)
 {
-	return false;
+	BOOL success = 0;
+
+	auto dll_invocant = SelfDllInfo::getInvocantString();
+
+	PushStrVar(text.data());
+	wstring cmd =
+		L"begingroupundo;\n"
+		L"selectall;\n"
+		L"insert dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n"
+		L"endgroupundo;\n";
+	auto ret = Hm.Macro.doEval(cmd.c_str());
+
+	return (bool)ret.getResult();
 }
 
 std::wstring THm::TEdit::getSelectedText()
@@ -74,7 +105,18 @@ std::wstring THm::TEdit::getSelectedText()
 
 bool THm::TEdit::setSelectedText(std::wstring text)
 {
-	return false;
+	BOOL success = 0;
+
+	auto dll_invocant = SelfDllInfo::getInvocantString();
+
+	PushStrVar(text.data());
+	wstring cmd =
+		L"if (selecting) {\n"
+		L"insert dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n"
+		L"};\n";
+	auto ret = Hm.Macro.doEval(cmd.c_str());
+
+	return (bool)ret.getResult();
 }
 
 std::wstring THm::TEdit::getLineText()
@@ -102,7 +144,22 @@ std::wstring THm::TEdit::getLineText()
 
 bool THm::TEdit::setLineText(std::wstring text)
 {
-	return false;
+	BOOL success = 0;
+
+	auto dll_invocant = SelfDllInfo::getInvocantString();
+
+	auto pos = getCursorPos();
+
+	PushStrVar(text.data());
+	wstring cmd =
+		L"begingroupundo;\n"
+		L"selectline;\n"
+		L"insert dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n"
+		L"moveto2 " + std::to_wstring(pos.getColumn()) + L", " + std::to_wstring(pos.getLineNo()) + L";\n" +
+		L"endgroupundo;\n";
+	auto ret = Hm.Macro.doEval(cmd.c_str());
+
+	return (bool)ret.getResult();
 }
 
 bool THm::TEdit::isQueueStatus()

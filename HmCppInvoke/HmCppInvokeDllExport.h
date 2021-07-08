@@ -64,3 +64,4 @@ namespace Hidemaru {
 
     using THmDllParamVariable = std::variant<nullptr_t, THmDllParamNumber, std::wstring>;
 }
+

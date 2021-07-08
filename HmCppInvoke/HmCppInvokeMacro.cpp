@@ -54,19 +54,15 @@ THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 	wstring cmd =
 		L"##_tmp_dll_id_ret = dllfuncw( " + dll_invocant + L"\"SetDynamicVar\", " + varname + L");\n"
 		L"##_tmp_dll_id_ret = 0;\n";
-	BOOL success = Hidemaru_EvalMacro(cmd.c_str());
+	auto ret = Hm.Macro.doEval(cmd);
 
 	return TestDynamicVar;
 }
 
 
 
-
-
-
-
 // èGä€ÇÃïœêîÇ™ï∂éöóÒÇ©êîílÇ©ÇÃîªíËóp
-extern "C" __declspec(dllexport) long SetDynamicVar(const void* dynamic_value);
+extern "C" __declspec(dllexport) long SetDynamicVar(THmDllParamNumber dynamic_value);
 extern "C" __declspec(dllexport) THmMacroNumber PopNumVar();
 extern "C" __declspec(dllexport) long PushNumVar(THmMacroNumber i_tmp_num);
 extern "C" __declspec(dllexport) const wchar_t* PopStrVar();
@@ -90,7 +86,8 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 			PushNumVar(n);
 			wstring cmd = L" = dllfuncw( " + dll_invocant + L"\"PopNumVar\" );\n";
 			cmd = varname + cmd;
-			success = Hidemaru_EvalMacro(cmd.c_str());
+			auto ret = Hm.Macro.doEval(cmd);
+			success = ret.getResult();
 		}
 		catch (exception& e) {
 			OutputDebugStringA(e.what());
@@ -102,7 +99,8 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 			PushStrVar(s.data());
 			wstring cmd = L" = dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n";
 			cmd = varname + cmd;
-			success = Hidemaru_EvalMacro(cmd.c_str());
+			auto ret = Hm.Macro.doEval(cmd);
+			success = ret.getResult();
 		}
 		catch (exception& e) {
 			OutputDebugStringA(e.what());

@@ -48,9 +48,6 @@ namespace Hidemaru {
         using PFNGetCurrentWindowHandle = HWND(WINAPI*)();
         static PFNGetCurrentWindowHandle Hidemaru_GetCurrentWindowHandle;
 
-        // この結果のバイト列(vector.data())を HmOutputPane.dllのOutput関数になげれば、Unicodeでも再現できる
-        std::vector<BYTE> EncodeWStringToOriginalEncodeVector(std::wstring original_string);
-
     public:
         class TEdit {
             // 現在編集中の全てのテキストを得る
@@ -206,6 +203,10 @@ namespace Hidemaru {
     public:
         TFile File;
 
+
+    private:
+        // この結果のバイト列(vector.data())を HmOutputPane.dllのOutput関数になげれば、Unicodeでも再現できる
+        static std::vector<BYTE> EncodeWStringToOriginalEncodeVector(std::wstring original_string);
 
     public:
         class TOutputPane {

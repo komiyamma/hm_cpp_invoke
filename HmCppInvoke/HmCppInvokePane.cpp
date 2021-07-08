@@ -47,41 +47,98 @@ THm::TOutputPane::TOutputPane()
 	}
 }
 
+
+
 bool THm::TOutputPane::output(std::wstring message)
 {
-	// ★
-	return 0;
+
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmOutputPane_Output) {
+			auto encode_byte_data = EncodeWStringToOriginalEncodeVector(message);
+			BOOL result = HmOutputPane_Output(hHidemaruWindow, encode_byte_data.data());
+			return result;
+		}
+	}
+
+	return false;
 }
 
 bool THm::TOutputPane::push()
 {
-	// ★
-	return 0;
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = THm::Hidemaru_GetCurrentWindowHandle();
+		if (HmOutputPane_Push) {
+			bool result = HmOutputPane_Push(hHidemaruWindow);
+			return result;
+		}
+	}
+
+	return false;
 }
 
 bool THm::TOutputPane::pop()
 {
-	return 0;
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmOutputPane_Pop) {
+			bool result = HmOutputPane_Pop(hHidemaruWindow);
+			return result;
+		}
+	}
+
+	return false;
 }
 
 bool THm::TOutputPane::clear()
 {
-	return 0;
+	long ret = this->sendMessage(1009);
+	return (bool)ret;
 }
 
 long THm::TOutputPane::sendMessage(int command_id)
 {
-	return long();
+	HWND OutputWindowHandle = this->getWindowHandle();
+	if (OutputWindowHandle) {
+		// (#h,0x111/*WM_COMMAND*/,1009,0);//1009=クリア
+		// 0x111 = WM_COMMAND
+		LRESULT r = SendMessageW(OutputWindowHandle, 0x111, command_id, 0);
+		return r;
+
+	}
+	return FALSE;
 }
 
 bool THm::TOutputPane::setBaseDir(std::wstring dirpath)
 {
+	auto encode_byte_data = EncodeWStringToOriginalEncodeVector(dirpath);
+
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmOutputPane_SetBaseDir) {
+			bool result = HmOutputPane_SetBaseDir(hHidemaruWindow, encode_byte_data.data());
+			return result;
+		}
+	}
+
 	return false;
 }
 
 HWND THm::TOutputPane::getWindowHandle()
 {
-	return HWND();
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow =Hidemaru_GetCurrentWindowHandle();
+		if (HmOutputPane_GetWindowHandle) {
+			return HmOutputPane_GetWindowHandle(hHidemaruWindow);
+		}
+	}
+
+	return NULL;
 }
 
 
@@ -130,21 +187,59 @@ THm::TExplorerPane::TExplorerPane()
 
 bool THm::TExplorerPane::setMode(int mode)
 {
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmExplorerPane_SetMode) {
+			bool result = HmExplorerPane_SetMode(hHidemaruWindow, mode);
+			return result;
+		}
+	}
+
 	return false;
 }
 
 int THm::TExplorerPane::getMode()
 {
-	return 0;
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmExplorerPane_GetMode) {
+			bool result = HmExplorerPane_GetMode(hHidemaruWindow);
+			return result;
+		}
+	}
+
+	return false;
 }
 
 bool THm::TExplorerPane::loadProject(std::wstring filepath)
 {
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmExplorerPane_LoadProject) {
+			auto encode_byte_data = EncodeWStringToOriginalEncodeVector(filepath);
+			bool result = HmExplorerPane_LoadProject(hHidemaruWindow, encode_byte_data.data());
+			return result;
+		}
+	}
+
 	return false;
 }
 
 bool THm::TExplorerPane::saveProject(std::wstring filepath)
 {
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmExplorerPane_SaveProject) {
+			auto encode_byte_data = EncodeWStringToOriginalEncodeVector(filepath);
+			bool result = HmExplorerPane_SaveProject(hHidemaruWindow, encode_byte_data.data());
+			return result;
+		}
+	}
+
 	return false;
 }
 
@@ -155,16 +250,41 @@ std::wstring THm::TExplorerPane::getProject()
 
 long THm::TExplorerPane::sendMessage(int command_id)
 {
-	return long();
+	HWND ExplorerWindowHandle = this->getWindowHandle();
+	if (ExplorerWindowHandle) {
+		//251=１つ上のフォルダ
+		// 0x111 = WM_COMMAND
+		LRESULT r = SendMessageW(ExplorerWindowHandle, 0x111, command_id, 0);
+		return r;
+
+	}
+	return FALSE;
 }
 
 HWND THm::TExplorerPane::getWindowHandle()
 {
-	return HWND();
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmExplorerPane_GetWindowHandle) {
+			return HmExplorerPane_GetWindowHandle(hHidemaruWindow);
+		}
+	}
+
+	return NULL;
 }
 
 bool THm::TExplorerPane::getUpdated()
 {
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmExplorerPane_GetUpdated) {
+			bool result = HmExplorerPane_GetUpdated(hHidemaruWindow);
+			return result;
+		}
+	}
+
 	return false;
 }
 
