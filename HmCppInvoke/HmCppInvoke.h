@@ -294,7 +294,7 @@ namespace Hidemaru {
         // dll自身のハンドルやフスパスの情報の保持
         //-------------------------------------------------------------------------
     private:
-        class SelfDllInfo {
+        class TSelfDllInfo {
 
             //-------------------------------------------------------------------------
             // 自分自身(hmPerl.dll)のモジュールインスタンスハンドル
@@ -313,6 +313,8 @@ namespace Hidemaru {
             // 0    :読めていない。(読めてなかったらdll実行されてないので、これはあり得ない)
             // 1以上:その数値で秀丸マクロ上で束縛されている。
             //-------------------------------------------------------------------------
+        public:
+            TSelfDllInfo();
         private:
             static int iSelfBindedType;
         public:
@@ -325,6 +327,9 @@ namespace Hidemaru {
             static std::wstring getSelfModuleFullPath();
             static std::wstring getSelfModuleDir();
         };
+
+    private:
+        TSelfDllInfo SelfDllInfo;
 
     public:
         bool rebindParameters();

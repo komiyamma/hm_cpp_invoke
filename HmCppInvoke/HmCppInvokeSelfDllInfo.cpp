@@ -12,42 +12,47 @@ using namespace Hidemaru;
 
 
 
-HMODULE THm::SelfDllInfo::hModule = NULL;
+HMODULE THm::TSelfDllInfo::hModule = NULL;
 
-wchar_t THm::SelfDllInfo::szSelfModuleFullPath[MAX_PATH] = L"";
-wchar_t THm::SelfDllInfo::szSelfModuleDirPath[MAX_PATH] = L"";
+wchar_t THm::TSelfDllInfo::szSelfModuleFullPath[MAX_PATH] = L"";
+wchar_t THm::TSelfDllInfo::szSelfModuleDirPath[MAX_PATH] = L"";
 
-int THm::SelfDllInfo::iSelfBindedType = 0;
+int THm::TSelfDllInfo::iSelfBindedType = 0;
 
 
-HMODULE THm::SelfDllInfo::getCurrentModule()
+HMODULE THm::TSelfDllInfo::getCurrentModule()
 {
 	DWORD flags = GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT;
 	HMODULE hm = 0;
-	::GetModuleHandleEx(flags, reinterpret_cast<LPCTSTR>(THm::SelfDllInfo::getCurrentModule), &hm);
+	::GetModuleHandleEx(flags, reinterpret_cast<LPCTSTR>(THm::TSelfDllInfo::getCurrentModule), &hm);
 	return hm;
 }
 
 
 
-void THm::SelfDllInfo::initHandle() {
-	HMODULE hCurrentModule = getCurrentModule();
-	SelfDllInfo::hModule = hCurrentModule;
-	GetModuleFileName(hModule, SelfDllInfo::szSelfModuleFullPath, _countof(SelfDllInfo::szSelfModuleFullPath));
-	wcscpy_s(SelfDllInfo::szSelfModuleDirPath, SelfDllInfo::szSelfModuleFullPath);
-	PathRemoveFileSpec(SelfDllInfo::szSelfModuleDirPath);
+Hidemaru::THm::TSelfDllInfo::TSelfDllInfo()
+{
+	this->initHandle();
 }
 
-int THm::SelfDllInfo::getBindDllType() {
+void THm::TSelfDllInfo::initHandle() {
+	HMODULE hCurrentModule = getCurrentModule();
+	TSelfDllInfo::hModule = hCurrentModule;
+	GetModuleFileName(hModule, TSelfDllInfo::szSelfModuleFullPath, _countof(TSelfDllInfo::szSelfModuleFullPath));
+	wcscpy_s(TSelfDllInfo::szSelfModuleDirPath, TSelfDllInfo::szSelfModuleFullPath);
+	PathRemoveFileSpec(TSelfDllInfo::szSelfModuleDirPath);
+}
+
+int THm::TSelfDllInfo::getBindDllType() {
 	return iSelfBindedType;
 }
 
-BOOL THm::SelfDllInfo::setBindDllType() {
+BOOL THm::TSelfDllInfo::setBindDllType() {
 
 	// 秀丸8.66以上
 	if (Hm.Hidemaru_GetDllFuncCalledType) {
 		int dll = Hm.Hidemaru_GetDllFuncCalledType(-1); // 自分のdllの呼ばれ方をチェック
-		SelfDllInfo::iSelfBindedType = dll;
+		TSelfDllInfo::iSelfBindedType = dll;
 		return TRUE;
 	}
 	else {
@@ -57,7 +62,7 @@ BOOL THm::SelfDllInfo::setBindDllType() {
 	return FALSE;
 }
 
-wstring THm::SelfDllInfo::getInvocantString() {
+wstring THm::TSelfDllInfo::getInvocantString() {
 	if (iSelfBindedType == -1) {
 		return L"";
 	}
@@ -66,11 +71,11 @@ wstring THm::SelfDllInfo::getInvocantString() {
 	}
 }
 
-wstring THm::SelfDllInfo::getSelfModuleFullPath() {
+wstring THm::TSelfDllInfo::getSelfModuleFullPath() {
 	return szSelfModuleFullPath;
 }
 
-wstring THm::SelfDllInfo::getSelfModuleDir() {
+wstring THm::TSelfDllInfo::getSelfModuleDir() {
 	return szSelfModuleDirPath;
 }
 
