@@ -25,7 +25,7 @@ namespace Hidemaru {
     class THm : public THmDllExport {
     public:
         THm();
-    // Hm をコピー禁止にしておく。
+        // Hm をコピー禁止にしておく。
     private:
         THm(const THm& src) {}
         void operator =(const THm& src);
@@ -227,7 +227,7 @@ namespace Hidemaru {
             //-------------------------------------------------------------------------
             using PFNHmOutputPane_Output = int(_cdecl*)(HWND hwnd, BYTE*);
             static PFNHmOutputPane_Output HmOutputPane_Output;
-            using PFNHmOutputPane_OutputW = int(_cdecl*)(HWND hwnd, wchar_t *message);
+            using PFNHmOutputPane_OutputW = int(_cdecl*)(HWND hwnd, wchar_t* message);
             static PFNHmOutputPane_OutputW HmOutputPane_OutputW;
             using PFNHmOutputPane_Push = int(_cdecl*)(HWND hwnd);
             static PFNHmOutputPane_Push HmOutputPane_Push;
@@ -316,7 +316,8 @@ namespace Hidemaru {
         private:
             static int iSelfBindedType;
         public:
-            static void initHandle(HMODULE handle);
+            static void initHandle();
+            static HMODULE getCurrentModule();
         public:
             static int getBindDllType();
             static BOOL setBindDllType();
@@ -326,9 +327,6 @@ namespace Hidemaru {
         };
 
     public:
-        BOOL DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved);
-        void initDllHandle(HMODULE handle);
-
         bool rebindParameters();
     };
 

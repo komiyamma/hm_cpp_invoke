@@ -24,6 +24,8 @@ HMODULE THm::TExplorerPane::hHmExplorerPaneDLL = NULL;
 
 THm::THm()
 {
+	SelfDllInfo::initHandle();
+
 	GetModuleFileName(NULL, szHidemaruFullPath, _countof(szHidemaruFullPath));
 
 	bool success = setVersion();

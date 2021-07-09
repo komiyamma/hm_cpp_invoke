@@ -7,9 +7,6 @@
     <ClCompile Include="HmCppInvokeOriginalEncode.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
-    <ClCompile Include="HmCppInvokeDllMain.cpp">
-      <Filter>hidemaru</Filter>
-    </ClCompile>
     <ClCompile Include="HmCppInvokePane.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>

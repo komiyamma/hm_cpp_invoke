@@ -19,9 +19,20 @@ wchar_t THm::SelfDllInfo::szSelfModuleDirPath[MAX_PATH] = L"";
 
 int THm::SelfDllInfo::iSelfBindedType = 0;
 
-void THm::SelfDllInfo::initHandle(HMODULE hModule) {
 
-	SelfDllInfo::hModule = hModule;
+HMODULE THm::SelfDllInfo::getCurrentModule()
+{
+	DWORD flags = GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT;
+	HMODULE hm = 0;
+	::GetModuleHandleEx(flags, reinterpret_cast<LPCTSTR>(THm::SelfDllInfo::getCurrentModule), &hm);
+	return hm;
+}
+
+
+
+void THm::SelfDllInfo::initHandle() {
+	HMODULE hCurrentModule = getCurrentModule();
+	SelfDllInfo::hModule = hCurrentModule;
 	GetModuleFileName(hModule, SelfDllInfo::szSelfModuleFullPath, _countof(SelfDllInfo::szSelfModuleFullPath));
 	wcscpy_s(SelfDllInfo::szSelfModuleDirPath, SelfDllInfo::szSelfModuleFullPath);
 	PathRemoveFileSpec(SelfDllInfo::szSelfModuleDirPath);

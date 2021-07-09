@@ -156,7 +156,6 @@
     <ClCompile Include="HmCppInvokeFile.cpp" />
     <ClCompile Include="HmCppInvokeMacro.cpp" />
     <ClCompile Include="HmCppInvokeOriginalEncode.cpp" />
-    <ClCompile Include="HmCppInvokeDllMain.cpp" />
     <ClCompile Include="HmCppInvokePane.cpp" />
     <ClCompile Include="HmCppInvokeSelfDllInfo.cpp" />
   </ItemGroup>
