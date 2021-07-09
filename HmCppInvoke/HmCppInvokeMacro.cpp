@@ -67,13 +67,6 @@ THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 
 
 
-// 秀丸の変数が文字列か数値かの判定用
-HM_DLLEXPORT long SetDynamicVar(const void *dynamic_value);
-HM_DLLEXPORT long PopNumVar();
-HM_DLLEXPORT long PushNumVar(long i_tmp_num);
-HM_DLLEXPORT const wchar_t* PopStrVar();
-HM_DLLEXPORT long PushStrVar(const wchar_t* sz_tmp_str);
-
 
 bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 {
@@ -222,7 +215,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
 			std::exception e = std::exception();
-			THm::TMacro::IResult r = THm::TMacro::IResult(lRet, nullptr, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
 			return r;
 		}
 		else {
@@ -230,7 +223,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(expression.c_str());
 			std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
-			THm::TMacro::IResult r = THm::TMacro::IResult(lRet, nullptr, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
 			return r;
 		}
 	}
@@ -253,7 +246,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
 			std::exception e = std::exception();
-			THm::TMacro::IResult r = THm::TMacro::IResult(lRet, nullptr, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
 			return r;
 		}
 		else {
@@ -261,7 +254,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(filepath.c_str());
 			std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
-			THm::TMacro::IResult r = THm::TMacro::IResult(lRet, nullptr, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
 			return r;
 		}
 	}

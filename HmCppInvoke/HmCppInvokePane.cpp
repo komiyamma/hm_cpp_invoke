@@ -111,7 +111,7 @@ long THm::TOutputPane::sendMessage(int command_id)
 		// (#h,0x111/*WM_COMMAND*/,1009,0);//1009=クリア
 		// 0x111 = WM_COMMAND
 		LRESULT r = SendMessageW(OutputWindowHandle, 0x111, command_id, 0);
-		return r;
+		return (long)r;
 
 	}
 	return FALSE;
@@ -270,7 +270,7 @@ long THm::TExplorerPane::sendMessage(int command_id)
 		//251=１つ上のフォルダ
 		// 0x111 = WM_COMMAND
 		LRESULT r = SendMessageW(ExplorerWindowHandle, 0x111, command_id, 0);
-		return r;
+		return (long)r;
 
 	}
 	return FALSE;
