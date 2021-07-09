@@ -343,7 +343,7 @@ namespace Hidemaru {
 };
 
 
-// 秀丸の変数が文字列か数値かの判定用
+// 秀丸マクロ上の変数と、C++内部との自動やりとりに使用される。
 HM_DLLEXPORT long SetDynamicVar(const void* dynamic_value);
 HM_DLLEXPORT long PopNumVar();
 HM_DLLEXPORT long PushNumVar(long i_tmp_num);
