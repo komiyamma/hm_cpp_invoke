@@ -19,7 +19,7 @@
     <ClCompile Include="HmCppInvokeMacro.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
-    <ClCompile Include="HmCppInvokeSelfDllInfo.cpp">
+    <ClCompile Include="HmCppInvokeSelfDllAttribute.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
     <ClCompile Include="HmCppInvokeDllExport.cpp">

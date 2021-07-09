@@ -24,7 +24,7 @@ HMODULE THm::TExplorerPane::hHmExplorerPaneDLL = NULL;
 
 THm::THm()
 {
-	this->SelfDllInfo = TSelfDllInfo();
+	this->SelfDllInfo = TSelfDllAttribute();
 
 	GetModuleFileName(NULL, szHidemaruFullPath, _countof(szHidemaruFullPath));
 
