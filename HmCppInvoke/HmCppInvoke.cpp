@@ -31,7 +31,7 @@ THm::THm()
 	bool success = setVersion();
 	if (success)
 	{
-		if (this->getVersion() >= 8.66) {
+		if (this->getVersion() >= 866) {
 
 			// GŠÛ–{‘Ì‚ÉŠÖ”‚ª‚ ‚é‚Ì‚Í 8.66ˆÈã
 			hHideExeHandle = LoadLibrary(szHidemaruFullPath);
@@ -47,7 +47,7 @@ THm::THm()
 			this->ExplorerPane = TExplorerPane();
 		}
 		else {
-			throw std::runtime_error("Hidemaru Version Exception Under 8.66");
+			throw std::runtime_error("HidemaruMissionVersionException:" + to_string( this->getVersion() ) + "<866");
 		}
 	}
 }
