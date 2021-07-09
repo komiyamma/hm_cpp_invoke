@@ -25,10 +25,10 @@ namespace Hidemaru {
     class THm : public THmDllExport {
     public:
         THm();
-        // Hm をコピー禁止にしておく。
     private:
-        THm(const THm& src) {}
-        void operator =(const THm& src);
+        // Hm をコピー禁止にしておく。
+        THm(const THm& src) = delete;
+        void operator =(const THm& src) = delete;
     private:
         static double hm_version;
         static double QueryFileVersion(wchar_t* path);
@@ -65,6 +65,9 @@ namespace Hidemaru {
             // 現在編集中のテキストのマウスの位置に対応するカーソルの位置を取得する。
             using PFNGetCursorPosUnicodeFromMousePos = BOOL(WINAPI*)(POINT* ppt, int* pnLineNo, int* pnColumn);
             static PFNGetCursorPosUnicodeFromMousePos Hidemaru_GetCursorPosUnicodeFromMousePos;
+            // キー入力があるなどの理由で処理を中断するべきかを返します。
+            using PFNCheckQueueStatus = BOOL(WINAPI*)();
+            static PFNCheckQueueStatus Hidemaru_CheckQueueStatus;
 
         public:
             TEdit();

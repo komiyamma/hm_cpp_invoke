@@ -24,6 +24,7 @@ HMODULE THm::TExplorerPane::hHmExplorerPaneDLL = NULL;
 
 THm::THm()
 {
+	// ©•ª©g‚Ìdll‚Ìî•ñ‚ÍAˆê”Ôæ‚Éİ’è‚µ‚Ä‚¨‚­
 	this->SelfDllInfo = TSelfDllAttribute();
 
 	GetModuleFileName(NULL, szHidemaruFullPath, _countof(szHidemaruFullPath));
@@ -31,7 +32,7 @@ THm::THm()
 	bool success = setVersion();
 	if (success)
 	{
-		if (this->getVersion() >= 866) {
+		if (hm_version >= 866) {
 
 			// GŠÛ–{‘Ì‚ÉŠÖ”‚ª‚ ‚é‚Ì‚Í 8.66ˆÈã
 			hHideExeHandle = LoadLibrary(szHidemaruFullPath);
@@ -51,11 +52,6 @@ THm::THm()
 		}
 	}
 }
-
-void Hidemaru::THm::operator=(const THm& src)
-{
-}
-
 
 double THm::QueryFileVersion(wchar_t* path)
 {
