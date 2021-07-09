@@ -101,6 +101,7 @@ bool THm::TOutputPane::pop()
 bool THm::TOutputPane::clear()
 {
 	long ret = this->sendMessage(1009);
+	// ¡‚Ì‚Æ‚±‚ë—LˆÓ‚È’l‚Í•Ô‚µ‚Ä‚¢‚È‚¢
 	return (bool)ret;
 }
 
