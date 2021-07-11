@@ -199,24 +199,29 @@ namespace Hidemaru {
                 int hm_encode;
                 int ms_codepage;
             public:
+                IEncoding(int hm_encode, int ms_codepage);
+                IEncoding() = default;
+                IEncoding(const IEncoding&) = default;
                 int getHmEncode();
                 int getMsCodePage();
             };
 
+            IEncoding getEncoding(int hm_encode);
             IEncoding getEncoding(std::wstring filepath);
             const std::vector<int> getEncodingTable();
 
             class IHidemaruStreamReader {
-                IEncoding encodling;
+                IEncoding encoding;
                 std::wstring filepath;
             public:
+                IHidemaruStreamReader(std::wstring filepath, IEncoding encoding);
                 IEncoding getEncoding();
                 std::wstring read();
                 std::wstring getFilePath();
                 void close();
             };
 
-            IHidemaruStreamReader open(std::wstring filepath, int hm_encode = -1);
+            IHidemaruStreamReader open(std::wstring filepath, int hm_encode=-1);
         };
 
     public:

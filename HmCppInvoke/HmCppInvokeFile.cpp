@@ -23,19 +23,44 @@ THm::TFile::TFile()
 	}
 }
 
+Hidemaru::THm::TFile::IEncoding::IEncoding(int hm_encode, int ms_codepage)
+{
+	this->hm_encode = hm_encode;
+	this->ms_codepage = ms_codepage;
+}
+
+
 int THm::TFile::IEncoding::getHmEncode()
 {
-	return 0;
+	return hm_encode;
 }
 
 int THm::TFile::IEncoding::getMsCodePage()
 {
-	return 0;
+	return ms_codepage;
+}
+
+THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(int hm_encode)
+{
+	const vector<int> to_mscp_list = getEncodingTable();
+	if (0 <= hm_encode && hm_encode < (int)to_mscp_list.size()) {
+		IEncoding encode = IEncoding(hm_encode, to_mscp_list[hm_encode]);
+		return encode;
+	}
+
+	IEncoding no_encode = IEncoding(0, 0);
+	return no_encode;
+
 }
 
 THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(wstring filepath)
 {
-	return IEncoding();
+	if (Hidemaru_AnalyzeEncoding) {
+		int hm_encode = Hidemaru_AnalyzeEncoding(filepath.c_str(), 0, 0);
+		return getEncoding(hm_encode);
+	}
+
+	return getEncoding(0);
 }
 
 const vector<int> Hidemaru::THm::TFile::getEncodingTable()
@@ -74,27 +99,61 @@ const vector<int> Hidemaru::THm::TFile::getEncodingTable()
 	return ret;
 }
 
+
+Hidemaru::THm::TFile::IHidemaruStreamReader::IHidemaruStreamReader(std::wstring filepath, IEncoding encoding)
+{
+	this->filepath = filepath;
+	this->encoding = encoding;
+}
+
 THm::TFile::IEncoding THm::TFile::IHidemaruStreamReader::getEncoding()
 {
+	return this->encoding;
 }
 
 wstring THm::TFile::IHidemaruStreamReader::read()
 {
-	return wstring();
+	if (Hidemaru_LoadFileUnicode) {
+		UINT pcwchOut = 0;
+		HGLOBAL hGlobal = Hidemaru_LoadFileUnicode(filepath.c_str(), this->encoding.getHmEncode(), &pcwchOut, NULL, NULL);
+		if (hGlobal) {
+			wchar_t* pwsz = (wchar_t*)GlobalLock(hGlobal);
+			if (pwsz) {
+				wstring text(pwsz); // ƒRƒs[
+				GlobalUnlock(hGlobal);
+				GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
+				return text;
+			}
+		}
+	}
+
+	return L"";
 }
 
 wstring THm::TFile::IHidemaruStreamReader::getFilePath()
 {
-	return wstring();
+	return this->filepath;
 }
 
 void THm::TFile::IHidemaruStreamReader::close()
 {
+	this->filepath = L"";
+	this->encoding = IEncoding(0, 0);
 }
 
 THm::TFile::IHidemaruStreamReader THm::TFile::open(std::wstring filepath, int hm_encode)
 {
-	return IHidemaruStreamReader();
+	if (hm_encode == -1) {
+		IEncoding encoding = getEncoding(filepath);
+		IHidemaruStreamReader sr = IHidemaruStreamReader(filepath, encoding);
+		return sr;
+	}
+	else {
+		IEncoding encoding = getEncoding(hm_encode);
+		IHidemaruStreamReader sr = IHidemaruStreamReader(filepath, encoding);
+		return sr;
+	}
+
 }
 
 
