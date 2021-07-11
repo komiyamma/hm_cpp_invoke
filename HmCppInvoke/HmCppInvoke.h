@@ -12,6 +12,7 @@
 #include <stdexcept>
 #include <vector>
 #include <variant>
+#include <functional>
 
 #include "HmCppInvokeDllExport.h"
 
@@ -19,8 +20,6 @@
 namespace Hidemaru {
     using THmMacroVariable = std::variant<nullptr_t, long, std::wstring>;
     using THmMacroResultError = std::variant<nullptr_t, std::exception>;
-
-    using THmMacroScopeMethodPointer = long (*)(std::wstring message_parameter);
 
     class THm : public THmDllExport {
     public:
@@ -173,7 +172,7 @@ namespace Hidemaru {
             public:
                 IResult doEval(std::wstring expression);
                 IResult doFile(std::wstring filepath);
-                IResult doMethod(std::wstring message_parameter, THmMacroScopeMethodPointer callback_method);
+                IResult doMethod(std::wstring message_parameter, std::function<long(std::wstring)> callback_method);
             };
 
             TExec Exec;

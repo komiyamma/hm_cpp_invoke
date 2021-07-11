@@ -264,7 +264,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 	return r;
 }
 
-Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, THmMacroScopeMethodPointer callback_method)
+Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, function<long(wstring)> callback_method)
 {
 	std::exception e = std::exception();
 	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
