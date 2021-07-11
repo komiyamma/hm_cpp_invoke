@@ -195,14 +195,20 @@ namespace Hidemaru {
             TFile();
 
             class IEncoding {
+                int hm_encode;
+                int ms_codepage;
             public:
                 int getHmEncode();
                 int getMsCodePage();
             };
 
-            IEncoding getEncoding();
+            IEncoding getEncoding(std::wstring filepath);
+            std::vector<int> getEncodingList();
+            int getMsCodePageFromHmEncode(const int hm_encode);
 
             class IHidemaruStreamReader {
+                IEncoding encodling;
+                std::wstring filepath;
             public:
                 IEncoding getEncoding();
                 std::wstring read();
