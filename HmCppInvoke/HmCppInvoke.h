@@ -203,8 +203,9 @@ namespace Hidemaru {
             };
 
             IEncoding getEncoding(std::wstring filepath);
-            std::vector<int> getEncodingList();
-            int getMsCodePageFromHmEncode(const int hm_encode);
+            const std::vector<int> getEncodingList();
+            int getMsCodePageFromHmEncode(int hm_encode);
+            int getHmEncodeFromMsCodePage(int ms_codepage);
 
             class IHidemaruStreamReader {
                 IEncoding encodling;
