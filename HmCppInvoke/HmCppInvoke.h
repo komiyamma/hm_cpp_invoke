@@ -204,7 +204,7 @@ namespace Hidemaru {
             };
 
             IEncoding getEncoding(std::wstring filepath);
-            const std::multiset<int> getEncodingSet();
+            const std::vector<int> getEncodingTable();
 
             class IHidemaruStreamReader {
                 IEncoding encodling;

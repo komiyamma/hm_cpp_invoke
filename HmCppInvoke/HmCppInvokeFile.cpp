@@ -38,9 +38,9 @@ THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(wstring filepath)
 	return IEncoding();
 }
 
-const multiset<int> Hidemaru::THm::TFile::getEncodingSet()
+const vector<int> Hidemaru::THm::TFile::getEncodingTable()
 {
-	const multiset<int> ret = {
+	const vector<int> ret = {
 		0,      // Unknown
 		932,	// encode = 1 ANSI/OEM Japanese; Japanese (Shift-JIS)
 		1200,	// encode = 2 Unicode UTF-16, little-endian
