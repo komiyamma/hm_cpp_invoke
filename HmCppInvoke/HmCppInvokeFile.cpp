@@ -38,9 +38,9 @@ THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(wstring filepath)
 	return IEncoding();
 }
 
-const vector<int> Hidemaru::THm::TFile::getEncodingList()
+const multiset<int> Hidemaru::THm::TFile::getEncodingSet()
 {
-	const vector<int> ret = {
+	const multiset<int> ret = {
 		0,      // Unknown
 		932,	// encode = 1 ANSI/OEM Japanese; Japanese (Shift-JIS)
 		1200,	// encode = 2 Unicode UTF-16, little-endian
@@ -73,27 +73,6 @@ const vector<int> Hidemaru::THm::TFile::getEncodingList()
 
 	return ret;
 }
-
-int Hidemaru::THm::TFile::getMsCodePageFromHmEncode(int hm_encode)
-{
-	auto& encode_list = this->getEncodingList();
-	if (0 <= hm_encode && hm_encode < encode_list.size()) {
-		return encode_list[hm_encode];
-	}
-	return 0;
-}
-
-int Hidemaru::THm::TFile::getHmEncodeFromMsCodePage(int ms_codepage)
-{
-	auto& encode_list = this->getEncodingList();
-	for (int hm_enc = 0; hm_enc < (int)encode_list.size(); hm_enc++) {
-		if (encode_list[hm_enc] == ms_codepage) {
-			return hm_enc;
-		}
-	}
-	return 0;
-}
-
 
 THm::TFile::IEncoding THm::TFile::IHidemaruStreamReader::getEncoding()
 {

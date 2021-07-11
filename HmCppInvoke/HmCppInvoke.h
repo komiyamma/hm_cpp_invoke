@@ -13,6 +13,7 @@
 #include <vector>
 #include <variant>
 #include <functional>
+#include <set>
 
 #include "HmCppInvokeDllExport.h"
 
@@ -203,9 +204,7 @@ namespace Hidemaru {
             };
 
             IEncoding getEncoding(std::wstring filepath);
-            const std::vector<int> getEncodingList();
-            int getMsCodePageFromHmEncode(int hm_encode);
-            int getHmEncodeFromMsCodePage(int ms_codepage);
+            const std::multiset<int> getEncodingSet();
 
             class IHidemaruStreamReader {
                 IEncoding encodling;
