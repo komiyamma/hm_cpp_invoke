@@ -4,8 +4,10 @@
  */
 
 
-#include "HmCppInvoke.h"
 #include <shlwapi.h>
+
+#include "HmCppInvoke.h"
+#include "HmCppInvokeConvertString.h"
 
 using namespace std;
 using namespace Hidemaru;
@@ -58,9 +60,10 @@ THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(wstring filepath)
 	if (Hidemaru_AnalyzeEncoding) {
 		int exists = PathFileExists(filepath.c_str());
 		if (exists == 0) {
-			throw runtime_error("FileNotFoundException");
+			wstring error_msg = L"FileNotFoundException:" + filepath;
+			throw runtime_error(Text::Encoding::utf16_to_utf8(error_msg).c_str());
 		}
-		int hm_encode = Hidemaru_AnalyzeEncoding(filepath.c_str(), 0, 0);
+		int hm_encode = Hidemaru_AnalyzeEncoding(filepath.c_str(), NULL, NULL);
 		if (hm_encode >= 0) {
 			return getEncoding(hm_encode);
 		}

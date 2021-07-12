@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HmCppInvokeConvertString.cpp" />
     <ClCompile Include="HmCppInvoke.cpp" />
     <ClCompile Include="HmCppInvokeEdit.cpp" />
     <ClCompile Include="HmCppInvokeDllExport.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="HmCppInvokeSelfDllAttribute.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HmCppInvokeConvertString.h" />
     <ClInclude Include="HmCppInvoke.h" />
     <ClInclude Include="HmCppInvokeDllExport.h" />
   </ItemGroup>

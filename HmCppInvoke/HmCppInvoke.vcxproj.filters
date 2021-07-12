@@ -25,6 +25,9 @@
     <ClCompile Include="HmCppInvokeDllExport.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
+    <ClCompile Include="HmCppInvokeConvertString.cpp">
+      <Filter>hidemaru</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hidemaru">
@@ -36,6 +39,9 @@
       <Filter>hidemaru</Filter>
     </ClInclude>
     <ClInclude Include="HmCppInvokeDllExport.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeConvertString.h">
       <Filter>hidemaru</Filter>
     </ClInclude>
   </ItemGroup>
