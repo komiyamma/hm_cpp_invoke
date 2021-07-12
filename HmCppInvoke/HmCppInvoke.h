@@ -11,6 +11,7 @@
 #include <exception>
 #include <stdexcept>
 #include <vector>
+#include <map>
 #include <variant>
 #include <functional>
 #include <set>
@@ -208,7 +209,7 @@ namespace Hidemaru {
 
             IEncoding getEncoding(int hm_encode);
             IEncoding getEncoding(std::wstring filepath);
-            const std::vector<int> getEncodingTable();
+            const std::map<int, int> getEncodingMap();
 
             class IHidemaruStreamReader {
                 IEncoding encoding;

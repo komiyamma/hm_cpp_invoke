@@ -42,13 +42,13 @@ int THm::TFile::IEncoding::getMsCodePage()
 
 THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(int hm_encode)
 {
-	const vector<int> to_mscp_list = getEncodingTable();
-	if (0 <= hm_encode && hm_encode < (int)to_mscp_list.size()) {
+	auto to_mscp_list = getEncodingMap();
+	if (to_mscp_list.count(hm_encode) > 0) {
 		IEncoding encode = IEncoding(hm_encode, to_mscp_list[hm_encode]);
 		return encode;
 	}
 
-	IEncoding no_encode = IEncoding(0, 0);
+	IEncoding no_encode = IEncoding(-1, -1);
 	return no_encode;
 
 }
@@ -61,43 +61,45 @@ THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(wstring filepath)
 			throw runtime_error("FileNotFoundException");
 		}
 		int hm_encode = Hidemaru_AnalyzeEncoding(filepath.c_str(), 0, 0);
-		return getEncoding(hm_encode);
+		if (hm_encode >= 0) {
+			return getEncoding(hm_encode);
+		}
 	}
 
-	return getEncoding(0);
+	return getEncoding(-1);
 }
 
-const vector<int> Hidemaru::THm::TFile::getEncodingTable()
+const map<int, int> Hidemaru::THm::TFile::getEncodingMap()
 {
-	const vector<int> ret = {
-		0,      // Unknown
-		932,	// encode = 1 ANSI/OEM Japanese; Japanese (Shift-JIS)
-		1200,	// encode = 2 Unicode UTF-16, little-endian
-		51932,	// encode = 3 EUC
-		50221,	// encode = 4 JIS
-		65000,	// encode = 5 UTF-7
-		65001,	// encode = 6 UTF-8
-		1201,	// encode = 7 Unicode UTF-16, big-endian
-		1252,	// encode = 8 欧文 ANSI Latin 1; Western European (Windows)
-		936,	// encode = 9 簡体字中国語 ANSI/OEM Simplified Chinese (PRC, Singapore); Chinese Simplified (GB2312)
-		950,	// encode =10 繁体字中国語 ANSI/OEM Traditional Chinese (Taiwan; Hong Kong SAR, PRC); Chinese Traditional (Big5)
-		949,	// encode =11 韓国語 ANSI/OEM Korean (Unified Hangul Code)
-		1361,	// encode =12 韓国語 Korean (Johab)
-		1250,	// encode =13 中央ヨーロッパ言語 ANSI Central European; Central European (Windows)
-		1257,	// encode =14 バルト語 ANSI Baltic; Baltic (Windows)
-		1253,	// encode =15 ギリシャ語 ANSI Greek; Greek (Windows)
-		1251,	// encode =16 キリル言語 ANSI Cyrillic; Cyrillic (Windows)
-		42,		// encode =17 シンボル
-		1254,	// encode =18 トルコ語 ANSI Turkish; Turkish (Windows)
-		1255,	// encode =19 ヘブライ語 ANSI Hebrew; Hebrew (Windows)
-		1256,	// encode =20 アラビア語 ANSI Arabic; Arabic (Windows)
-		874,	// encode =21 タイ語 ANSI/OEM Thai (same as 28605, ISO 8859-15); Thai (Windows)
-		1258,	// encode =22 ベトナム語 ANSI/OEM Vietnamese; Vietnamese (Windows)
-		10001,	// encode =23 x-mac-japanese Japanese (Mac)
-		850,	// encode =24 OEM/DOS
-		0,		// encode =25 その他
-		12000,	// encode =26 Unicode (UTF-32) little-endian
-		12001	// encode =27 Unicode (UTF-32) big-endian
+	const map<int, int> ret = {
+		{0,   0},       // Unknown
+		{1,   932},	    // encode = 1 ANSI/OEM Japanese; Japanese (Shift-JIS)
+		{2,   1200},	// encode = 2 Unicode UTF-16, little-endian
+		{3,   51932},	// encode = 3 EUC
+		{4,   50221},	// encode = 4 JIS
+		{5,   65000},	// encode = 5 UTF-7
+		{6,   65001},	// encode = 6 UTF-8
+		{7,   1201},	// encode = 7 Unicode UTF-16, big-endian
+		{8,   1252},	// encode = 8 欧文 ANSI Latin 1; Western European (Windows)
+		{9,   936},	    // encode = 9 簡体字中国語 ANSI/OEM Simplified Chinese (PRC, Singapore); Chinese Simplified (GB2312)
+		{10,  950},	    // encode =10 繁体字中国語 ANSI/OEM Traditional Chinese (Taiwan; Hong Kong SAR, PRC); Chinese Traditional (Big5)
+		{11,  949},	    // encode =11 韓国語 ANSI/OEM Korean (Unified Hangul Code)
+		{12,  1361},	// encode =12 韓国語 Korean (Johab)
+		{13,  1250},	// encode =13 中央ヨーロッパ言語 ANSI Central European; Central European (Windows)
+		{14,  1257},	// encode =14 バルト語 ANSI Baltic; Baltic (Windows)
+		{15,  1253},	// encode =15 ギリシャ語 ANSI Greek; Greek (Windows)
+		{16,  1251},	// encode =16 キリル言語 ANSI Cyrillic; Cyrillic (Windows)
+		{17,  42},		// encode =17 シンボル
+		{18,  1254},	// encode =18 トルコ語 ANSI Turkish; Turkish (Windows)
+		{19,  1255},	// encode =19 ヘブライ語 ANSI Hebrew; Hebrew (Windows)
+		{20,  1256},	// encode =20 アラビア語 ANSI Arabic; Arabic (Windows)
+		{21,  874},	    // encode =21 タイ語 ANSI/OEM Thai (same as 28605, ISO 8859-15); Thai (Windows)
+		{22,  1258},	// encode =22 ベトナム語 ANSI/OEM Vietnamese; Vietnamese (Windows)
+		{23,  10001},	// encode =23 x-mac-japanese Japanese (Mac)
+		{24,  850},	    // encode =24 OEM/DOS
+		{25,  0},		// encode =25 その他
+		{26,  12000},	// encode =26 Unicode (UTF-32) little-endian
+		{27,  12001}	// encode =27 Unicode (UTF-32) big-endian
 	};
 
 	return ret;
@@ -142,7 +144,7 @@ wstring THm::TFile::IHidemaruStreamReader::getFilePath()
 void THm::TFile::IHidemaruStreamReader::close()
 {
 	this->filepath = L"";
-	this->encoding = IEncoding(0, 0);
+	this->encoding = IEncoding(-1, -1);
 }
 
 THm::TFile::IHidemaruStreamReader THm::TFile::open(std::wstring filepath, int hm_encode)
