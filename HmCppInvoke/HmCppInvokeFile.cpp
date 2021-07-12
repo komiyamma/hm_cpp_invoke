@@ -5,7 +5,7 @@
 
 
 #include "HmCppInvoke.h"
-
+#include <shlwapi.h>
 
 using namespace std;
 using namespace Hidemaru;
@@ -56,6 +56,10 @@ THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(int hm_encode)
 THm::TFile::IEncoding Hidemaru::THm::TFile::getEncoding(wstring filepath)
 {
 	if (Hidemaru_AnalyzeEncoding) {
+		int exists = PathFileExists(filepath.c_str());
+		if (exists == 0) {
+			throw runtime_error("FileNotFoundException");
+		}
 		int hm_encode = Hidemaru_AnalyzeEncoding(filepath.c_str(), 0, 0);
 		return getEncoding(hm_encode);
 	}
