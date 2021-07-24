@@ -47,7 +47,7 @@ THm::TMacro::IResult THm::TMacro::doEval(std::wstring expression)
 		OutputDebugString(L"マクロの実行に失敗しました。\n");
 		OutputDebugString(L"マクロ内容:\n");
 		OutputDebugString(expression.c_str());
-		std::exception e = std::runtime_error("HidemaruMacroEvalException");
+		std::exception e = std::runtime_error("Hidemaru_MacroEvalException");
 		THm::TMacro::IResult r = THm::TMacro::IResult(success, e, L"");
 		return r;
 	}
@@ -222,13 +222,13 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 			OutputDebugString(L"マクロの実行に失敗しました。\n");
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(expression.c_str());
-			std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
+			std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
 			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
 			return r;
 		}
 	}
 
-	std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
+	std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
 	THm::TMacro::IResult r = THm::TMacro::IResult(0, nullptr, L"");
 	return r;
 }
@@ -253,13 +253,13 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 			OutputDebugString(L"マクロの実行に失敗しました。\n");
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(filepath.c_str());
-			std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
+			std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
 			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
 			return r;
 		}
 	}
 
-	std::exception e = std::runtime_error("HidemaruMacroExecEvalException");
+	std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
 	THm::TMacro::IResult r = THm::TMacro::IResult(0, nullptr, L"");
 	return r;
 }

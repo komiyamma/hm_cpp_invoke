@@ -32,9 +32,9 @@ THm::THm()
 	bool success = setVersion();
 	if (success)
 	{
-		if (hm_version >= 866) {
+		if (hm_version >= 873.99) {
 
-			// GŠÛ–{‘Ì‚ÉŠÖ”‚ª‚ ‚é‚Ì‚Í 8.66ˆÈã
+			// GŠÛ–{‘Ì‚ÉŠÖ”‚ª‚ ‚é‚Ì‚Í 8.73.99ˆÈã
 			hHideExeHandle = LoadLibrary(szHidemaruFullPath);
 			if (hHideExeHandle) {
 				Hidemaru_GetDllFuncCalledType = (PFNGetDllFuncCalledType)GetProcAddress(hHideExeHandle, "Hidemaru_GetDllFuncCalledType");
@@ -48,7 +48,7 @@ THm::THm()
 			this->ExplorerPane = TExplorerPane();
 		}
 		else {
-			throw std::runtime_error("HidemaruMissionVersionException:" + to_string( this->getVersion() ) + "<866");
+			throw std::runtime_error("Hidemaru_MissionVersionException:" + to_string( this->getVersion() ) + "<873.99");
 		}
 	}
 }
