@@ -158,7 +158,7 @@ std::wstring THm::TEdit::getLineText()
 
 bool THm::TEdit::setLineText(std::wstring text)
 {
-	BOOL success = 0;
+	bool success = false;
 
 	auto dll_invocant = TSelfDllAttribute::getInvocantString();
 
@@ -179,6 +179,8 @@ bool THm::TEdit::setLineText(std::wstring text)
 		auto ret = Hm.Macro.Exec.doEval(cmd.c_str());
 		(bool)ret.getResult();
 	}
+
+	return success;
 }
 
 bool THm::TEdit::isQueueStatus()
@@ -220,7 +222,7 @@ THm::TEdit::IMousePos THm::TEdit::getMousePos()
 	int nLineNo = -1;
 	int nColumn = -1;
 
-	// ŠY“–‚ÌŠÖ”‚ª‘¶Ý‚µ‚Ä‚¢‚éŽž‚¾‚¯’l‚ðXV(GŠÛ 8.73ˆÈã)
+	// ŠY“–‚ÌŠÖ”‚ª‘¶Ý‚µ‚Ä‚¢‚È‚¢Žž(GŠÛ 8.73–¢–ž)
 	if (!this->Hidemaru_GetCursorPosUnicodeFromMousePos) {
 		IMousePos pos(point.x, point.y, nLineNo, nColumn);
 		return pos;

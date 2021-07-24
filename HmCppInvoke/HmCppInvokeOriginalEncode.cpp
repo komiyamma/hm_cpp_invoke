@@ -2,7 +2,7 @@
  * Copyright (c) 2021 Akitsugu Komiyama
  * under the MIT License
  */
-// 0xFFFFŒÂ
+// (0xFFFF+1)ŒÂ index‚É‚ÍWORD’l‚ğæ‚é‚½‚ßA0`0xFFFF‚Ü‚Å‚Ìindex‚Ìó‚¯M‚ª‚ ‚éB
 unsigned int hidemaru_encode_map[] = {
 	0,
 	1,
