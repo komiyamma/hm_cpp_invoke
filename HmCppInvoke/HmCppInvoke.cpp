@@ -56,11 +56,11 @@ THm::THm()
 double THm::QueryFileVersion(wchar_t* path)
 {
 	VS_FIXEDFILEINFO* v;
-	DWORD dwZero = 0;
 	UINT len;
-	DWORD sz = GetFileVersionInfoSize(path, &dwZero);
+	DWORD sz = GetFileVersionInfoSize(path, NULL);
 	if (sz) {
-		void* buf = new char[sz];
+		unique_ptr<char[]> mngBuf = make_unique<char[]>(sz);
+		void* buf = (void *)mngBuf.get();
 		GetFileVersionInfo(path, 0, sz, buf);
 
 		if (VerQueryValue(buf, L"\\", (LPVOID*)&v, &len)) {
@@ -69,11 +69,7 @@ double THm::QueryFileVersion(wchar_t* path)
 				double(LOWORD(v->dwFileVersionMS)) * 10 +
 				double(HIWORD(v->dwFileVersionLS)) +
 				double(LOWORD(v->dwFileVersionLS)) * 0.01;
-			delete[] buf;
 			return ret;
-		}
-		else {
-			delete[] buf;
 		}
 	}
 

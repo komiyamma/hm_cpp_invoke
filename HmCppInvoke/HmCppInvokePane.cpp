@@ -262,6 +262,8 @@ std::wstring THm::TExplorerPane::getProject()
 			return ret.getMessage();
 		}
 	}
+
+	return L"";
 }
 
 long THm::TExplorerPane::sendMessage(int command_id)
