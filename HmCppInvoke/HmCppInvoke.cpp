@@ -61,7 +61,7 @@ double THm::QueryFileVersion(wchar_t* path)
 	if (sz) {
 		unique_ptr<BYTE[]> mngBuf = make_unique<BYTE[]>(sz);
 		LPVOID buf = (LPVOID)mngBuf.get();
-		GetFileVersionInfo(path, 0, sz, buf);
+		GetFileVersionInfo(path, NULL, sz, buf);
 
 		if (VerQueryValue(buf, L"\\", (LPVOID*)&v, &len)) {
 			double ret = 0;
