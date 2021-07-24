@@ -209,8 +209,8 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
 		const int WM_REMOTE_EXECMACRO_MEMORY = WM_USER + 272;
 
-		wchar_t wszReturn[65535];
-		*(WORD*)wszReturn = sizeof(wszReturn) / sizeof(wszReturn[0]); // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
+		wchar_t wszReturn[0xFFFF];
+		*(WORD*)wszReturn = _countof(wszReturn); // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
 		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_MEMORY, (WPARAM)wszReturn, (LPARAM)expression.c_str());
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
@@ -240,8 +240,8 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
 		const int WM_REMOTE_EXECMACRO_FILE = WM_USER + 271;
 
-		wchar_t wszReturn[65535];
-		*(WORD*)wszReturn = sizeof(wszReturn) / sizeof(wszReturn[0]); // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
+		wchar_t wszReturn[0xFFFF];
+		*(WORD*)wszReturn = _countof(wszReturn); // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
 		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_FILE, (WPARAM)wszReturn, (LPARAM)filepath.c_str());
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
