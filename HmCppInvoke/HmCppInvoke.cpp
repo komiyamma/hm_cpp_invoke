@@ -59,8 +59,8 @@ double THm::QueryFileVersion(wchar_t* path)
 	UINT len;
 	DWORD sz = GetFileVersionInfoSize(path, NULL);
 	if (sz) {
-		unique_ptr<char[]> mngBuf = make_unique<char[]>(sz);
-		void* buf = (void *)mngBuf.get();
+		unique_ptr<BYTE[]> mngBuf = make_unique<BYTE[]>(sz);
+		LPVOID buf = (LPVOID)mngBuf.get();
 		GetFileVersionInfo(path, 0, sz, buf);
 
 		if (VerQueryValue(buf, L"\\", (LPVOID*)&v, &len)) {
