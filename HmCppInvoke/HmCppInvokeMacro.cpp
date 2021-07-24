@@ -112,14 +112,14 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)
 {
 	std::vector<THmMacroVariable> v;
-	IFunctionResult r = IFunctionResult(0, v, nullptr, L"");
+	IFunctionResult r = IFunctionResult(0, v, std::nullopt, L"");
 	return r;
 }
 
 THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring statement_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)
 {
 	std::vector<THmMacroVariable> v;
-	IStatementResult r = IStatementResult(0, v, nullptr, L"");
+	IStatementResult r = IStatementResult(0, v, std::nullopt, L"");
 	return r;
 }
 
@@ -209,13 +209,16 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
 		const int WM_REMOTE_EXECMACRO_MEMORY = WM_USER + 272;
 
-		wchar_t wszReturn[0xFFFF];
-		*(WORD*)wszReturn = _countof(wszReturn); // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
+		const WORD bufSize = 0xFFFF;
+		unique_ptr<wchar_t[]> mngWszReturn = make_unique<wchar_t[]>(bufSize);
+		wchar_t* wszReturn = mngWszReturn.get();
+		*(WORD*)wszReturn = bufSize; // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
+
 		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_MEMORY, (WPARAM)wszReturn, (LPARAM)expression.c_str());
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
 			std::exception e = std::exception();
-			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, std::nullopt, L"");
 			return r;
 		}
 		else {
@@ -223,13 +226,13 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(expression.c_str());
 			std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
-			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, std::nullopt, L"");
 			return r;
 		}
 	}
 
 	std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
-	THm::TMacro::IResult r = THm::TMacro::IResult(0, nullptr, L"");
+	THm::TMacro::IResult r = THm::TMacro::IResult(0, std::nullopt, L"");
 	return r;
 }
 
@@ -240,13 +243,16 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
 		const int WM_REMOTE_EXECMACRO_FILE = WM_USER + 271;
 
-		wchar_t wszReturn[0xFFFF];
-		*(WORD*)wszReturn = _countof(wszReturn); // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
+		const WORD bufSize = 0xFFFF;
+		unique_ptr<wchar_t[]> mngWszReturn = make_unique<wchar_t[]>(bufSize);
+		wchar_t* wszReturn = mngWszReturn.get();
+		*(WORD*)wszReturn = bufSize; // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
+
 		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_FILE, (WPARAM)wszReturn, (LPARAM)filepath.c_str());
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
 			std::exception e = std::exception();
-			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, std::nullopt, L"");
 			return r;
 		}
 		else {
@@ -254,13 +260,13 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(filepath.c_str());
 			std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
-			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, nullptr, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, std::nullopt, L"");
 			return r;
 		}
 	}
 
 	std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
-	THm::TMacro::IResult r = THm::TMacro::IResult(0, nullptr, L"");
+	THm::TMacro::IResult r = THm::TMacro::IResult(0, std::nullopt, L"");
 	return r;
 }
 

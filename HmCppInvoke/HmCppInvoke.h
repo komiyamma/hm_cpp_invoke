@@ -15,13 +15,14 @@
 #include <variant>
 #include <functional>
 #include <set>
+#include <optional>
 
 #include "HmCppInvokeDllExport.h"
 
 
 namespace Hidemaru {
     using THmMacroVariable = std::variant<nullptr_t, long, std::wstring>;
-    using THmMacroResultError = std::variant<nullptr_t, std::exception>;
+    using THmMacroResultError = std::optional<std::exception>;
 
     class THm : public THmDllExport {
     public:
