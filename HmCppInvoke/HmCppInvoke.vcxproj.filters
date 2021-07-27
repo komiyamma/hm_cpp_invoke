@@ -7,7 +7,7 @@
     <ClCompile Include="HmCppInvokeOriginalEncode.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
-    <ClCompile Include="HmCppInvokePane.cpp">
+    <ClCompile Include="HmCppInvokeOutputPane.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
     <ClCompile Include="HmCppInvokeEdit.cpp">
@@ -28,6 +28,9 @@
     <ClCompile Include="HmCppInvokeConvertString.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
+    <ClCompile Include="HmCppInvokeExplorerPane.cpp">
+      <Filter>hidemaru</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hidemaru">
@@ -39,6 +42,30 @@
       <Filter>hidemaru</Filter>
     </ClInclude>
     <ClInclude Include="HmCppInvokeConvertString.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeEdit.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeMacro.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeOutputPane.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeExplorerPane.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeFile.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeDllBindAttribute.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeDllmacroVariant.h">
+      <Filter>hidemaru</Filter>
+    </ClInclude>
+    <ClInclude Include="HmCppInvokeDllExport.h">
       <Filter>hidemaru</Filter>
     </ClInclude>
   </ItemGroup>

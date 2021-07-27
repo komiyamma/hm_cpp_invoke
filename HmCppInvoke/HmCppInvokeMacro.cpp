@@ -5,11 +5,11 @@
 
 
 #include "HmCppInvoke.h"
+#include "HmCppInvokeDllExport.h"
 
 
 using namespace std;
 using namespace Hidemaru;
-
 
 
 THm::TMacro::PFNEvalMacro THm::TMacro::Hidemaru_EvalMacro = NULL;

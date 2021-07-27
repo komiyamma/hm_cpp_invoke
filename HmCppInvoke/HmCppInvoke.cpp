@@ -87,6 +87,11 @@ HWND THm::getWindowHandle()
 	return Hidemaru_GetCurrentWindowHandle();
 }
 
+wstring THm::getHidemaruFullPath()
+{
+	return this->wszHidemaruFullPath;
+}
+
 bool THm::setVersion()
 {
 	hm_version = QueryFileVersion(wszHidemaruFullPath);

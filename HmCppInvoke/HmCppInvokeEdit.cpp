@@ -5,10 +5,11 @@
 
 
 #include "HmCppInvoke.h"
-
+#include "HmCppInvokeDllExport.h"
 
 using namespace std;
 using namespace Hidemaru;
+
 
 
 
