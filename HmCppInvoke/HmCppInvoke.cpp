@@ -48,7 +48,7 @@ THm::THm()
 			this->ExplorerPane = TExplorerPane();
 		}
 		else {
-			throw std::runtime_error("Hidemaru_MissionVersionException:" + to_string( this->getVersion() ) + "<873.99");
+			throw std::runtime_error("Hidemaru_MissingVersionException:" + to_string( this->getVersion() ) + "<873.99");
 		}
 	}
 }
