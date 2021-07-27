@@ -19,10 +19,10 @@
     <ClCompile Include="HmCppInvokeMacro.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
-    <ClCompile Include="HmCppInvokeSelfDllAttribute.cpp">
+    <ClCompile Include="HmCppInvokeDllBindAttribute.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
-    <ClCompile Include="HmCppInvokeDllExport.cpp">
+    <ClCompile Include="HmCppInvokeDllMacroVariant.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
     <ClCompile Include="HmCppInvokeConvertString.cpp">
@@ -36,9 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HmCppInvoke.h">
-      <Filter>hidemaru</Filter>
-    </ClInclude>
-    <ClInclude Include="HmCppInvokeDllExport.h">
       <Filter>hidemaru</Filter>
     </ClInclude>
     <ClInclude Include="HmCppInvokeConvertString.h">

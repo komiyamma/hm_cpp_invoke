@@ -74,7 +74,7 @@ bool THm::TEdit::setTotalText(std::wstring text)
 {
 	BOOL success = 0;
 
-	auto dll_invocant = TSelfDllAttribute::getInvocantString();
+	auto dll_invocant = TDllBindAttribute::getInvocantString();
 
 	PushStrVar(text.data());
 	wstring cmd =
@@ -116,7 +116,7 @@ bool THm::TEdit::setSelectedText(std::wstring text)
 {
 	BOOL success = 0;
 
-	auto dll_invocant = TSelfDllAttribute::getInvocantString();
+	auto dll_invocant = TDllBindAttribute::getInvocantString();
 
 	PushStrVar(text.data());
 	wstring cmd =
@@ -160,7 +160,7 @@ bool THm::TEdit::setLineText(std::wstring text)
 {
 	bool success = false;
 
-	auto dll_invocant = TSelfDllAttribute::getInvocantString();
+	auto dll_invocant = TDllBindAttribute::getInvocantString();
 
 	auto pos = getCursorPos();
 

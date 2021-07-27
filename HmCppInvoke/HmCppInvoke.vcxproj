@@ -153,17 +153,16 @@
     <ClCompile Include="HmCppInvokeConvertString.cpp" />
     <ClCompile Include="HmCppInvoke.cpp" />
     <ClCompile Include="HmCppInvokeEdit.cpp" />
-    <ClCompile Include="HmCppInvokeDllExport.cpp" />
+    <ClCompile Include="HmCppInvokeDllMacroVariant.cpp" />
     <ClCompile Include="HmCppInvokeFile.cpp" />
     <ClCompile Include="HmCppInvokeMacro.cpp" />
     <ClCompile Include="HmCppInvokeOriginalEncode.cpp" />
     <ClCompile Include="HmCppInvokePane.cpp" />
-    <ClCompile Include="HmCppInvokeSelfDllAttribute.cpp" />
+    <ClCompile Include="HmCppInvokeDllBindAttribute.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HmCppInvokeConvertString.h" />
     <ClInclude Include="HmCppInvoke.h" />
-    <ClInclude Include="HmCppInvokeDllExport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

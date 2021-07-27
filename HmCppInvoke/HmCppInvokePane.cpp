@@ -26,7 +26,7 @@ THm::TOutputPane::TOutputPane()
 	if (Hidemaru_GetCurrentWindowHandle) {
 		// hidemaru.exeのディレクトリを求める
 		wchar_t hidemarudir[512] = L"";
-		wcscpy_s(hidemarudir, szHidemaruFullPath);
+		wcscpy_s(hidemarudir, wszHidemaruFullPath);
 		PathRemoveFileSpec(hidemarudir);
 
 		// ディレクトリある？ （まぁあるよね）
@@ -164,7 +164,7 @@ THm::TExplorerPane::TExplorerPane()
 	if (Hidemaru_GetCurrentWindowHandle) {
 		// hidemaru.exeのディレクトリを求める
 		wchar_t hidemarudir[512] = L"";
-		wcscpy_s(hidemarudir, szHidemaruFullPath);
+		wcscpy_s(hidemarudir, wszHidemaruFullPath);
 		PathRemoveFileSpec(hidemarudir);
 
 		// ディレクトリある？ （まぁあるよね）

@@ -16,7 +16,7 @@ double THm::hm_version = 0;
 THm::PFNGetCurrentWindowHandle THm::Hidemaru_GetCurrentWindowHandle = NULL;
 
 HMODULE THm::hHideExeHandle = NULL;
-wchar_t THm::szHidemaruFullPath[MAX_PATH] = L"";
+wchar_t THm::wszHidemaruFullPath[MAX_PATH] = L"";
 
 HMODULE THm::TOutputPane::hHmOutputPaneDLL = NULL;
 HMODULE THm::TExplorerPane::hHmExplorerPaneDLL = NULL;
@@ -25,9 +25,9 @@ HMODULE THm::TExplorerPane::hHmExplorerPaneDLL = NULL;
 THm::THm()
 {
 	// ©•ª©g‚Ìdll‚Ìî•ñ‚ÍAˆê”Ôæ‚Éİ’è‚µ‚Ä‚¨‚­
-	this->SelfDllInfo = TSelfDllAttribute();
+	this->DllBindAttribute = TDllBindAttribute();
 
-	GetModuleFileName(NULL, szHidemaruFullPath, _countof(szHidemaruFullPath));
+	GetModuleFileName(NULL, wszHidemaruFullPath, _countof(wszHidemaruFullPath));
 
 	bool success = setVersion();
 	if (success)
@@ -35,12 +35,12 @@ THm::THm()
 		if (hm_version >= 873.99) {
 
 			// GŠÛ–{‘Ì‚ÉŠÖ”‚ª‚ ‚é‚Ì‚Í 8.73.99ˆÈã
-			hHideExeHandle = LoadLibrary(szHidemaruFullPath);
+			hHideExeHandle = LoadLibrary(wszHidemaruFullPath);
 			if (hHideExeHandle) {
-				Hidemaru_GetDllFuncCalledType = (PFNGetDllFuncCalledType)GetProcAddress(hHideExeHandle, "Hidemaru_GetDllFuncCalledType");
 				Hidemaru_GetCurrentWindowHandle = (PFNGetCurrentWindowHandle)GetProcAddress(hHideExeHandle, "Hidemaru_GetCurrentWindowHandle");
 			}
 
+			this->DllMacroVariant = TDllMacroVariant();
 			this->Edit = TEdit();
 			this->File = TFile();
 			this->Macro = TMacro();
@@ -89,19 +89,10 @@ HWND THm::getWindowHandle()
 
 bool THm::setVersion()
 {
-	hm_version = QueryFileVersion(szHidemaruFullPath);
+	hm_version = QueryFileVersion(wszHidemaruFullPath);
 	if (hm_version > 0.0) {
 		return true;
 	}
 	return false;
 }
-
-
-
-
-
-
-
-
-
 
