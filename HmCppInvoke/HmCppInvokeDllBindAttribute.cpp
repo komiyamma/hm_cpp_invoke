@@ -19,6 +19,11 @@ wchar_t THm::TDllBindAttribute::wszSelfModuleDirPath[MAX_PATH] = L"";
 
 int THm::TDllBindAttribute::iSelfBindedType = 0;
 
+bool THm::rebindParameters() {
+	// これ重要。loadllの形態を保持する。関数が呼ばれる度に更新しておく。
+	return TDllBindAttribute::setBindDllType();
+}
+
 
 HMODULE THm::TDllBindAttribute::getCurrentModule()
 {
@@ -32,16 +37,13 @@ HMODULE THm::TDllBindAttribute::getCurrentModule()
 
 Hidemaru::THm::TDllBindAttribute::TDllBindAttribute()
 {
-	this->initHandle();
-}
-
-void THm::TDllBindAttribute::initHandle() {
 	HMODULE hCurrentModule = getCurrentModule();
 	TDllBindAttribute::hModule = hCurrentModule;
 	GetModuleFileName(hModule, TDllBindAttribute::wszSelfModuleFullPath, _countof(TDllBindAttribute::wszSelfModuleFullPath));
 	wcscpy_s(TDllBindAttribute::wszSelfModuleDirPath, TDllBindAttribute::wszSelfModuleFullPath);
 	PathRemoveFileSpec(TDllBindAttribute::wszSelfModuleDirPath);
 }
+
 
 int THm::TDllBindAttribute::getBindDllType() {
 	return iSelfBindedType;

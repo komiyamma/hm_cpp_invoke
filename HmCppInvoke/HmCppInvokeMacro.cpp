@@ -181,9 +181,45 @@ void Hidemaru::THm::TMacro::ClearMacroVarAndUpdateArgs(const vector<THmMacroVari
 
 THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)
 {
-	std::vector<THmMacroVariable> v;
-	IFunctionResult r = IFunctionResult(0, v, std::nullopt, L"");
-	return r;
+	vector<THmMacroVariable> value_args = { args0, args1, args2, args3, args4, args5, args6, args7, args8, args9 };
+	for (int i = 0; i < value_args.size(); i++) {
+		try {
+			auto value = std::get<nullptr_t>(value_args[i]);
+		}
+		catch (...) {
+			value_args.resize(i);
+			break;
+		}
+	}
+	vector<wstring> varname_list;
+	SetMacroVarAndMakeMacroKeyArray(value_args, varname_list);
+
+	wstring arg_varname_list = StringJoin(varname_list, L", ");
+	wstring utf16_expression = func_name + L"(" + arg_varname_list + L")";
+
+	// GetVar相当-------------------------
+	TestDynamicVar = nullptr;
+	auto dll_invocant = TDllBindAttribute::getInvocantString();
+	wstring cmd =
+		L"##_tmp_dll_id_ret = dllfuncw( " + dll_invocant + L"\"SetDynamicVar\", " + utf16_expression + L");\n"
+		L"##_tmp_dll_id_ret = 0;\n";
+	auto ret = doEval(cmd);
+
+	vector<THmMacroVariable> updated_value_args;
+	ClearMacroVarAndUpdateArgs(value_args, varname_list, updated_value_args);
+
+	if (ret.getResult() >= 0) {
+		IFunctionResult r = IFunctionResult(TestDynamicVar, updated_value_args, std::nullopt, L"");
+		return r;
+	}
+	else {
+		OutputDebugString(L"マクロの実行に失敗しました。\n");
+		OutputDebugString(L"マクロ内容:\n");
+		OutputDebugString(utf16_expression.c_str());
+		exception e = exception("Hidemaru_MacroEvalException");
+		IFunctionResult r = IFunctionResult(nullptr, updated_value_args, e, L"");
+		return r;
+	}
 }
 
 THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring statement_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)

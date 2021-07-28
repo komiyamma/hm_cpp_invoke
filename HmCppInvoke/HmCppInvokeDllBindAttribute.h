@@ -26,7 +26,6 @@ public:
 private:
     static int iSelfBindedType;
 private:
-    static void initHandle();
     static HMODULE getCurrentModule();
 public:
     static int getBindDllType();
