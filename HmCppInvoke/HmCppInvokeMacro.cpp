@@ -109,6 +109,76 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 	return success;
 }
 
+/** joins a vector of strings into a single string */
+std::wstring StringJoin(const std::vector<std::wstring>& strs, const std::wstring delim)
+{
+	if (strs.size() == 0) return L"";
+	std::vector<wchar_t> res;
+	for (size_t i = 0; i < strs.size() - 1; ++i)
+	{
+		for (auto c : strs[i]) res.push_back(c);
+		for (auto c : delim) res.push_back(c);
+	}
+	for (auto c : strs[strs.size() - 1]) res.push_back(c);
+	return std::wstring{ res.begin(), res.end() };
+}
+
+void Hidemaru::THm::TMacro::SetMacroVarAndMakeMacroKeyArray(const vector<THmMacroVariable> value_args, std::vector<std::wstring>& varname_list)
+{
+	int cur_random = rand() + 1;
+	for (size_t i = 0; i < value_args.size(); i++) {
+		auto o = value_args[i];
+
+		try {
+			long v = std::get<long>(o);
+			// 型エラーならここでbad_variant_accessとなる。
+
+			wstring varname = L"#AsMacroArs_" + to_wstring(cur_random + i);
+			varname_list.push_back(varname);
+			setVar(varname, o);
+		}
+		catch (std::bad_variant_access&/* e*/) {
+		}
+
+		try {
+			wstring v = std::get<wstring>(o);
+			// 型エラーならここでbad_variant_accessとなる。
+
+			wstring varname = L"#AsMacroArs_" + to_wstring(cur_random + i);
+			varname_list.push_back(varname);
+			setVar(varname, o);
+		}
+		catch (std::bad_variant_access&/* e*/) {
+		}
+	}
+}
+
+void Hidemaru::THm::TMacro::ClearMacroVarAndUpdateArgs(const vector<THmMacroVariable> value_args, const std::vector<std::wstring> varname_list, vector<THmMacroVariable>& updated_value_args)
+{
+	for (size_t i = 0; i < varname_list.size(); i++) {
+		wstring varname = varname_list[i];
+		if (varname.find(L"#AsMacroArs_") != wstring::npos) {
+			try {
+				updated_value_args.push_back(getVar(varname));
+			}
+			catch (...) {
+				updated_value_args.push_back(value_args[i]);
+			}
+
+			setVar(varname, (long)0);
+		}
+		else if (varname.find(L"$AsMacroArs_") != wstring::npos) {
+			try {
+				updated_value_args.push_back(getVar(varname));
+			}
+			catch (...) {
+				updated_value_args.push_back(value_args[i]);
+			}
+			setVar(varname, L"");
+		}
+	}
+}
+
 THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)
 {
 	std::vector<THmMacroVariable> v;
