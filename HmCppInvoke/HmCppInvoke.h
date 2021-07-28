@@ -1,10 +1,8 @@
+#pragma once
 /*
  * Copyright (c) 2021 Akitsugu Komiyama
  * under the MIT License
  */
-
-
-#pragma once
 
 #include <windows.h>
 #include <string>
@@ -13,6 +11,7 @@
 #include <vector>
 #include <map>
 #include <variant>
+#include <tuple>
 #include <functional>
 #include <set>
 #include <optional>
@@ -56,39 +55,39 @@ namespace Hidemaru {
 
     public:
         class TEdit;
-#include "HmCppInvokeEdit.h"
+#include "HmCppInvokeEdit.hpp"
     public:
         TEdit Edit;
 
     public:
         class TMacro;
-#include "HmCppInvokeMacro.h"
+#include "HmCppInvokeMacro.hpp"
     public:
         TMacro Macro;
 
     public:
         class TFile;
-#include "HmCppInvokeFile.h"
+#include "HmCppInvokeFile.hpp"
     public:
         TFile File;
 
     public:
         class TOutputPane;
-#include "HmCppInvokeOutputPane.h"
+#include "HmCppInvokeOutputPane.hpp"
          
     public:
         TOutputPane OutputPane;
 
     public:
         class TExplorerPane;
-#include "HmCppInvokeExplorerPane.h"
+#include "HmCppInvokeExplorerPane.hpp"
     public:
         TExplorerPane ExplorerPane;
 
 
     private:
         class TDllBindAttribute;
-#include "HmCppInvokeDllBindAttribute.h"
+#include "HmCppInvokeDllBindAttribute.hpp"
     private:
         TDllBindAttribute DllBindAttribute;
 
@@ -97,7 +96,7 @@ namespace Hidemaru {
 
     public:
         class TDllMacroVariant;
-#include "HmCppInvokeDllmacroVariant.h"
+#include "HmCppInvokeDllmacroVariant.hpp"
     private:
         TDllMacroVariant DllMacroVariant;
     };

@@ -2,7 +2,7 @@
  * Copyright (c) 2021 Akitsugu Komiyama
  * under the MIT License
  */
-// (0xFFFF+1)個 indexにはWORD値を取るため、0～0xFFFFまでのindexの受け皿がある。
+// (0xFFFF+1)個 indexにはWORD値を取るため、0～0xFFFFまでの65536個のindexの受け皿がある。
 unsigned int hidemaru_encode_map[] = {
 	0,
 	1,

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021 Akitsugu Komiyama
+ * under the MIT License
+ */
+
 class TMacro {
     // dll‚Ì’†‚©‚çGŠÛƒ}ƒNƒ‚ğÀs‚·‚é
     using PFNEvalMacro = BOOL(WINAPI*)(const wchar_t* pwsz);

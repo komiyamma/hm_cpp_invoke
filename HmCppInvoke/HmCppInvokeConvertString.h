@@ -1,9 +1,8 @@
-/* 
- * Copyright (c) 2017 Akitsugu Komiyama
- * under the Apache License Version 2.0
- */
-
 #pragma once
+/*
+ * Copyright (c) 2021 Akitsugu Komiyama
+ * under the MIT License
+ */
 
 #include <string>
 

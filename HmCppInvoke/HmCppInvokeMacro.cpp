@@ -5,7 +5,7 @@
 
 
 #include "HmCppInvoke.h"
-#include "HmCppInvokeDllExport.h"
+#include "HmCppInvokeDllExport.hpp"
 
 
 using namespace std;
@@ -369,7 +369,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 	}
 
 	std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
-	THm::TMacro::IResult r = THm::TMacro::IResult(0, std::nullopt, L"");
+	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
 	return r;
 }
 

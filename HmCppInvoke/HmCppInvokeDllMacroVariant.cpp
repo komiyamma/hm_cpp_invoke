@@ -3,9 +3,8 @@
  * under the MIT License
  */
 
-
 #include "HmCppInvoke.h"
-#include "HmCppInvokeDllExport.h"
+#include "HmCppInvokeDllExport.hpp"
 
 using namespace std;
 using namespace Hidemaru;

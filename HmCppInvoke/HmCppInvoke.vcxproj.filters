@@ -44,28 +44,28 @@
     <ClInclude Include="HmCppInvokeConvertString.h">
       <Filter>hidemaru</Filter>
     </ClInclude>
-    <ClInclude Include="HmCppInvokeEdit.h">
+    <ClInclude Include="HmCppInvokeEdit.hpp">
       <Filter>hidemaru</Filter>
     </ClInclude>
-    <ClInclude Include="HmCppInvokeMacro.h">
+    <ClInclude Include="HmCppInvokeMacro.hpp">
       <Filter>hidemaru</Filter>
     </ClInclude>
-    <ClInclude Include="HmCppInvokeOutputPane.h">
+    <ClInclude Include="HmCppInvokeOutputPane.hpp">
       <Filter>hidemaru</Filter>
     </ClInclude>
-    <ClInclude Include="HmCppInvokeExplorerPane.h">
+    <ClInclude Include="HmCppInvokeExplorerPane.hpp">
       <Filter>hidemaru</Filter>
     </ClInclude>
-    <ClInclude Include="HmCppInvokeFile.h">
+    <ClInclude Include="HmCppInvokeFile.hpp">
       <Filter>hidemaru</Filter>
     </ClInclude>
-    <ClInclude Include="HmCppInvokeDllBindAttribute.h">
+    <ClInclude Include="HmCppInvokeDllBindAttribute.hpp">
       <Filter>hidemaru</Filter>
     </ClInclude>
-    <ClInclude Include="HmCppInvokeDllmacroVariant.h">
+    <ClInclude Include="HmCppInvokeDllmacroVariant.hpp">
       <Filter>hidemaru</Filter>
     </ClInclude>
-    <ClInclude Include="HmCppInvokeDllExport.h">
+    <ClInclude Include="HmCppInvokeDllExport.hpp">
       <Filter>hidemaru</Filter>
     </ClInclude>
   </ItemGroup>

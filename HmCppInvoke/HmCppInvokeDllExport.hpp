@@ -1,4 +1,9 @@
 #pragma once
+/*
+ * Copyright (c) 2021 Akitsugu Komiyama
+ * under the MIT License
+ */
+
 
 #define HM_DLLEXPORT extern "C" __declspec(dllexport)
 

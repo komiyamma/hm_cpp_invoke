@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021 Akitsugu Komiyama
+ * under the MIT License
+ */
+
 class TOutputPane {
     static HMODULE hHmOutputPaneDLL;
     //-------------------------------------------------------------------------

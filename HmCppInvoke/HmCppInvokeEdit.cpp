@@ -5,7 +5,7 @@
 
 
 #include "HmCppInvoke.h"
-#include "HmCppInvokeDllExport.h"
+#include "HmCppInvokeDllExport.hpp"
 
 using namespace std;
 using namespace Hidemaru;
@@ -255,6 +255,12 @@ int THm::TEdit::ICursorPos::getColumn()
 	return this->column;
 }
 
+THm::TEdit::ICursorPos::operator std::tuple<int, int>()
+{
+	return { getLineNo(), getColumn() };
+}
+
+
 THm::TEdit::IMousePos::IMousePos(int lineno, int column, int x, int y)
 {
 	this->lineno = lineno;
@@ -262,6 +268,8 @@ THm::TEdit::IMousePos::IMousePos(int lineno, int column, int x, int y)
 	this->x = x;
 	this->y = y;
 }
+
+
 
 
 int THm::TEdit::IMousePos::getLineNo()
@@ -285,4 +293,8 @@ int THm::TEdit::IMousePos::getY()
 }
 
 
+THm::TEdit::IMousePos::operator std::tuple<int, int, int, int>()
+{
+	return { getLineNo(), getColumn(), getX(), getY() };
+}
 
