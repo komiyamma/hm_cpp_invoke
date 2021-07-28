@@ -403,12 +403,13 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 	}
 
 	std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
-	THm::TMacro::IResult r = THm::TMacro::IResult(0, std::nullopt, L"");
+	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
 	return r;
 }
 
 Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, function<long(wstring)> callback_method)
 {
+	// ‚Ü‚¾–¢ŽÀ‘•
 	std::exception e = std::exception();
 	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
 	return r;
