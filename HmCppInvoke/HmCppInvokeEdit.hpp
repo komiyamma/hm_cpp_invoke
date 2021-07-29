@@ -43,8 +43,6 @@ public:
         int getLineNo();
         int getColumn();
         ICursorPos(int lineno, int column);
-
-        operator std::tuple<int, int>();
     };
 
     class IMousePos {
@@ -58,8 +56,6 @@ public:
         int getX();
         int getY();
         IMousePos(int lineno, int column, int x, int y);
-
-        operator std::tuple<int, int, int, int>();
     };
 
     ICursorPos getCursorPos();

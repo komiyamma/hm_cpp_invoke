@@ -255,11 +255,6 @@ int THm::TEdit::ICursorPos::getColumn()
 	return this->column;
 }
 
-THm::TEdit::ICursorPos::operator std::tuple<int, int>()
-{
-	return { getLineNo(), getColumn() };
-}
-
 
 THm::TEdit::IMousePos::IMousePos(int lineno, int column, int x, int y)
 {
@@ -291,10 +286,3 @@ int THm::TEdit::IMousePos::getY()
 {
 	return this->y;
 }
-
-
-THm::TEdit::IMousePos::operator std::tuple<int, int, int, int>()
-{
-	return { getLineNo(), getColumn(), getX(), getY() };
-}
-

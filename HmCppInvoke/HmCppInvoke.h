@@ -17,6 +17,7 @@
 #include <optional>
 
 namespace Hidemaru {
+
     using THmMacroVariable = std::variant<nullptr_t, long, std::wstring>;
     using THmMacroResultError = std::optional<std::exception>;
     using THmMacroDoMethodType = long (*)(std::wstring message_parameter);
