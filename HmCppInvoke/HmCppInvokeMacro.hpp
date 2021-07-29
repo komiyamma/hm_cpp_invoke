@@ -68,7 +68,7 @@ public:
     public:
         IResult doEval(std::wstring expression);
         IResult doFile(std::wstring filepath);
-        IResult doMethod(std::wstring message_parameter, std::function<long(std::wstring)> callback_method);
+        IResult doMethod(std::wstring message_parameter, THmMacroDoMethodType callback_method);
     };
 
     TExec Exec;

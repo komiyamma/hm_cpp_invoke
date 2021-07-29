@@ -17,3 +17,5 @@ HM_DLLEXPORT long PopNumVar();
 HM_DLLEXPORT long PushNumVar(long i_tmp_num);
 HM_DLLEXPORT const wchar_t* PopStrVar();
 HM_DLLEXPORT long PushStrVar(const wchar_t* wsz_tmp_str);
+
+HM_DLLEXPORT long DoDelegateMethod(const wchar_t* wsz_tmp_str, intptr_t func_address);

@@ -407,11 +407,26 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 	return r;
 }
 
-Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, function<long(wstring)> callback_method)
+// ä÷êîÇé¿çsÇ∑ÇÈ
+HM_DLLEXPORT long DoDelegateMethod(const wchar_t* message_parameter, intptr_t func_address) {
+	THmMacroDoMethodType func = (THmMacroDoMethodType)func_address;
+	return func(message_parameter);
+
+}
+
+Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, THmMacroDoMethodType callback_method)
 {
-	// Ç‹Çæñ¢é¿ëï
-	std::exception e = std::exception();
-	THm::TMacro::IResult r = THm::TMacro::IResult(0, e, L"");
-	return r;
+
+	wstring strDllFullPath = Hm.DllBindAttribute.getSelfModuleFullPath();
+	intptr_t funcAddress = (intptr_t)callback_method;
+	wstring &scopeName = message_parameter;
+
+	wstring expression = LR"EXP(
+		#_dll_dotnet_newscope = loaddll()EXP" + strDllFullPath + LR"EXP();
+    	#_r_dotnet_newscope = dllfuncw(#_dll_dotnet_newscope, "DoDelegateMethod", )EXP" + std::to_wstring(funcAddress) + LR"EXP(, R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME");
+        endmacro R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME";
+    )EXP";
+
+	return doEval(expression);
 }
 
