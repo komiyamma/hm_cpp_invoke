@@ -283,6 +283,11 @@ THm::TMacro::IResult::IResult(long result, THmMacroResultError error, std::wstri
 	this->message = message;
 }
 
+THm::TMacro::IResult::operator std::tuple<long, THmMacroResultError, std::wstring>()
+{
+	return { getResult(), getException(), getMessage() };
+}
+
 THmMacroVariable THm::TMacro::IFunctionResult::getResult()
 {
 	return this->result;
@@ -311,6 +316,11 @@ Hidemaru::THm::TMacro::IFunctionResult::IFunctionResult(THmMacroVariable result,
 	this->message = message;
 }
 
+Hidemaru::THm::TMacro::IFunctionResult::operator std::tuple<THmMacroVariable, THmMacroResultError, std::vector<THmMacroVariable>, std::wstring>()
+{
+	return { getResult(),getException(), getArgs(), getMessage() };
+}
+
 long Hidemaru::THm::TMacro::IStatementResult::getResult()
 {
 	return this->result;
@@ -337,6 +347,11 @@ Hidemaru::THm::TMacro::IStatementResult::IStatementResult(long result, std::vect
 	this->args = args;
 	this->error = error;
 	this->message = message;
+}
+
+Hidemaru::THm::TMacro::IStatementResult::operator std::tuple<long, THmMacroResultError, std::vector<THmMacroVariable>, std::wstring>()
+{
+	return { getResult(),getException(), getArgs(), getMessage() };
 }
 
 Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring expression)
