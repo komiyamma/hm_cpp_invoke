@@ -76,7 +76,7 @@ namespace Hidemaru {
     public:
         class TOutputPane;
 #include "HmCppInvokeOutputPane.hpp"
-         
+
     public:
         TOutputPane OutputPane;
 
