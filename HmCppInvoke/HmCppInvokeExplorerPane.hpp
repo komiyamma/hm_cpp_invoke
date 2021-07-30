@@ -33,7 +33,7 @@ public:
     bool loadProject(std::wstring filepath);
     bool saveProject(std::wstring filepath);
     std::wstring getProject();
-    long sendMessage(int command_id);
+    THmNumber sendMessage(int command_id);
     HWND getWindowHandle();
     bool getUpdated();
 };

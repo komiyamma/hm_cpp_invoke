@@ -27,7 +27,7 @@ public:
     bool push();
     bool pop();
     bool clear();
-    long sendMessage(int command_id);
+    THmNumber sendMessage(int command_id);
     bool setBaseDir(std::wstring dirpath);
     HWND getWindowHandle();
 };

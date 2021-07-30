@@ -11,7 +11,6 @@
 using namespace std;
 using namespace Hidemaru;
 
-
 THm::TMacro::PFNEvalMacro THm::TMacro::Hidemaru_EvalMacro = NULL;
 
 THm::TMacro::TMacro()
@@ -78,15 +77,15 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 	if (start == L'#') {
 
 		// 数字を数値にトライ。ダメなら0だよ。
-		long n = 0;
+		THmNumber n = 0;
 		try {
-			n = std::get<long>(value);
+			n = std::get<THmNumber>(value);
 
 			PushNumVar(n);
 			wstring cmd = L" = dllfuncw( " + dll_invocant + L"\"PopNumVar\" );\n";
 			cmd = varname + cmd;
 			auto ret = Hm.Macro.doEval(cmd);
-			success = ret.getResult();
+			success = (ret.getResult() > 0);
 		}
 		catch (exception& e) {
 			OutputDebugStringA(e.what());
@@ -99,7 +98,7 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 			wstring cmd = L" = dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n";
 			cmd = varname + cmd;
 			auto ret = Hm.Macro.doEval(cmd);
-			success = ret.getResult();
+			success = (ret.getResult() > 0);
 		}
 		catch (exception& e) {
 			OutputDebugStringA(e.what());
@@ -130,7 +129,7 @@ void Hidemaru::THm::TMacro::SetMacroVarAndMakeMacroKeyArray(const vector<THmMacr
 		auto o = value_args[i];
 
 		try {
-			long v = std::get<long>(o);
+			THmNumber v = std::get<THmNumber>(o);
 			// 型エラーならここでbad_variant_accessとなる。
 
 			wstring varname = L"#AsMacroArs_" + to_wstring(cur_random + i);
@@ -165,7 +164,7 @@ void Hidemaru::THm::TMacro::ClearMacroVarAndUpdateArgs(const vector<THmMacroVari
 				updated_value_args.push_back(value_args[i]);
 			}
 
-			setVar(varname, (long)0);
+			setVar(varname, (THmNumber)0);
 		}
 		else if (varname.find(L"$AsMacroArs_") != wstring::npos) {
 			try {
@@ -261,7 +260,7 @@ THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring st
 }
 
 
-long THm::TMacro::IResult::getResult()
+THmNumber THm::TMacro::IResult::getResult()
 {
 	return this->result;
 }
@@ -276,7 +275,7 @@ std::wstring THm::TMacro::IResult::getMessage()
 	return this->message;
 }
 
-THm::TMacro::IResult::IResult(long result, THmMacroResultError error, std::wstring message)
+THm::TMacro::IResult::IResult(THmNumber result, THmMacroResultError error, std::wstring message)
 {
 	this->result = result;
 	this->error = error;
@@ -311,7 +310,7 @@ Hidemaru::THm::TMacro::IFunctionResult::IFunctionResult(THmMacroVariable result,
 	this->message = message;
 }
 
-long Hidemaru::THm::TMacro::IStatementResult::getResult()
+THmNumber Hidemaru::THm::TMacro::IStatementResult::getResult()
 {
 	return this->result;
 }
@@ -331,7 +330,7 @@ std::wstring Hidemaru::THm::TMacro::IStatementResult::getMessage()
 	return this->message;
 }
 
-Hidemaru::THm::TMacro::IStatementResult::IStatementResult(long result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message)
+Hidemaru::THm::TMacro::IStatementResult::IStatementResult(THmNumber result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message)
 {
 	this->result = result;
 	this->args = args;
@@ -361,7 +360,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
 			std::exception e = std::exception();
-			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, std::nullopt, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, L"");
 			return r;
 		}
 		else {
@@ -369,7 +368,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(expression.c_str());
 			std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
-			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, std::nullopt, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, L"");
 			return r;
 		}
 	}
@@ -401,7 +400,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
 			std::exception e = std::exception();
-			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, std::nullopt, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, L"");
 			return r;
 		}
 		else {
@@ -409,7 +408,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(filepath.c_str());
 			std::exception e = std::runtime_error("Hidemaru_MacroExecFileException");
-			THm::TMacro::IResult r = THm::TMacro::IResult((long)lRet, std::nullopt, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, L"");
 			return r;
 		}
 	}
@@ -420,9 +419,9 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 }
 
 // 関数を実行する
-HM_DLLEXPORT long DoDelegateMethod(const wchar_t* message_parameter, intptr_t func_address) {
-	THmMacroDoMethodType func = (THmMacroDoMethodType)func_address;
-	return func(message_parameter);
+HM_DLLEXPORT THmNumber DoDelegateMethod(THmNumber func_address, const wchar_t* message_parameter ) {
+	THmMacroDoMethodType callback_method = (THmMacroDoMethodType)(intptr_t)func_address;
+	return callback_method(message_parameter);
 
 }
 
@@ -433,17 +432,16 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstri
 		THm::TMacro::IResult ret = THm::TMacro::IResult(0, e, L"");
 		return ret;
 	}
-
 	wstring strDllFullPath = Hm.DllBindAttribute.getSelfModuleFullPath();
-	intptr_t funcAddress = (intptr_t)callback_method;
 	wstring &scopeName = message_parameter;
 
+	intptr_t func_address = (intptr_t)(*callback_method);
+
 	wstring expression = LR"EXP(
-		#_dll_dotnet_newscope = loaddll()EXP" + strDllFullPath + LR"EXP();
-    	#_r_dotnet_newscope = dllfuncw(#_dll_dotnet_newscope, "DoDelegateMethod", )EXP" + std::to_wstring(funcAddress) + LR"EXP(, R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME");
+		#_dll_dotnet_newscope = loaddll(R"DLLPATH()EXP" + strDllFullPath + LR"EXP()DLLPATH");
+    	#_r_dotnet_newscope = dllfuncw(#_dll_dotnet_newscope, "DoDelegateMethod", )EXP" + std::to_wstring(func_address) + LR"EXP(, R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME");
         endmacro R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME";
     )EXP";
-
 	auto ret = Hm.Macro.Exec.doEval(expression);
 	return ret;
 }

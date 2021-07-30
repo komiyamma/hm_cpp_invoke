@@ -14,14 +14,14 @@ public:
 
 public:
     class IResult {
-        long result;
+        THmNumber result;
         THmMacroResultError error;
         std::wstring message;
     public:
-        long getResult();
+        THmNumber getResult();
         THmMacroResultError getException();
         std::wstring getMessage();
-        IResult(long result, THmMacroResultError error, std::wstring message);
+        IResult(THmNumber result, THmMacroResultError error, std::wstring message);
     };
 
     IResult doEval(std::wstring expression);
@@ -46,16 +46,16 @@ public:
     IFunctionResult doFunction(std::wstring func_name, THmMacroVariable args0 = nullptr, THmMacroVariable args1 = nullptr, THmMacroVariable args2 = nullptr, THmMacroVariable args3 = nullptr, THmMacroVariable args4 = nullptr, THmMacroVariable args5 = nullptr, THmMacroVariable args6 = nullptr, THmMacroVariable args7 = nullptr, THmMacroVariable args8 = nullptr, THmMacroVariable args9 = nullptr);
 
     class IStatementResult {
-        long result;
+        THmNumber result;
         THmMacroResultError error;
         std::vector<THmMacroVariable> args;
         std::wstring message;
     public:
-        long getResult();
+        THmNumber getResult();
         THmMacroResultError getException();
         std::vector<THmMacroVariable> getArgs();
         std::wstring getMessage();
-        IStatementResult(long result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message);
+        IStatementResult(THmNumber result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message);
     };
 
     IStatementResult doStatement(std::wstring statement_name, THmMacroVariable args0 = nullptr, THmMacroVariable args1 = nullptr, THmMacroVariable args2 = nullptr, THmMacroVariable args3 = nullptr, THmMacroVariable args4 = nullptr, THmMacroVariable args5 = nullptr, THmMacroVariable args6 = nullptr, THmMacroVariable args7 = nullptr, THmMacroVariable args8 = nullptr, THmMacroVariable args9 = nullptr);

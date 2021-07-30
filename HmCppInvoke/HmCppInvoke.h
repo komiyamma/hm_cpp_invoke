@@ -16,11 +16,12 @@
 #include <set>
 #include <optional>
 
-namespace Hidemaru {
 
-    using THmMacroVariable = std::variant<nullptr_t, long, std::wstring>;
+namespace Hidemaru {
+    using THmNumber = intptr_t;
+    using THmMacroVariable = std::variant<nullptr_t, THmNumber, std::wstring>;
     using THmMacroResultError = std::optional<std::exception>;
-    using THmMacroDoMethodType = long (*)(std::wstring message_parameter);
+    using THmMacroDoMethodType = THmNumber (*)(std::wstring message_parameter);
 }
 
 namespace Hidemaru {

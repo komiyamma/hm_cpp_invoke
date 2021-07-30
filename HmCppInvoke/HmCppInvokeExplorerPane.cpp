@@ -132,14 +132,14 @@ std::wstring THm::TExplorerPane::getProject()
 	return L"";
 }
 
-long THm::TExplorerPane::sendMessage(int command_id)
+THmNumber THm::TExplorerPane::sendMessage(int command_id)
 {
 	HWND ExplorerWindowHandle = this->getWindowHandle();
 	if (ExplorerWindowHandle) {
 		//251=‚P‚Âã‚ÌƒtƒHƒ‹ƒ_
 		// 0x111 = WM_COMMAND
 		LRESULT r = SendMessageW(ExplorerWindowHandle, 0x111, command_id, 0);
-		return (long)r;
+		return (THmNumber)r;
 
 	}
 	return FALSE;

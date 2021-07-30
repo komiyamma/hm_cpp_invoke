@@ -21,7 +21,7 @@ Hidemaru::THm::TDllMacroVariant::TDllMacroVariant()
 }
 
 // 秀丸の変数が文字列か数値かの判定用
-HM_DLLEXPORT long SetDynamicVar(const void* dynamic_value) {
+HM_DLLEXPORT THmNumber SetDynamicVar(const void* dynamic_value) {
 
 	if (!THm::TDllMacroVariant::Hidemaru_GetDllFuncCalledType) {
 		return 0;
@@ -33,20 +33,20 @@ HM_DLLEXPORT long SetDynamicVar(const void* dynamic_value) {
 		return 1;
 	}
 	else {
-		Hidemaru::TestDynamicVar = (long)(intptr_t)dynamic_value;
+		Hidemaru::TestDynamicVar = (THmNumber)(intptr_t)dynamic_value;
 		return 1;
 	}
 }
 
 
-static long popnumvar = 0;
+static THmNumber popnumvar = 0;
 // スタックした変数を秀丸マクロから取り出す。内部処理用
-HM_DLLEXPORT long PopNumVar() {
+HM_DLLEXPORT THmNumber PopNumVar() {
 	return popnumvar;
 }
 
 // 変数を秀丸マクロから取り出すためにスタック。内部処理用
-HM_DLLEXPORT long PushNumVar(long i_tmp_num) {
+HM_DLLEXPORT THmNumber PushNumVar(THmNumber i_tmp_num) {
 	popnumvar = i_tmp_num;
 	return 1;
 }
@@ -58,7 +58,7 @@ HM_DLLEXPORT const wchar_t* PopStrVar() {
 }
 
 // 変数を秀丸マクロから取り出すためにスタック。内部処理用
-HM_DLLEXPORT long PushStrVar(const wchar_t* wsz_tmp_str) {
+HM_DLLEXPORT THmNumber PushStrVar(const wchar_t* wsz_tmp_str) {
 	popstrvar = wsz_tmp_str;
 	return 1;
 }

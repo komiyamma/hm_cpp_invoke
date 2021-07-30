@@ -104,19 +104,19 @@ bool THm::TOutputPane::pop()
 
 bool THm::TOutputPane::clear()
 {
-	long ret = this->sendMessage(1009);
+	THmNumber ret = this->sendMessage(1009);
 	// 今のところ有意な値は返していない
 	return (bool)ret;
 }
 
-long THm::TOutputPane::sendMessage(int command_id)
+THmNumber THm::TOutputPane::sendMessage(int command_id)
 {
 	HWND OutputWindowHandle = this->getWindowHandle();
 	if (OutputWindowHandle) {
 		// (#h,0x111/*WM_COMMAND*/,1009,0);//1009=クリア
 		// 0x111 = WM_COMMAND
 		LRESULT r = SendMessageW(OutputWindowHandle, 0x111, command_id, 0);
-		return (long)r;
+		return (THmNumber)r;
 
 	}
 	return FALSE;
