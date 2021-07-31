@@ -425,7 +425,7 @@ HM_DLLEXPORT THmNumber DoDelegateMethod(THmNumber func_address, const wchar_t* m
 
 }
 
-Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, THmMacroDoMethodType callback_method)
+Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstring message_parameter, THmMacroDoMethodType delegate_method)
 {
 	if (Hm.Macro.isExecuting()) {
 		std::exception e = std::runtime_error("Hidemaru_MacroIsExecutingException");
@@ -435,7 +435,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstri
 	wstring strDllFullPath = Hm.DllBindAttribute.getSelfModuleFullPath();
 	wstring &scopeName = message_parameter;
 
-	intptr_t func_address = (intptr_t)(*callback_method);
+	intptr_t func_address = (intptr_t)(*delegate_method);
 
 	wstring expression = LR"EXP(
 		#_dll_dotnet_newscope = loaddll(R"DLLPATH()EXP" + strDllFullPath + LR"EXP()DLLPATH");

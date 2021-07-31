@@ -23,12 +23,47 @@ class TOutputPane {
 public:
     TOutputPane();
 public:
+    /// <summary>
+    /// アウトプット枠への文字列の出力。
+    /// 改行するには「\r\n」といったように「\r」も必要。
+    /// </summary>
+    /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool output(std::wstring message);
+
+    /// <summary>
+    /// アウトプット枠にある文字列の一時退避
+    /// </summary>
+    /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool push();
+
+    /// <summary>
+    /// Pushによって一時退避した文字列の復元
+    /// </summary>
+    /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool pop();
+
+    /// <summary>
+    /// アウトプット枠にある文字列のクリア
+    /// </summary>
+    /// <returns>現在のところ、成否を指し示す値は返ってこない</returns>
     bool clear();
+
+    /// <summary>
+    /// アウトプット枠へのSendMessage
+    /// </summary>
+    /// <returns>SendMessageの返り値(LRESULT型)と同じ</returns>
     THmNumber sendMessage(int command_id);
+
+    /// <summary>
+    /// アウトプット枠のベースとなるディレクトリの設定
+    /// </summary>
+    /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool setBaseDir(std::wstring dirpath);
+
+    /// <summary>
+    /// アウトプット枠のWindowHandle
+    /// </summary>
+    /// <returns>アウトプット枠のWindowHandle</returns>
     HWND getWindowHandle();
 };
 
