@@ -14,6 +14,9 @@ class TFile {
 public:
     TFile();
 
+    /// <summary>
+    /// MsCodePage と HmEncode を一括で扱うためのクラス
+    /// </summary>
     class IEncoding {
         int hm_encode;
         int ms_codepage;
@@ -21,11 +24,31 @@ public:
         IEncoding(int hm_encode, int ms_codepage);
         IEncoding() = default;
         IEncoding(const IEncoding&) = default;
+
+        /// <summary>
+        /// 秀丸のencode値相当を得る。厳密には マクロのencode値 「& 0x3F」のANDビット演算した値）
+        /// <para>https://help.maruo.co.jp/hidemac/html/060_Keyword_State.html#encode の0～28と同じ</para>
+        /// </summary>
         int getHmEncode();
+
+        /// <summary>
+        /// マイクロソフトのCodePage値相当を得る。
+        /// <para>Win32apiを使って文字エンコードを処理するにはこの値が必要となるだろう。</para>
+        /// </summary>
         int getMsCodePage();
     };
 
+    /// <summary>
+    /// 秀丸のEncode値からMsCodePageの値を得るためのメソッド
+    /// </summary>
+    /// <returns>IEncoding型のオブジェクト。MsCodePage と HmEncode を得られる。</returns>
     IEncoding getEncoding(int hm_encode);
+
+    /// <summary>
+    /// 指定のファイルの絶対パスからIEncoding型オブジェクを得るためのメソッド
+    /// <para>（あなたの秀丸のファイルのエンコード判断の設定に従う。汎用的なファイルエンコード判定関数ではない）</para>
+    /// </summary>
+    /// <returns>IEncoding型のオブジェクト。MsCodePage と HmEncode を得られる。</returns>
     IEncoding getEncoding(std::wstring filepath);
     const std::map<int, int> getEncodingMap();
 
@@ -40,6 +63,13 @@ public:
         void close();
     };
 
+    /// <summary>
+    /// 秀丸でファイルのエンコードを判断し、その判断結果に基づいてファイルのテキスト内容を取得する。
+    /// （秀丸に設定されている内容に従う）
+    /// </summary>
+    /// <param name = "filepath">読み込み対象のファイルのパス</param>
+    /// <param name = "hm_encode">エンコード(秀丸マクロの「encode」の値)が分かっているならば指定する、指定しない場合秀丸APIの自動判定に任せる。</param>
+    /// <returns>IHidemaruStreamReader型のオブジェクト。</returns>
     IHidemaruStreamReader open(std::wstring filepath, int hm_encode = -1);
 };
 
