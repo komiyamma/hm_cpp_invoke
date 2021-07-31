@@ -64,7 +64,11 @@ bool THm::TOutputPane::output(std::wstring message)
 	// ‚¿‚á‚ñ‚ÆŠÖ”‚ª‚ ‚é‚¾‚¯
 	if (Hidemaru_GetCurrentWindowHandle) {
 		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
-		if (HmOutputPane_Output) {
+		if (HmOutputPane_OutputW) {
+			BOOL result = HmOutputPane_OutputW(hHidemaruWindow, message.data());
+			return result;
+		}
+		else if (HmOutputPane_Output) {
 			auto encode_byte_data = EncodeWStringToOriginalEncodeVector(message);
 			BOOL result = HmOutputPane_Output(hHidemaruWindow, encode_byte_data.data());
 			return result;
