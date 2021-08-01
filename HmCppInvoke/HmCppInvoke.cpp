@@ -30,7 +30,7 @@ HMODULE THm::TExplorerPane::hHmExplorerPaneDLL = NULL;
 THm::THm()
 {
 	// Ž©•ªŽ©g‚Ìdll‚Ìî•ñ‚ÍAˆê”Ôæ‚ÉÝ’è‚µ‚Ä‚¨‚­
-	this->DllBindAttribute = TDllBindAttribute();
+	this->DllBindType = TDllBindType();
 
 	GetModuleFileName(NULL, wszHidemaruFullPath, _countof(wszHidemaruFullPath));
 
@@ -45,7 +45,7 @@ THm::THm()
 				Hidemaru_GetCurrentWindowHandle = (PFNGetCurrentWindowHandle)GetProcAddress(hHideExeHandle, "Hidemaru_GetCurrentWindowHandle");
 			}
 
-			this->DllMacroVariant = TDllMacroVariant();
+			this->DllFuncCalledType = TDllFuncCalledType();
 			this->Edit = TEdit();
 			this->File = TFile();
 			this->Macro = TMacro();

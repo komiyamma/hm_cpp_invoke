@@ -55,7 +55,7 @@ THm::TMacro::IResult THm::TMacro::doEval(std::wstring expression)
 THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 {
 	TestDynamicVar = nullptr;
-	auto dll_invocant = TDllBindAttribute::getInvocantString();
+	auto dll_invocant = TDllBindType::getInvocantString();
 	wstring cmd =
 		L"##_tmp_dll_id_ret = dllfuncw( " + dll_invocant + L"\"SetDynamicVar\", " + varname + L");\n"
 		L"##_tmp_dll_id_ret = 0;\n";
@@ -71,7 +71,7 @@ bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 {
 	BOOL success = 0;
 
-	auto dll_invocant = TDllBindAttribute::getInvocantString();
+	auto dll_invocant = TDllBindType::getInvocantString();
 
 	wchar_t start = varname[0];
 	if (start == L'#') {
@@ -198,7 +198,7 @@ THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func
 
 	// GetVar‘Š“–-------------------------
 	TestDynamicVar = nullptr;
-	auto dll_invocant = TDllBindAttribute::getInvocantString();
+	auto dll_invocant = TDllBindType::getInvocantString();
 	wstring cmd =
 		L"##_tmp_dll_id_ret = dllfuncw( " + dll_invocant + L"\"SetDynamicVar\", " + utf16_expression + L");\n"
 		L"##_tmp_dll_id_ret = 0;\n";
@@ -432,7 +432,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstri
 		THm::TMacro::IResult ret = THm::TMacro::IResult(0, e, L"");
 		return ret;
 	}
-	wstring strDllFullPath = Hm.DllBindAttribute.getSelfModuleFullPath();
+	wstring strDllFullPath = Hm.DllBindType.getSelfModuleFullPath();
 	wstring &scopeName = message_parameter;
 
 	intptr_t func_address = (intptr_t)(*delegate_method);

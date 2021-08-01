@@ -5,30 +5,66 @@
 
 #include "HmCppInvoke.h"
 #include "HmCppInvokeDllExport.h"
+#include "HmCppInvokeDllFuncCalledType.h"
 
 using namespace std;
 using namespace Hidemaru;
 
-THm::TDllMacroVariant::PFNGetDllFuncCalledType THm::TDllMacroVariant::Hidemaru_GetDllFuncCalledType = NULL;
+THm::TDllFuncCalledType::PFNGetDllFuncCalledType THm::TDllFuncCalledType::Hidemaru_GetDllFuncCalledType = NULL;
 
 THmMacroVariable Hidemaru::TestDynamicVar = nullptr;
 
-Hidemaru::THm::TDllMacroVariant::TDllMacroVariant()
+Hidemaru::THm::TDllFuncCalledType::TDllFuncCalledType()
 {
 	if (hHideExeHandle) {
 		Hidemaru_GetDllFuncCalledType = (PFNGetDllFuncCalledType)GetProcAddress(hHideExeHandle, "Hidemaru_GetDllFuncCalledType");
 	}
 }
 
-// 秀丸の変数が文字列か数値かの判定用
-HM_DLLEXPORT THmNumber SetDynamicVar(const void* dynamic_value) {
+bool THm::TDllFuncCalledType::isMissingMethod()
+{
+	if (!Hidemaru_GetDllFuncCalledType) {
+		return true;
+	}
+	return false;
+}
 
-	if (!THm::TDllMacroVariant::Hidemaru_GetDllFuncCalledType) {
+int THm::TDllFuncCalledType::getDllBindType()
+{
+	if (!Hidemaru_GetDllFuncCalledType) {
 		return 0;
 	}
 
-	auto param_type = (THm::TDllMacroVariant::DLLFUNCPARAM)THm::TDllMacroVariant::Hidemaru_GetDllFuncCalledType(1);
-	if (param_type == THm::TDllMacroVariant::DLLFUNCPARAM::WCHAR_PTR) {
+	int dll = Hidemaru_GetDllFuncCalledType(-1); // 自分のdllの呼ばれ方をチェック
+	return dll;
+}
+
+THm::TDllFuncCalledType::DLLFUNCPARAM THm::TDllFuncCalledType::getFuncParamType(int arg_n)
+{
+	if (!Hidemaru_GetDllFuncCalledType) {
+		return DLLFUNCPARAM::NOPARAM;
+	}
+
+	auto param_type = Hidemaru_GetDllFuncCalledType(arg_n);
+
+	return (DLLFUNCPARAM)param_type;
+}
+
+THm::TDllFuncCalledType::DLLFUNCRETURN THm::TDllFuncCalledType::getFuncReturnType()
+{
+	auto return_type = Hidemaru_GetDllFuncCalledType(0);
+
+	return (DLLFUNCRETURN)return_type;
+}
+
+// 秀丸の変数が文字列か数値かの判定用
+HM_DLLEXPORT THmNumber SetDynamicVar(const void* dynamic_value) {
+
+	if (Hm.DllFuncCalledType.isMissingMethod()) {
+		return 0;
+	}
+	auto param_type = Hm.DllFuncCalledType.getFuncParamType(1);
+	if (param_type == THm::TDllFuncCalledType::DLLFUNCPARAM::WCHAR_PTR) {
 		Hidemaru::TestDynamicVar = wstring((wchar_t*)dynamic_value);
 		return 1;
 	}

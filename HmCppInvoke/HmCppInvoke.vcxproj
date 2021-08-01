@@ -153,20 +153,20 @@
     <ClCompile Include="HmCppInvokeConvertString.cpp" />
     <ClCompile Include="HmCppInvoke.cpp" />
     <ClCompile Include="HmCppInvokeEdit.cpp" />
-    <ClCompile Include="HmCppInvokeDllMacroVariant.cpp" />
+    <ClCompile Include="HmCppInvokeDllFuncCalledType.cpp" />
     <ClCompile Include="HmCppInvokeExplorerPane.cpp" />
     <ClCompile Include="HmCppInvokeFile.cpp" />
     <ClCompile Include="HmCppInvokeMacro.cpp" />
     <ClCompile Include="HmCppInvokeOriginalEncode.cpp" />
     <ClCompile Include="HmCppInvokeOutputPane.cpp" />
-    <ClCompile Include="HmCppInvokeDllBindAttribute.cpp" />
+    <ClCompile Include="HmCppInvokeDllBindType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HmCppInvokeConvertString.h" />
     <ClInclude Include="HmCppInvoke.h" />
-    <ClInclude Include="HmCppInvokeDllBindAttribute.h" />
+    <ClInclude Include="HmCppInvokeDllBindType.h" />
     <ClInclude Include="HmCppInvokeDllExport.h" />
-    <ClInclude Include="HmCppInvokeDllmacroVariant.h" />
+    <ClInclude Include="HmCppInvokeDllFuncCalledType.h" />
     <ClInclude Include="HmCppInvokeEdit.h" />
     <ClInclude Include="HmCppInvokeExplorerPane.h" />
     <ClInclude Include="HmCppInvokeFile.h" />

@@ -133,19 +133,19 @@ namespace Hidemaru {
 
 
     private:
-        class TDllBindAttribute;
-#include "HmCppInvokeDllBindAttribute.h"
+        class TDllBindType;
+#include "HmCppInvokeDllBindType.h"
     private:
-        TDllBindAttribute DllBindAttribute;
+        TDllBindType DllBindType;
 
     public:
         bool rebindParameters();
 
     public:
-        class TDllMacroVariant;
-#include "HmCppInvokeDllmacroVariant.h"
-    private:
-        TDllMacroVariant DllMacroVariant;
+        class TDllFuncCalledType;
+#include "HmCppInvokeDllFuncCalledType.h"
+    public:
+        TDllFuncCalledType DllFuncCalledType;
     };
 };
 
