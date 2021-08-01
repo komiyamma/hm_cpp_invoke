@@ -3,6 +3,9 @@
  * under the MIT License
  */
 
+ /// <summary>
+ /// ファイル関連
+ /// </summary>
 class TFile {
     // 何のエンコードで開かれるのかを取得する機能となる。
     using PFNAnalyzeEncoding = int(WINAPI*)(const WCHAR* pwszFileName, DWORD_PTR lParam1, DWORD_PTR lParam2);

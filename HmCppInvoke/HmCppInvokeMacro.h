@@ -3,6 +3,9 @@
  * under the MIT License
  */
 
+ /// <summary>
+ /// マクロ関連
+ /// </summary>
 class TMacro {
     // dllの中から秀丸マクロを実行する
     using PFNEvalMacro = BOOL(WINAPI*)(const wchar_t* pwsz);

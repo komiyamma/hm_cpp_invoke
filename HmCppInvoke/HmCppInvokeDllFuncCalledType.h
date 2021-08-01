@@ -3,7 +3,9 @@
  * under the MIT License
  */
 
-
+/// <summary>
+/// dll‚âŠÖ”‚ÌŒÄ‚Î‚ê•û‚ÌƒNƒ‰ƒX
+/// </summary>
 class TDllFuncCalledType {
 public:
     TDllFuncCalledType();

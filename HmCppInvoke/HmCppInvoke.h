@@ -42,6 +42,10 @@ namespace Hidemaru {
 }
 
 namespace Hidemaru {
+
+    /// <summary>
+    /// Hm‚ÌŠî–{‚Æ‚È‚éƒNƒ‰ƒX
+    /// </summary>
     class THm {
     public:
         THm();

@@ -3,11 +3,11 @@
  * under the MIT License
  */
 
+ /// <summary>
+ /// アウトプット枠
+ /// </summary>
 class TOutputPane {
     static HMODULE hHmOutputPaneDLL;
-    //-------------------------------------------------------------------------
-    // アウトプットパネル
-    //-------------------------------------------------------------------------
     using PFNHmOutputPane_Output = int(_cdecl*)(HWND hwnd, BYTE*);
     static PFNHmOutputPane_Output HmOutputPane_Output;
     using PFNHmOutputPane_OutputW = int(_cdecl*)(HWND hwnd, wchar_t* message);

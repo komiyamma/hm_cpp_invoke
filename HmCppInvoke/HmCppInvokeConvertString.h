@@ -8,6 +8,10 @@
 
 namespace Hidemaru {
 	namespace Text {
+
+		/// <summary>
+		/// よくある文字エンコード変換系
+		/// </summary>
 		class Encoding {
 		public:
 			/// <summary>
