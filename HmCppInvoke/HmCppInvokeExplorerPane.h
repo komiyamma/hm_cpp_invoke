@@ -33,6 +33,7 @@ public:
     /// <summary>
     /// ファイルマネージャ枠のモードの設定
     /// </summary>
+    /// <param name = "mode">新たなモード値</param>
     /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool setMode(int mode);
 
@@ -45,12 +46,14 @@ public:
     /// <summary>
     /// ファイルマネージャ枠に指定のファイルのプロジェクトを読み込む
     /// </summary>
+    /// <param name = "filepath">読み込み対象のプロジェクトのファイルのフルパス</param>
     /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool loadProject(std::wstring filepath);
 
     /// <summary>
     /// ファイルマネージャ枠のプロジェクトを指定ファイルに保存
     /// </summary>
+    /// <param name = "filepath">保存対象のプロジェクトのファイルのフルパス</param>
     /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool saveProject(std::wstring filepath);
 
@@ -62,7 +65,9 @@ public:
 
     /// <summary>
     /// ファイルマネージャ枠へのSendMessage
+    /// <para>「コマンド値」はhttps://help.maruo.co.jp/hidemac/html/240_PaneDll.html</para>
     /// </summary>
+    /// <param name = "command_id">コマンド値</param>
     /// <returns>SendMessageの返り値(LRESULT型)と同じ</returns>
     THmNumber sendMessage(int command_id);
 

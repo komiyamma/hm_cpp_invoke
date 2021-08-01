@@ -26,7 +26,7 @@ public:
         IEncoding(const IEncoding&) = default;
 
         /// <summary>
-        /// 秀丸のencode値相当を得る。厳密には マクロのencode値 「& 0x3F」のANDビット演算した値）
+        /// 秀丸のencode値相当を得る。厳密には マクロのencode値 「&amp;  0x3F」のANDビット演算した値）
         /// <para>https://help.maruo.co.jp/hidemac/html/060_Keyword_State.html#encode の0～28と同じ</para>
         /// </summary>
         int getHmEncode();
@@ -40,7 +40,10 @@ public:
 
     /// <summary>
     /// 秀丸のEncode値からMsCodePageの値を得るためのメソッド
+    /// 秀丸のencode値とは、厳密には マクロのencode値 「&amp; 0x3F」のANDビット演算した値）
+    /// <para>https://help.maruo.co.jp/hidemac/html/060_Keyword_State.html#encode の0～28と同じ</para>
     /// </summary>
+    /// <param name = "hm_encode">秀丸のEncode値</param>
     /// <returns>IEncoding型のオブジェクト。MsCodePage と HmEncode を得られる。</returns>
     IEncoding getEncoding(int hm_encode);
 

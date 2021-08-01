@@ -87,7 +87,7 @@ namespace Hidemaru {
 
     public:
         class TEdit;
-#include "HmCppInvokeEdit.hpp"
+#include "HmCppInvokeEdit.h"
     public:
         /// <summary>
         /// エディタ編集枠系。名前空間の代替。
@@ -96,7 +96,7 @@ namespace Hidemaru {
 
     public:
         class TMacro;
-#include "HmCppInvokeMacro.hpp"
+#include "HmCppInvokeMacro.h"
     public:
         /// <summary>
         /// マクロ系。名前空間の代替。
@@ -105,7 +105,7 @@ namespace Hidemaru {
 
     public:
         class TFile;
-#include "HmCppInvokeFile.hpp"
+#include "HmCppInvokeFile.h"
     public:
         /// <summary>
         /// ファイル系。名前空間の代替。
@@ -114,7 +114,7 @@ namespace Hidemaru {
 
     public:
         class TOutputPane;
-#include "HmCppInvokeOutputPane.hpp"
+#include "HmCppInvokeOutputPane.h"
 
     public:
         /// <summary>
@@ -124,7 +124,7 @@ namespace Hidemaru {
 
     public:
         class TExplorerPane;
-#include "HmCppInvokeExplorerPane.hpp"
+#include "HmCppInvokeExplorerPane.h"
     public:
         /// <summary>
         /// ファイルマネージャ枠系。名前空間の代替。
@@ -134,7 +134,7 @@ namespace Hidemaru {
 
     private:
         class TDllBindAttribute;
-#include "HmCppInvokeDllBindAttribute.hpp"
+#include "HmCppInvokeDllBindAttribute.h"
     private:
         TDllBindAttribute DllBindAttribute;
 
@@ -143,7 +143,7 @@ namespace Hidemaru {
 
     public:
         class TDllMacroVariant;
-#include "HmCppInvokeDllmacroVariant.hpp"
+#include "HmCppInvokeDllmacroVariant.h"
     private:
         TDllMacroVariant DllMacroVariant;
     };

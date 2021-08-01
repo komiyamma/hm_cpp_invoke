@@ -4,7 +4,7 @@
  */
 
 #include "HmCppInvoke.h"
-#include "HmCppInvokeDllExport.hpp"
+#include "HmCppInvokeDllExport.h"
 
 using namespace std;
 using namespace Hidemaru;

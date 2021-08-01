@@ -40,6 +40,7 @@ public:
     /// <summary>
     /// 現在アクティブな編集領域のテキスト内容を指定の文字列とする。
     /// </summary>
+    /// <param name = "text">新たなテキスト内容</param>
     /// <returns>入れ替えの成否</returns>
     bool setTotalText(std::wstring text);
 
@@ -52,6 +53,7 @@ public:
     /// <summary>
     /// 現在、単純選択している場合、その選択中のテキスト内容を指定の文字列とする。
     /// </summary>
+    /// <param name = "text">新たなテキスト内容</param>
     /// <returns>入れ替えの成否</returns>
     bool setSelectedText(std::wstring text);
 
@@ -64,6 +66,7 @@ public:
     /// <summary>
     /// 現在、カーソルがある行(エディタ的)のテキスト内容を指定の文字列とする。
     /// </summary>
+    /// <param name = "text">新たなテキスト内容</param>
     /// <returns>入れ替えの成否</returns>
     bool setLineText(std::wstring text);
 

@@ -27,6 +27,7 @@ public:
     /// アウトプット枠への文字列の出力。
     /// 改行するには「\r\n」といったように「\r」も必要。
     /// </summary>
+    /// <param name = "message">アウトプット枠へと表示するテキスト内容</param>
     /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool output(std::wstring message);
 
@@ -50,13 +51,16 @@ public:
 
     /// <summary>
     /// アウトプット枠へのSendMessage
+    /// <para>「コマンド値」はhttps://help.maruo.co.jp/hidemac/html/240_PaneDll.html</para>
     /// </summary>
+    /// <param name = "command_id">コマンド値</param>
     /// <returns>SendMessageの返り値(LRESULT型)と同じ</returns>
     THmNumber sendMessage(int command_id);
 
     /// <summary>
     /// アウトプット枠のベースとなるディレクトリの設定
     /// </summary>
+    /// <param name = "dirpath">ディレクトリのパス</param>
     /// <returns>失敗ならfalse、成功ならtrue</returns>
     bool setBaseDir(std::wstring dirpath);
 

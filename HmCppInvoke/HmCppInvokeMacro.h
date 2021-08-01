@@ -50,6 +50,7 @@ public:
     /// 現在の「マクロ実行中」に、プログラム中で、マクロを文字列で実行。
     /// <para>マクロ実行中のみ実行可能なメソッド</para>
     /// </summary>
+    /// <param name = "expression">マクロ内容の文字列</param>
     IResult doEval(std::wstring expression);
 
     /// <summary>
@@ -136,12 +137,14 @@ public:
         /// 「マクロを実行していない時」に、プログラム中で、文字列で新たなマクロを実行。
         /// <para>マクロを実行していない時のみ実行可能なメソッド。</para>
         /// </summary>
+        /// <param name = "expression">マクロ内容の文字列</param>
         IResult doEval(std::wstring expression);
 
         /// <summary>
         /// 「マクロを実行していない時」に、プログラム中で、マクロファイルを与えて新たなマクロを実行。
         /// <para>マクロを実行していない時のみ実行可能なメソッド。</para>
         /// </summary>
+        /// <param name = "filepath">マクロファイルのフルパス</param>
         IResult doFile(std::wstring filepath);
 
         /// <summary>
