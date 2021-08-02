@@ -5,4 +5,4 @@
 ![Hidemaru 8.98](https://img.shields.io/badge/Hidemaru-v8.73-6479ff.svg)
 ![C++ 17](https://img.shields.io/badge/C++-v17-6479ff.svg)
 
-Hm.HmCppInvokeとは、秀丸マクロの「loadll」関連機能を用い、「C++記述内で秀丸マクロ変数・秀丸マクロ関数」などを利用するためのライブラリです。
+Hm.CppInvokeとは、秀丸マクロの「loadll」関連機能を用い、「C++記述内で秀丸マクロ変数・秀丸マクロ関数」などを利用するためのライブラリです。
