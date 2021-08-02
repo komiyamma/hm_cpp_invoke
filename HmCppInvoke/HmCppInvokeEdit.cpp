@@ -58,7 +58,7 @@ std::wstring THm::TEdit::getTotalText()
 		return L"";
 	}
 
-	HGLOBAL hGlobal = this->Hidemaru_GetTotalTextUnicode();
+	HGLOBAL hGlobal = Hidemaru_GetTotalTextUnicode();
 	if (hGlobal) {
 		wchar_t* pwsz = (wchar_t*)GlobalLock(hGlobal);
 		if (pwsz) {
@@ -100,7 +100,7 @@ std::wstring THm::TEdit::getSelectedText()
 		return L"";
 	}
 
-	HGLOBAL hGlobal = this->Hidemaru_GetSelectedTextUnicode();
+	HGLOBAL hGlobal = Hidemaru_GetSelectedTextUnicode();
 	if (hGlobal) {
 		wchar_t* pwsz = (wchar_t*)GlobalLock(hGlobal);
 		if (pwsz) {
@@ -136,14 +136,14 @@ bool THm::TEdit::setSelectedText(std::wstring text)
 
 std::wstring THm::TEdit::getLineText()
 {
-	if (!this->Hidemaru_GetLineTextUnicode) {
+	if (!Hidemaru_GetLineTextUnicode) {
 		return L"";
 	}
 
 	auto pos = this->getCursorPos();
 	int lineno = pos.getLineNo();
 
-	HGLOBAL hGlobal = this->Hidemaru_GetLineTextUnicode(lineno);
+	HGLOBAL hGlobal = Hidemaru_GetLineTextUnicode(lineno);
 	if (hGlobal) {
 		wchar_t* pwsz = (wchar_t*)GlobalLock(hGlobal);
 		if (pwsz) {
@@ -197,7 +197,7 @@ THm::TEdit::ICursorPos THm::TEdit::getCursorPos()
 	int nLineNo = -1;
 	int nColumn = -1;
 
-	if (!this->Hidemaru_GetCursorPosUnicode) {
+	if (!Hidemaru_GetCursorPosUnicode) {
 		ICursorPos pos(nLineNo, nColumn);
 		return pos;
 	}
@@ -224,13 +224,13 @@ THm::TEdit::IMousePos THm::TEdit::getMousePos()
 	int nColumn = -1;
 
 	// 該当の関数が存在していない時(秀丸 8.73未満)
-	if (!this->Hidemaru_GetCursorPosUnicodeFromMousePos) {
+	if (!Hidemaru_GetCursorPosUnicodeFromMousePos) {
 		IMousePos pos(point.x, point.y, nLineNo, nColumn);
 		return pos;
 	}
 
 	// 該当の関数が存在している時だけ値を更新(秀丸 8.73以上)
-	if (this->Hidemaru_GetCursorPosUnicodeFromMousePos) {
+	if (Hidemaru_GetCursorPosUnicodeFromMousePos) {
 		// このsuccessはnLineNoもしくは、nColumnのどちらか１つが失敗するとFalseを返してしまうので、返り値は使わない
 		BOOL _ = Hidemaru_GetCursorPosUnicodeFromMousePos(NULL, &nLineNo, &nColumn);
 	}
