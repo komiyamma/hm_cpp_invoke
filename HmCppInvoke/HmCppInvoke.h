@@ -143,7 +143,7 @@ namespace Hidemaru {
         TDllBindType DllBindType;
 
     public:
-        bool declDllExport();
+        bool funcDllExport();
 
     public:
         class TDllFuncCalledType;
