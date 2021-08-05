@@ -225,7 +225,7 @@ THm::TEdit::IMousePos THm::TEdit::getMousePos()
 
 	// äYìñÇÃä÷êîÇ™ë∂ç›ÇµÇƒÇ¢Ç»Ç¢éû(èGä€ 8.73ñ¢ñû)
 	if (!Hidemaru_GetCursorPosUnicodeFromMousePos) {
-		IMousePos pos(point.x, point.y, nLineNo, nColumn);
+		IMousePos pos(nLineNo, nColumn, point.x, point.y);
 		return pos;
 	}
 
@@ -235,7 +235,7 @@ THm::TEdit::IMousePos THm::TEdit::getMousePos()
 		BOOL _ = Hidemaru_GetCursorPosUnicodeFromMousePos(NULL, &nLineNo, &nColumn);
 	}
 
-	IMousePos pos(point.x, point.y, nLineNo, nColumn);
+	IMousePos pos(nLineNo, nColumn, point.x, point.y);
 	return pos;
 }
 
