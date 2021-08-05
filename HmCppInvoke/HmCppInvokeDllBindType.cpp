@@ -19,7 +19,7 @@ wchar_t THm::TDllBindType::wszSelfModuleDirPath[MAX_PATH] = L"";
 
 int THm::TDllBindType::iSelfBindedType = 0;
 
-bool THm::rebind() {
+bool THm::declDllExport() {
 	// これ重要。loadllの形態を保持する。関数が呼ばれる度に更新しておく。
 	return TDllBindType::setDllBindType();
 }
