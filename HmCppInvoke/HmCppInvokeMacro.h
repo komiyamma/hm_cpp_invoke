@@ -64,6 +64,20 @@ public:
     THmMacroVariable getVar(std::wstring varname);
 
     /// <summary>
+    /// 対象の「秀丸マクロ変数名」の読み込み。テンプレートパラメータとして型を指定することでマニュアルでの値の取得を省略できる。
+    /// テンプレートパラメータに指定可能な型は「THmNumber」もしくは「wstring」のみ。
+    /// </summary>
+    /// <param name = "varname">変数のシンボル名</param>
+    /// <param name = "T">Tに指定可能な型は「THmNumber」もしくは「wstring」のみ</param>
+    /// <returns>Tで指定した型の値。Tには「THmNumber」もしくは「wstring」値を指定して取得することになる。</returns>
+    template<class T>
+    T getVar(std::wstring varname) {
+        THmMacroVariable v = getVar(varname);
+        T r = std::get<T>(v);
+        return r;
+    }
+
+    /// <summary>
     /// 対象の「秀丸マクロ変数名」への書き込み
     /// </summary>
     /// <param name = "varname">変数のシンボル名</param>

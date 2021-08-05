@@ -1,4 +1,4 @@
-- Hm.C++Invoke
+- Hm.CppInvoke
    Copyright (C) 2021 Akitsugu Komiyama
 
 

@@ -1,5 +1,4 @@
 /*
- * HmNetCOM ver 2.001
  * Copyright (c) 2021 Akitsugu Komiyama
  * under the MIT License
  */

@@ -64,9 +64,6 @@ THmMacroVariable THm::TMacro::getVar(std::wstring varname)
 	return TestDynamicVar;
 }
 
-
-
-
 bool THm::TMacro::setVar(std::wstring varname, THmMacroVariable value)
 {
 	BOOL success = 0;
