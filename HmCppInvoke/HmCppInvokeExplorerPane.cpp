@@ -77,12 +77,12 @@ int THm::TExplorerPane::getMode()
 	if (Hidemaru_GetCurrentWindowHandle) {
 		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
 		if (HmExplorerPane_GetMode) {
-			bool result = HmExplorerPane_GetMode(hHidemaruWindow);
-			return result;
+			int mode = HmExplorerPane_GetMode(hHidemaruWindow);
+			return mode;
 		}
 	}
 
-	return false;
+	return 0;
 }
 
 bool THm::TExplorerPane::loadProject(std::wstring filepath)
