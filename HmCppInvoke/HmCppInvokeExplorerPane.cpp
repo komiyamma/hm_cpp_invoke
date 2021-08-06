@@ -35,9 +35,9 @@ THm::TExplorerPane::TExplorerPane()
 
 		// ディレクトリある？ （まぁあるよね）
 		if (PathFileExists(hidemarudir)) {
-			// HmOutputPane.dllがあるかどうか。
-			wstring hmoutputpane_fullpath = wstring(hidemarudir) + wstring(L"\\HmOutputPane.dll");
-			hHmExplorerPaneDLL = LoadLibrary(hmoutputpane_fullpath.data());
+			// HmExplorerPane.dllがあるかどうか。
+			wstring hmexplorerpane_fullpath = wstring(hidemarudir) + wstring(L"\\HmExplorerPane.dll");
+			hHmExplorerPaneDLL = LoadLibrary(hmexplorerpane_fullpath.data());
 
 			// あれば、ExplorerPane関数をセッティングしておく
 			if (hHmExplorerPaneDLL) {
