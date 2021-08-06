@@ -118,8 +118,7 @@ THmNumber THm::TOutputPane::sendMessage(int command_id)
 	HWND OutputWindowHandle = this->getWindowHandle();
 	if (OutputWindowHandle) {
 		// (#h,0x111/*WM_COMMAND*/,1009,0);//1009=ÉNÉäÉA
-		// 0x111 = WM_COMMAND
-		LRESULT r = SendMessageW(OutputWindowHandle, 0x111, command_id, 0);
+		LRESULT r = SendMessageW(OutputWindowHandle, WM_COMMAND, command_id, 0);
 		return (THmNumber)r;
 
 	}
