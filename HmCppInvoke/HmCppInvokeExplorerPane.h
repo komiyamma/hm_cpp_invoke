@@ -82,4 +82,10 @@ public:
     /// </summary>
     /// <returns>更新状態なら1、それ以外は0</returns>
     bool getUpdated();
+
+    /// <summary>
+    /// ファイルマネージャ枠のカレントディレクトリを返す
+    /// </summary>
+    /// <returns>カレントディレクトリのフルパス。読み損ねた場合は空文字を返します。</returns>
+    std::wstring getCurrentDir();
 };
