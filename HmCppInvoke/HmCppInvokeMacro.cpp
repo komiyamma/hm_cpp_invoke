@@ -357,7 +357,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
 			std::exception e = std::exception();
-			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, wstrreturn);
 			return r;
 		}
 		else {
@@ -397,7 +397,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
 			std::exception e = std::exception();
-			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, wstrreturn);
 			return r;
 		}
 		else {
