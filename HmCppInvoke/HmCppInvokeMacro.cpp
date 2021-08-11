@@ -38,8 +38,7 @@ THm::TMacro::IResult THm::TMacro::doEval(std::wstring expression)
 {
 	BOOL success = Hidemaru_EvalMacro(expression.c_str());
 	if (success) {
-		std::exception e = std::exception();
-		THm::TMacro::IResult r = THm::TMacro::IResult(success, e, L"");
+		THm::TMacro::IResult r = THm::TMacro::IResult(success, std::nullopt, L"");
 		return r;
 	}
 	else {
@@ -356,7 +355,6 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_MEMORY, (WPARAM)wszReturn, (LPARAM)expression.c_str());
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
-			std::exception e = std::exception();
 			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, wstrreturn);
 			return r;
 		}
@@ -365,7 +363,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(expression.c_str());
 			std::exception e = std::runtime_error("Hidemaru_MacroExecEvalException");
-			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, e, L"");
 			return r;
 		}
 	}
@@ -396,7 +394,6 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_FILE, (WPARAM)wszReturn, (LPARAM)filepath.c_str());
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
-			std::exception e = std::exception();
 			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, wstrreturn);
 			return r;
 		}
@@ -405,7 +402,7 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 			OutputDebugString(L"マクロ内容:\n");
 			OutputDebugString(filepath.c_str());
 			std::exception e = std::runtime_error("Hidemaru_MacroExecFileException");
-			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, std::nullopt, L"");
+			THm::TMacro::IResult r = THm::TMacro::IResult((THmNumber)lRet, e, L"");
 			return r;
 		}
 	}
