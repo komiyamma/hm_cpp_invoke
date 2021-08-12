@@ -93,6 +93,12 @@ public:
         std::wstring message;
     public:
         THmMacroVariable getResult();
+        template<class T>
+        T getResult() {
+            THmMacroVariable v = getResult();
+            T r = std::get<T>(v);
+            return r;
+        }
         THmMacroResultError getException();
         std::vector<THmMacroVariable> getArgs();
         std::wstring getMessage();
