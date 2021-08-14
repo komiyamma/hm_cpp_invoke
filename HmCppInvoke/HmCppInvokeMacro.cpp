@@ -352,6 +352,10 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doEval(std::wstring
 		wchar_t* wszReturn = mngWszReturn.get();
 		*(WORD*)wszReturn = bufSize; // 最初のバイトにバッファーのサイズを格納することで秀丸本体がバッファーサイズの上限を知る。
 
+#ifdef FLOATMACRO_COMPILE
+		expression = L"setfloatmode 1;\n" + expression;
+#endif
+
 		LRESULT lRet = SendMessage(hHidemaruWindow, WM_REMOTE_EXECMACRO_MEMORY, (WPARAM)wszReturn, (LPARAM)expression.c_str());
 		if (lRet) {
 			wstring wstrreturn = wszReturn;
@@ -431,11 +435,22 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstri
 
 	intptr_t func_address = (intptr_t)(*delegate_method);
 
+#ifdef FLOATMACRO_COMPILE
+	wstring expression = LR"EXP(
+        setfloatmode 1;
+		#_dll_dotnet_newscope = loaddll(R"DLLPATH()EXP" + strDllFullPath + LR"EXP()DLLPATH");
+    	#_r_dotnet_newscope = dllfuncw(#_dll_dotnet_newscope, "DoDelegateMethod", )EXP" + std::to_wstring(func_address) + LR"EXP(, R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME");
+        freedll(#_dll_dotnet_newscope);
+        endmacro R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME";
+    )EXP";
+#else
 	wstring expression = LR"EXP(
 		#_dll_dotnet_newscope = loaddll(R"DLLPATH()EXP" + strDllFullPath + LR"EXP()DLLPATH");
     	#_r_dotnet_newscope = dllfuncw(#_dll_dotnet_newscope, "DoDelegateMethod", )EXP" + std::to_wstring(func_address) + LR"EXP(, R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME");
+        freedll(#_dll_dotnet_newscope);
         endmacro R"MACRO_OF_SCOPENAME()EXP" + scopeName + LR"EXP()MACRO_OF_SCOPENAME";
     )EXP";
+#endif
 
 	auto ret = Hm.Macro.Exec.doEval(expression);
 	return ret;
