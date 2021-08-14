@@ -1,6 +1,6 @@
 #pragma once
 /*
- * Hm.CppInvoke ver 2.071
+ * Hm.CppInvoke ver 2.081
  * Copyright (c) 2021 Akitsugu Komiyama
  * under the MIT License
  */
@@ -20,10 +20,17 @@
 #include "HmCppInvokeConvertString.h"
 
 namespace Hidemaru {
+#ifdef FLOATMACRO_COMPILE
+    /// <summary>
+    /// GŠÛ‚Ì”’lŒ^
+    /// </summary>
+    using THmNumber = double;
+#else
     /// <summary>
     /// GŠÛ‚Ì”’lŒ^
     /// </summary>
     using THmNumber = intptr_t;
+#endif
 
     /// <summary>
     /// GŠÛƒ}ƒNƒ•Ï”‚Ìæ‚è‚¤‚éŒ^BŠî–{”’lŒ^‚©•¶š—ñŒ^‚Ì‚İ‚Ì‘z’èB

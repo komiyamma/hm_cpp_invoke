@@ -9,12 +9,18 @@
 
 namespace Hidemaru {
 	extern THmMacroVariable TestDynamicVar;
+    union TDYNAMICVARIABLE {
+        double fValue;
+        wchar_t* pszStr;
+        intptr_t nValue;
+    };
 }
 
 using namespace Hidemaru;
 
+
 // 秀丸マクロ上の変数と、C++内部との自動やりとりに使用される。
-HM_DLLEXPORT THmNumber SetDynamicVar(const void* dynamic_value);
+HM_DLLEXPORT THmNumber SetDynamicVar(TDYNAMICVARIABLE dynamic_value);
 HM_DLLEXPORT THmNumber PopNumVar();
 HM_DLLEXPORT THmNumber PushNumVar(THmNumber i_tmp_num);
 HM_DLLEXPORT const wchar_t* PopStrVar();

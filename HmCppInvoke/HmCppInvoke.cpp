@@ -13,6 +13,10 @@
 using namespace std;
 using namespace Hidemaru;
 
+#ifdef FLOATMACRO_COMPILE
+extern "C" __declspec(dllexport) void FLOATMACRO() {}
+#endif
+
 
 THm Hm = THm();
 

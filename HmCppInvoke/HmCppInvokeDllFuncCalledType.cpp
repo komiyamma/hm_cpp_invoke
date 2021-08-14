@@ -58,18 +58,22 @@ THm::TDllFuncCalledType::DLLFUNCRETURN THm::TDllFuncCalledType::getFuncReturnTyp
 }
 
 // GŠÛ‚Ì•Ï”‚ª•¶š—ñ‚©”’l‚©‚Ì”»’è—p
-HM_DLLEXPORT THmNumber SetDynamicVar(const void* dynamic_value) {
+HM_DLLEXPORT THmNumber SetDynamicVar(TDYNAMICVARIABLE dynamic_value) {
 
 	if (Hm.DllFuncCalledType.isMissingMethod()) {
 		return 0;
 	}
 	auto param_type = Hm.DllFuncCalledType.getFuncParamType(1);
 	if (param_type == THm::TDllFuncCalledType::DLLFUNCPARAM::WCHAR_PTR) {
-		Hidemaru::TestDynamicVar = wstring((wchar_t*)dynamic_value);
+		Hidemaru::TestDynamicVar = wstring((wchar_t*)dynamic_value.pszStr);
 		return 1;
 	}
 	else {
-		Hidemaru::TestDynamicVar = (THmNumber)(intptr_t)dynamic_value;
+#ifdef FLOATMACRO_COMPILE
+		Hidemaru::TestDynamicVar = (THmNumber)dynamic_value.fValue;
+#else
+		Hidemaru::TestDynamicVar = (THmNumber)dynamic_value.nValue;
+#endif
 		return 1;
 	}
 }
