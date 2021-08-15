@@ -39,6 +39,27 @@ int THm::TDllFuncCalledType::getDllBindType()
 	return dll;
 }
 
+vector<THm::TDllFuncCalledType::DLLFUNCPARAM> THm::TDllFuncCalledType::getFuncParamTypeList()
+{
+	vector<DLLFUNCPARAM> param_type_list;
+	if (!Hidemaru_GetDllFuncCalledType) {
+		return param_type_list;
+	}
+
+	// 1”Ô–Ú‚Ìˆø”‚©‚ç99”Ô–Ú‚Ìˆø”‚Ü‚ÅŒ^‚ğ’²‚×‚é
+	for (int i = 1; i < 99; i++) {
+		auto param_type = (DLLFUNCPARAM)Hidemaru_GetDllFuncCalledType(i);
+		if (param_type == DLLFUNCPARAM::NOPARAM) {
+			break;
+		}
+		else {
+			param_type_list.push_back(param_type);
+		}
+	}
+
+	return param_type_list;
+}
+
 THm::TDllFuncCalledType::DLLFUNCPARAM THm::TDllFuncCalledType::getFuncParamType(int arg_n)
 {
 	if (!Hidemaru_GetDllFuncCalledType) {

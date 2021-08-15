@@ -25,7 +25,7 @@ public:
     static bool isMissingMethod();
 
     /// <summary>
-    /// 秀丸のバージョンが 8.66正式版未満だと、メソッドがない。この判定のためのメソッド。
+    /// このdllが秀丸マクロ上の数値ハンドル(#dllなど)で何番に割り当てられているかの数。-1なら、loaddll関数ではなく、loaddll文でbindされている。。
     /// </summary>
     static int getDllBindType();
 
@@ -46,6 +46,12 @@ public:
     /// </summary>
     /// <returns>「enumのDLLFUNCPARAM」値のいずれか</returns>
     static DLLFUNCPARAM getFuncParamType(int arg_n);
+
+    /// <summary>
+    /// マクロからdll関数の呼び出しの引数のタイプリストを得る
+    /// </summary>
+    /// <returns>引数の順番通りの「enumのDLLFUNCPARAM」値のリスト</returns>
+    static std::vector<DLLFUNCPARAM> getFuncParamTypeList();
 
     enum class DLLFUNCRETURN {
         NOTCALL = 0,        // 呼ばれていない
