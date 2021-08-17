@@ -6,3 +6,5 @@
 ![C++ 17,20](https://img.shields.io/badge/C++-v17.v20-6479ff.svg)
 
 Hm.CppInvokeとは、秀丸マクロの「loadll」関連機能を用い、「C++記述内で秀丸マクロ変数・秀丸マクロ関数」などを利用するためのライブラリです。
+
+https://秀丸マクロ.net/?page=nobu_tool_hm_cpp_invoke
