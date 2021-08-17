@@ -417,7 +417,19 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doFile(std::wstring
 }
 
 // 関数を実行する
+map<int, intptr_t> func_map;
 HM_DLLEXPORT THmNumber DoDelegateMethod(THmNumber func_address, const wchar_t* message_parameter ) {
+#ifdef _M_AMD64
+	int down_cast_func_address = (int)func_address;
+	// 64bitなのに同じってことはすでに丸まっている疑惑
+	if (down_cast_func_address == func_address) {
+		if (func_map.count(down_cast_func_address) != 0) {
+			// キャストで潰れてしまったintptr_t本来の値を復元する
+			// 浮動小数点版かつ64bit版の秀丸本体のヤバい実装に対応するため、泣く泣く
+			func_address = (THmNumber)func_map[down_cast_func_address];
+		}
+	}
+#endif
 	THmMacroDoMethodType callback_method = (THmMacroDoMethodType)(intptr_t)func_address;
 	return callback_method(message_parameter);
 
@@ -434,7 +446,11 @@ Hidemaru::THm::TMacro::IResult Hidemaru::THm::TMacro::TExec::doMethod(std::wstri
 	wstring &scopeName = message_parameter;
 
 	intptr_t func_address = (intptr_t)(*delegate_method);
-
+	int down_cast_func_address = (int)func_address; // 浮動小数点版かつ64bit版の秀丸本体のヤバい実装に対応するため、泣く泣く
+	// キャストで値が変わった時だけつっこんでおく
+	if (func_address != down_cast_func_address) {
+		func_map[down_cast_func_address] = func_address;
+	}
 #ifdef FLOATMACRO_COMPILE
 	wstring expression = LR"EXP(
         setfloatmode 1;
