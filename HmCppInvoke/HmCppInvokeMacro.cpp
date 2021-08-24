@@ -118,7 +118,7 @@ std::wstring StringJoin(const std::vector<std::wstring>& strs, const std::wstrin
 	return std::wstring{ res.begin(), res.end() };
 }
 
-void Hidemaru::THm::TMacro::SetMacroVarAndMakeMacroKeyArray(const vector<THmMacroVariable> value_args, std::vector<std::wstring>& varname_list)
+void Hidemaru::THm::TMacro::setMacroVarAndMakeMacroKeyArray(const vector<THmMacroVariable> value_args, std::vector<std::wstring>& varname_list)
 {
 	int cur_random = rand() + 1;
 	for (size_t i = 0; i < value_args.size(); i++) {
@@ -148,7 +148,7 @@ void Hidemaru::THm::TMacro::SetMacroVarAndMakeMacroKeyArray(const vector<THmMacr
 	}
 }
 
-void Hidemaru::THm::TMacro::ClearMacroVarAndUpdateArgs(const vector<THmMacroVariable> value_args, const std::vector<std::wstring> varname_list, vector<THmMacroVariable>& updated_value_args)
+void Hidemaru::THm::TMacro::clearMacroVarAndUpdateArgs(const vector<THmMacroVariable> value_args, const std::vector<std::wstring> varname_list, vector<THmMacroVariable>& updated_value_args)
 {
 	for (size_t i = 0; i < varname_list.size(); i++) {
 		wstring varname = varname_list[i];
@@ -187,7 +187,7 @@ THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func
 		}
 	}
 	vector<wstring> varname_list;
-	SetMacroVarAndMakeMacroKeyArray(value_args, varname_list);
+	setMacroVarAndMakeMacroKeyArray(value_args, varname_list);
 
 	wstring arg_varname_list = StringJoin(varname_list, L", ");
 	wstring utf16_expression = func_name + L"(" + arg_varname_list + L")";
@@ -201,7 +201,7 @@ THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func
 	auto ret = doEval(cmd);
 	auto retDynamicVal = TestDynamicVar;
 	vector<THmMacroVariable> updated_value_args;
-	ClearMacroVarAndUpdateArgs(value_args, varname_list, updated_value_args);
+	clearMacroVarAndUpdateArgs(value_args, varname_list, updated_value_args);
 
 	if (ret.getResult() > 0) {
 		IFunctionResult r = IFunctionResult(retDynamicVal, updated_value_args, std::nullopt, L"");
@@ -230,7 +230,7 @@ THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring st
 		}
 	}
 	vector<wstring> varname_list;
-	SetMacroVarAndMakeMacroKeyArray(value_args, varname_list);
+	setMacroVarAndMakeMacroKeyArray(value_args, varname_list);
 
 	wstring arg_varname_list = StringJoin(varname_list, L", ");
 	wstring utf16_expression = statement_name + L" " + arg_varname_list;
@@ -239,7 +239,7 @@ THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring st
 	auto ret = doEval(cmd);
 
 	vector<THmMacroVariable> updated_value_args;
-	ClearMacroVarAndUpdateArgs(value_args, varname_list, updated_value_args);
+	clearMacroVarAndUpdateArgs(value_args, varname_list, updated_value_args);
 
 	if (ret.getResult() > 0) {
 		IStatementResult r = IStatementResult(ret.getResult(), updated_value_args, std::nullopt, L"");
