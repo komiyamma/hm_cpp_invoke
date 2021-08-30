@@ -63,6 +63,7 @@ public:
         std::wstring filepath;
     public:
         IHidemaruStreamReader(std::wstring filepath, IEncoding encoding);
+        ~IHidemaruStreamReader();
 
         /// <summary>
         /// 対象となっているファイルのIEncodingを得る。秀丸ベースのencoding値とマイクロソフトベースのCodePage値を得ることが出来る。

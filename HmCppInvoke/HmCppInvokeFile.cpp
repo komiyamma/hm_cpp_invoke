@@ -115,6 +115,11 @@ Hidemaru::THm::TFile::IHidemaruStreamReader::IHidemaruStreamReader(std::wstring 
 	this->encoding = encoding;
 }
 
+Hidemaru::THm::TFile::IHidemaruStreamReader::~IHidemaruStreamReader()
+{
+	this->close();
+}
+
 THm::TFile::IEncoding THm::TFile::IHidemaruStreamReader::getEncoding()
 {
 	return this->encoding;
