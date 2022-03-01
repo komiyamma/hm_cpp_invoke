@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{a731df29-11e4-4e18-92ab-245b1afd02c3}</ProjectGuid>
-    <RootNamespace>ConsoleApplication10</RootNamespace>
+    <RootNamespace>HmCppInvoke</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>HmCppInvoke</ProjectName>
   </PropertyGroup>
