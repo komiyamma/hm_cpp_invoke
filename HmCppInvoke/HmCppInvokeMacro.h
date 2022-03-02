@@ -152,7 +152,7 @@ public:
     /// 秀丸マクロの関数のような「命令文」を実行
     /// </summary>
     /// <param name = "statement_name">（関数のような）命令文名</param>
-    /// <param name = "args0">マクロ命令文への可変引数</param>
+    /// <param name = "args">マクロ命令文への可変引数</param>
     template<class... THmMacroStatementPARAMS>
     IStatementResult doStatement(std::wstring statement_name, THmMacroStatementPARAMS... args) {
 
