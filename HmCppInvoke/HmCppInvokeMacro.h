@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Akitsugu Komiyama
+ * Copyright (c) 2021-2022 Akitsugu Komiyama
  * under the MIT License
  */
 
@@ -105,21 +105,30 @@ public:
         IFunctionResult(THmMacroVariable result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message);
     };
 
+private:
+    IFunctionResult doFunctionHelper(std::wstring func_name, std::vector<THmMacroVariable> value_args);
+
+public:
+
     /// <summary>
     /// 秀丸マクロの「関数」を実行
     /// </summary>
     /// <param name = "func_name">関数名</param>
-    /// <param name = "args0">マクロ関数への引数1</param>
-    /// <param name = "args1">マクロ関数への引数2</param>
-    /// <param name = "args2">マクロ関数への引数3</param>
-    /// <param name = "args3">マクロ関数への引数4</param>
-    /// <param name = "args4">マクロ関数への引数5</param>
-    /// <param name = "args5">マクロ関数への引数6</param>
-    /// <param name = "args6">マクロ関数への引数7</param>
-    /// <param name = "args7">マクロ関数への引数8</param>
-    /// <param name = "args8">マクロ関数への引数9</param>
-    /// <param name = "args9">マクロ関数への引数10</param>
-    IFunctionResult doFunction(std::wstring func_name, THmMacroVariable args0 = nullptr, THmMacroVariable args1 = nullptr, THmMacroVariable args2 = nullptr, THmMacroVariable args3 = nullptr, THmMacroVariable args4 = nullptr, THmMacroVariable args5 = nullptr, THmMacroVariable args6 = nullptr, THmMacroVariable args7 = nullptr, THmMacroVariable args8 = nullptr, THmMacroVariable args9 = nullptr);
+    /// <param name = "args">マクロ関数への可変引数</param>
+    template<class... THmMacroFunctionPARAMS>
+    IFunctionResult doFunction(std::wstring func_name, THmMacroFunctionPARAMS... args) {
+
+        std::vector<THmMacroVariable> value_args;
+        for (THmMacroVariable arg : std::initializer_list<THmMacroVariable>{ args... }) {
+            try {
+                value_args.push_back(arg);
+            }
+            catch (...) {
+            }
+        }
+
+        return doFunctionHelper(func_name, value_args);
+    }
 
     class IStatementResult {
         THmNumber result;
@@ -134,21 +143,31 @@ public:
         IStatementResult(THmNumber result, std::vector<THmMacroVariable> args, THmMacroResultError error, std::wstring message);
     };
 
+
+private:
+    IStatementResult doStatementHelper(std::wstring statement_name, std::vector<THmMacroVariable> value_args);
+
+public:
     /// <summary>
     /// 秀丸マクロの関数のような「命令文」を実行
     /// </summary>
     /// <param name = "statement_name">（関数のような）命令文名</param>
-    /// <param name = "args0">マクロ命令文への引数1</param>
-    /// <param name = "args1">マクロ命令文への引数2</param>
-    /// <param name = "args2">マクロ命令文への引数3</param>
-    /// <param name = "args3">マクロ命令文への引数4</param>
-    /// <param name = "args4">マクロ命令文への引数5</param>
-    /// <param name = "args5">マクロ命令文への引数6</param>
-    /// <param name = "args6">マクロ命令文への引数7</param>
-    /// <param name = "args7">マクロ命令文への引数8</param>
-    /// <param name = "args8">マクロ命令文への引数9</param>
-    /// <param name = "args9">マクロ命令文への引数10</param>
-    IStatementResult doStatement(std::wstring statement_name, THmMacroVariable args0 = nullptr, THmMacroVariable args1 = nullptr, THmMacroVariable args2 = nullptr, THmMacroVariable args3 = nullptr, THmMacroVariable args4 = nullptr, THmMacroVariable args5 = nullptr, THmMacroVariable args6 = nullptr, THmMacroVariable args7 = nullptr, THmMacroVariable args8 = nullptr, THmMacroVariable args9 = nullptr);
+    /// <param name = "args0">マクロ命令文への可変引数</param>
+    template<class... THmMacroStatementPARAMS>
+    IStatementResult doStatement(std::wstring statement_name, THmMacroStatementPARAMS... args) {
+
+        std::vector<THmMacroVariable> value_args;
+        for (THmMacroVariable arg : std::initializer_list<THmMacroVariable>{ args... }) {
+            try {
+                value_args.push_back(arg);
+            }
+            catch (...) {
+            }
+        }
+
+        return doStatementHelper(statement_name, value_args);
+    }
+
 
 private:
     void setMacroVarAndMakeMacroKeyArray(const std::vector<THmMacroVariable> value_args, std::vector<std::wstring>& varname_list);

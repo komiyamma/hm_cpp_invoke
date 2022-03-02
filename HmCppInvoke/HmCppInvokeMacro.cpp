@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Akitsugu Komiyama
+ * Copyright (c) 2021-2022 Akitsugu Komiyama
  * under the MIT License
  */
 
@@ -174,18 +174,8 @@ void Hidemaru::THm::TMacro::clearMacroVarAndUpdateArgs(const vector<THmMacroVari
 	}
 }
 
-THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)
+THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunctionHelper(wstring func_name, vector<THmMacroVariable> value_args)
 {
-	vector<THmMacroVariable> value_args = { args0, args1, args2, args3, args4, args5, args6, args7, args8, args9 };
-	for (int i = 0; i < (int)value_args.size(); i++) {
-		try {
-			auto value = std::get<nullptr_t>(value_args[i]);
-			value_args.resize(i);
-			break;
-		}
-		catch (...) {
-		}
-	}
 	vector<wstring> varname_list;
 	setMacroVarAndMakeMacroKeyArray(value_args, varname_list);
 
@@ -217,18 +207,8 @@ THm::TMacro::IFunctionResult Hidemaru::THm::TMacro::doFunction(std::wstring func
 	}
 }
 
-THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatement(std::wstring statement_name, THmMacroVariable args0, THmMacroVariable args1, THmMacroVariable args2, THmMacroVariable args3, THmMacroVariable args4, THmMacroVariable args5, THmMacroVariable args6, THmMacroVariable args7, THmMacroVariable args8, THmMacroVariable args9)
+THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatementHelper(std::wstring statement_name, vector<THmMacroVariable> value_args)
 {
-	vector<THmMacroVariable> value_args = { args0, args1, args2, args3, args4, args5, args6, args7, args8, args9 };
-	for (int i = 0; i < (int)value_args.size(); i++) {
-		try {
-			auto value = std::get<nullptr_t>(value_args[i]);
-			value_args.resize(i);
-			break;
-		}
-		catch (...) {
-		}
-	}
 	vector<wstring> varname_list;
 	setMacroVarAndMakeMacroKeyArray(value_args, varname_list);
 

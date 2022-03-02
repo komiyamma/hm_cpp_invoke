@@ -1,6 +1,6 @@
 #pragma once
 /*
- * Copyright (c) 2021 Akitsugu Komiyama
+ * Copyright (c) 2021-2022 Akitsugu Komiyama
  * under the MIT License
  */
 
