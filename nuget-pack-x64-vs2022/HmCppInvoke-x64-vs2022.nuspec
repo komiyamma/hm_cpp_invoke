@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>Hm.CppInvoke-x64-vs2022</id>
-    <title>Hm.CppInvoke-x64-vs2022</title>
+    <id>HmCppInvoke-x64-vs2022</id>
+    <title>Hm.CppInvoke x64版 for Visual Studio 2022</title>
     <version>2.0.9.5</version>
     <authors>Akitsugu Komiyama</authors>
     <owners>Akitsugu Komiyama</owners>
