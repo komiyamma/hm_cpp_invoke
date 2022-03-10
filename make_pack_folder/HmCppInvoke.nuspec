@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>HmCppInvoke</id>
+    <title></title>
+    <version>2.0.9.5</version>
+    <authors>Akitsugu Komiyama</authors>
+    <owners>Akitsugu Komiyama</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>C++から秀丸マクロ空間にアクセスして、秀丸マクロの機能を利用する</summary>
+    <description>C++から秀丸マクロ空間にアクセスして、秀丸マクロの機能を利用可能なdllを作成するためのライブラリ。</description>
+    <releaseNotes>2.0.9.5: nugetパッケージとして初版リリース</releaseNotes>
+    <copyright>Copyright (C) 2021-2022 Akitsugu Komiyama</copyright>
+    <tags>C++ Hidemaru 秀丸 Library Macros</tags>
+    <language>ja-JP</language>
+  </metadata>
+</package>
