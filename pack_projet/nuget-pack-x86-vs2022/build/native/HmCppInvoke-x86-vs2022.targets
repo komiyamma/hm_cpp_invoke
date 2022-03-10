@@ -12,9 +12,13 @@
             <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../../build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         </ClCompile>
         <!-- プロジェクトファイルの「構成プロパティ」→「リンカー」に該当します。 -->
-        <Link>
+        <Link Condition="$(Configuration) == Release">
             <!-- 追加のライブラリディレクトリに追加するフォルダーを指定します。 -->
             <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/lib/HmCppInvokePack-x86-vs2022.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+        <Link Condition="$(Configuration) != Release">
+            <!-- 追加のライブラリディレクトリに追加するフォルダーを指定します。 -->
+            <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/lib/HmCppInvokePack-x86-vs2022_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
 </Project>
