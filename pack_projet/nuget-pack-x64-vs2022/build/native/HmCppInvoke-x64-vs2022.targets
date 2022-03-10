@@ -3,7 +3,7 @@
     <ImportGroup Label="PropertySheets"/>
     <PropertyGroup>
     </PropertyGroup>
-    <ItemDefinitionGroup>
+    <ItemDefinitionGroup Condition="$(Platform) == x64">
         <ClCompile>
             <!-- 追加のインクルードディレクトリに追加するフォルダーを指定します。 -->
             <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../../build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

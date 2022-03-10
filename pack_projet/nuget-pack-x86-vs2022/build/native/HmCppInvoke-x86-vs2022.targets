@@ -3,7 +3,7 @@
     <ImportGroup Label="PropertySheets"/>
     <PropertyGroup>
     </PropertyGroup>
-    <ItemDefinitionGroup>
+    <ItemDefinitionGroup Condition="$(Platform) != x64">
         <!-- プロジェクトファイルの「構成プロパティ」→「C++」に該当します。 -->
         <ClCompile>
             <!-- マクロを「HAS_HMCPPINVOKE」を定義します。 -->
