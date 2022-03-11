@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ImportGroup Label="PropertySheets"/>
+    <PropertyGroup>
+    </PropertyGroup>
+
+    <ItemDefinitionGroup Condition="$(Platform) != x64">
+        <!-- プロジェクトファイルの「構成プロパティ」→「C++」に該当します。 -->
+        <ClCompile>
+            <!-- マクロを「HAS_HMCPPINVOKE」を定義します。 -->
+            <PreprocessorDefinitions>HAS_HMCPPINVOKE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <!-- 追加のインクルードディレクトリに追加するフォルダーを指定します。 -->
+            <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../../build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        </ClCompile>
+        <!-- プロジェクトファイルの「構成プロパティ」→「リンカー」に該当します。 -->
+        <Link Condition="$(Configuration) == Release">
+            <!-- 追加のライブラリディレクトリに追加するフォルダーを指定します。 -->
+            <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/lib/HmCppInvokePack-x86-vs2019.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+        <Link Condition="$(Configuration) != Release">
+            <!-- 追加のライブラリディレクトリに追加するフォルダーを指定します。 -->
+            <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/lib/HmCppInvokePack-x86-vs2019_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+    </ItemDefinitionGroup>
+
+    <ItemDefinitionGroup Condition="$(Platform) == x64">
+        <ClCompile>
+            <!-- 追加のインクルードディレクトリに追加するフォルダーを指定します。 -->
+            <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../../build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        </ClCompile>
+        <Link Condition="$(Configuration) == Release">
+            <!-- 追加のライブラリディレクトリに追加するフォルダーを指定します。 -->
+            <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/lib/HmCppInvokePack-x64-vs2019.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+        <Link Condition="$(Configuration) != Release">
+            <!-- 追加のライブラリディレクトリに追加するフォルダーを指定します。 -->
+            <AdditionalDependencies>$(MSBuildThisFileDirectory)../../build/native/lib/HmCppInvokePack-x64-vs2019_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+    </ItemDefinitionGroup>
+
+</Project>
