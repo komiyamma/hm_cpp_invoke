@@ -1,6 +1,6 @@
 #pragma once
 /*
- * Hm.CppInvoke ver 2.095
+ * Hm.CppInvoke ver 2.097
  * Copyright (c) 2021-2022 Akitsugu Komiyama
  * under the MIT License
  */
@@ -162,6 +162,8 @@ namespace Hidemaru {
     };
 };
 
-extern Hidemaru::THm Hm;
+namespace Hidemaru {
+    extern Hidemaru::THm Hm;
+}
 
 

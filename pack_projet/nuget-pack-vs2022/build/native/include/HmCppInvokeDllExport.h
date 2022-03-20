@@ -16,14 +16,13 @@ namespace Hidemaru {
     };
 }
 
-using namespace Hidemaru;
 
 
 // 秀丸マクロ上の変数と、C++内部との自動やりとりに使用される。
-HM_DLLEXPORT THmNumber SetDynamicVar(TDYNAMICVARIABLE dynamic_value);
-HM_DLLEXPORT THmNumber PopNumVar();
-HM_DLLEXPORT THmNumber PushNumVar(THmNumber i_tmp_num);
+HM_DLLEXPORT Hidemaru::THmNumber SetDynamicVar(Hidemaru::TDYNAMICVARIABLE dynamic_value);
+HM_DLLEXPORT Hidemaru::THmNumber PopNumVar();
+HM_DLLEXPORT Hidemaru::THmNumber PushNumVar(Hidemaru::THmNumber i_tmp_num);
 HM_DLLEXPORT const wchar_t* PopStrVar();
-HM_DLLEXPORT THmNumber PushStrVar(const wchar_t* wsz_tmp_str);
+HM_DLLEXPORT Hidemaru::THmNumber PushStrVar(const wchar_t* wsz_tmp_str);
 
-HM_DLLEXPORT THmNumber DoDelegateMethod(THmNumber func_address, const wchar_t* message_parameter);
+HM_DLLEXPORT Hidemaru::THmNumber DoDelegateMethod(Hidemaru::THmNumber func_address, const wchar_t* message_parameter);
