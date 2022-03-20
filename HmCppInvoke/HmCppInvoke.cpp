@@ -17,8 +17,9 @@ using namespace Hidemaru;
 extern "C" __declspec(dllexport) void FLOATMACRO() {}
 #endif
 
-
-THm Hm = THm();
+namespace Hidemaru {
+    THm Hm = THm();
+}
 
 
 double THm::hm_version = 0;

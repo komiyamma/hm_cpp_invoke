@@ -4,5 +4,10 @@
 
 nuget-pack-vs2022 フォルダに移動
 ```
-./nuget pack HmCppInvoke--vs2022.nuspec
+./nuget pack .\HmCppInvoke-vs2022.nuspec
+```
+
+nuget-pack-vs2019 フォルダに移動
+```
+./nuget pack .\HmCppInvoke-vs2019.nuspec
 ```
