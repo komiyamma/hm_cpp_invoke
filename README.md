@@ -8,3 +8,7 @@
 Hm.CppInvokeとは、秀丸マクロの「loadll」関連機能を用い、「C++記述内で秀丸マクロ変数・秀丸マクロ関数」などを利用するためのライブラリです。
 
 https://秀丸マクロ.net/?page=nobu_tool_hm_cpp_invoke
+
+https://www.nuget.org/packages/HmCppInvoke-vs2022/
+
+https://www.nuget.org/packages/HmCppInvoke-vs2019/
