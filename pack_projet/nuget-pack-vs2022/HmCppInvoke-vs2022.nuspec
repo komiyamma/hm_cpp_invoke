@@ -3,7 +3,7 @@
   <metadata>
     <id>HmCppInvoke-vs2022</id>
     <title>Hm.CppInvoke for Visual Studio 2022</title>
-    <version>2.0.9.8</version>
+    <version>2.1.0.1</version>
     <authors>Akitsugu Komiyama</authors>
     <owners>Akitsugu Komiyama</owners>
     <icon>icon.png</icon>
@@ -16,7 +16,7 @@
     ★ コード生成：Release=マルチスレッド(/MT)｜Debug=マルチスレッド(/MTd)
     ★ x86｜x64
     </description>
-    <releaseNotes>2.0.9.8: Hmインスタンスがグローバル変数であったがHidemaru名前空間に入れた</releaseNotes>
+    <releaseNotes>Hm.Edit.getUpdateCount()の追加</releaseNotes>
     <copyright>Copyright (C) 2021-2022 Akitsugu Komiyama</copyright>
     <tags>C++ Hidemaru 秀丸 Library Macros</tags>
     <language>ja-JP</language>

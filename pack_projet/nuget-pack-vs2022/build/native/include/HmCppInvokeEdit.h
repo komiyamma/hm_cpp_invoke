@@ -29,7 +29,17 @@ class TEdit {
 public:
     TEdit();
 public:
+    /// <summary>
+    /// 現在アクティブな編集ファイル名を返す。無題なら空文字を返す。
+    /// </summary>
+    /// <returns>ファイル名。無題なら空文字。</returns>
     std::wstring getFilePath();
+
+    /// <summary>
+    /// マクロのupdatecount相当の値を返す。
+    /// </summary>
+    /// <returns>updatecount相当の値。</returns>
+    int getUpdateCount();
 
     /// <summary>
     /// 現在アクティブな編集領域のテキスト全体を返す。

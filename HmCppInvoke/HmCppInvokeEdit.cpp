@@ -36,11 +36,12 @@ THm::TEdit::TEdit()
 
 std::wstring THm::TEdit::getFilePath()
 {
-	const int WM_HIDEMARUINFO = WM_USER + 181;
-	const int HIDEMARUINFO_GETFILEFULLPATH = 4;
 	if (!Hidemaru_GetCurrentWindowHandle) {
 		return L"";
 	}
+
+	const int WM_HIDEMARUINFO = WM_USER + 181;
+	const int HIDEMARUINFO_GETFILEFULLPATH = 4;
 
 	HWND hWndHidemaru = Hidemaru_GetCurrentWindowHandle();
 	if (hWndHidemaru) {
@@ -51,6 +52,24 @@ std::wstring THm::TEdit::getFilePath()
 
 	return L"";
 }
+
+int THm::TEdit::getUpdateCount()
+{
+	if (!Hidemaru_GetCurrentWindowHandle) {
+		return -1;
+	}
+	const int WM_HIDEMARUINFO = WM_USER + 181;
+	const int HIDEMARUINFO_GETUPDATECOUNT = 7;
+
+	HWND hWndHidemaru = Hidemaru_GetCurrentWindowHandle();
+	if (hWndHidemaru) {
+		LRESULT updatecount = SendMessageW(hWndHidemaru, WM_HIDEMARUINFO, HIDEMARUINFO_GETUPDATECOUNT, (LPARAM)0);
+		return (int)updatecount;
+	}
+
+	return -1;
+}
+
 
 std::wstring THm::TEdit::getTotalText()
 {
