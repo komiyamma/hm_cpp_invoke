@@ -84,10 +84,7 @@ bool THm::TMacro::setStaticVar(std::wstring varname, std::wstring value, int sha
 		throw e;
 	}
 	BOOL success = Hidemaru_SetStaticVariable(varname.data(), value.data(), shared_flag);
-	if (success != FALSE) {
-		return true;
-	}
-	return false;
+	return (bool)success;
 }
 
 THmMacroVariable THm::TMacro::getVar(std::wstring varname)
