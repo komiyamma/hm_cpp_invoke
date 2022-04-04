@@ -10,6 +10,12 @@ class TMacro {
     // dllの中から秀丸マクロを実行する
     using PFNEvalMacro = BOOL(WINAPI*)(const wchar_t* pwsz);
     static PFNEvalMacro Hidemaru_EvalMacro;
+
+    using PFNGetStaticVariable = HGLOBAL(WINAPI*)(const wchar_t* pwszName, int sharedFlag);
+    static PFNGetStaticVariable Hidemaru_GetStaticVariable;
+
+    using PFNSetStaticVariable = BOOL(WINAPI*)(const wchar_t* pwszName, const wchar_t* pwszValue, int sharedFlag);
+    static PFNSetStaticVariable Hidemaru_SetStaticVariable;
 public:
     TMacro();
 public:
@@ -84,6 +90,24 @@ public:
     /// <param name = "value">書き込みの場合、代入する値</param>
     /// <returns>代入の成否。成功すればtrue、失敗すればfalse</returns>
     bool setVar(std::wstring varname, THmMacroVariable value);
+
+
+    /// <summary>
+    /// 対象の「秀丸マクロの静的な変数名」への書き込み (秀丸マクロのsetstaticvariable相当だが常時実行可)
+    /// </summary>
+    /// <param name = "varname">静的な変数のシンボル名</param>
+    /// <param name = "value">代入する文字列</param>
+    /// <param name = "shared_flag">共用フラグ</param>
+    /// <returns>代入の成否。成功すればtrue、失敗すればfalse</returns>
+    bool setStaticVar(std::wstring varname, std::wstring value, int shared_flag);
+
+    /// <summary>
+    /// 対象の「秀丸マクロの静的な変数名」の読み込み (秀丸マクロのgetstaticvariable相当だが常時実行可)
+    /// </summary>
+    /// <param name = "varname">静的な変数のシンボル名</param>
+    /// <param name = "shared_flag">共用フラグ</param>
+    /// <returns>対象のキーに格納された文字列型の値。</returns>
+    std::wstring getStaticVar(std::wstring varname, int shared_flag);
 
 
     class IFunctionResult {

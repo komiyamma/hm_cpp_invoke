@@ -12,11 +12,18 @@ using namespace std;
 using namespace Hidemaru;
 
 THm::TMacro::PFNEvalMacro THm::TMacro::Hidemaru_EvalMacro = NULL;
+THm::TMacro::PFNGetStaticVariable THm::TMacro::Hidemaru_GetStaticVariable = NULL;
+THm::TMacro::PFNSetStaticVariable THm::TMacro::Hidemaru_SetStaticVariable = NULL;
 
 THm::TMacro::TMacro()
 {
 	if (hHideExeHandle) {
 		Hidemaru_EvalMacro = (PFNEvalMacro)GetProcAddress(hHideExeHandle, "Hidemaru_EvalMacro");
+
+		if (hm_version > 915) {
+			Hidemaru_GetStaticVariable = (PFNGetStaticVariable)GetProcAddress(hHideExeHandle, "Hidemaru_GetStaticVariable");
+			Hidemaru_SetStaticVariable = (PFNSetStaticVariable)GetProcAddress(hHideExeHandle, "Hidemaru_SetStaticVariable");
+		}
 	}
 
 	this->Exec = TExec();
@@ -49,6 +56,38 @@ THm::TMacro::IResult THm::TMacro::doEval(std::wstring expression)
 		THm::TMacro::IResult r = THm::TMacro::IResult(success, e, L"");
 		return r;
 	}
+}
+
+std::wstring THm::TMacro::getStaticVar(std::wstring varname, int shared_flag)
+{
+	if (!Hidemaru_GetStaticVariable) {
+		std::exception e = std::runtime_error("Hidemaru_MacroGetStaticVariableException");
+		throw e;
+	}
+	HGLOBAL hGlobal = Hidemaru_GetStaticVariable(varname.data(), shared_flag);
+	if (hGlobal) {
+		wchar_t* pwsz = (wchar_t*)GlobalLock(hGlobal);
+		if (pwsz) {
+			wstring text(pwsz); // ÉRÉsÅ[
+			GlobalUnlock(hGlobal);
+			GlobalFree(hGlobal); // å≥ÇÃÇÕâï˙
+			return text;
+		}
+	}
+	return L"";
+}
+
+bool THm::TMacro::setStaticVar(std::wstring varname, std::wstring value, int shared_flag)
+{
+	if (!Hidemaru_SetStaticVariable) {
+		std::exception e = std::runtime_error("Hidemaru_MacroSetStaticVariableException");
+		throw e;
+	}
+	BOOL success = Hidemaru_SetStaticVariable(varname.data(), value.data(), shared_flag);
+	if (success != FALSE) {
+		return true;
+	}
+	return false;
 }
 
 THmMacroVariable THm::TMacro::getVar(std::wstring varname)
