@@ -3,7 +3,7 @@
   <metadata>
     <id>HmCppInvoke-vs2022</id>
     <title>Hm.CppInvoke for Visual Studio 2022</title>
-    <version>2.1.1.1</version>
+    <version>2.1.1.2</version>
     <authors>Akitsugu Komiyama</authors>
     <owners>Akitsugu Komiyama</owners>
     <icon>icon.png</icon>
@@ -16,7 +16,7 @@
     ★ コード生成：Release=マルチスレッド(/MT)｜Debug=マルチスレッド(/MTd)
     ★ x86｜x64
     </description>
-    <releaseNotes>Hm.Macro.getStaticVar(...)とsetStaticVar(...)の追加</releaseNotes>
+    <releaseNotes>文字列のロック失敗時にのみ発生するメモリリークバグ修正</releaseNotes>
     <copyright>Copyright (C) 2021-2022 Akitsugu Komiyama</copyright>
     <tags>C++ Hidemaru 秀丸 Library Macros</tags>
     <language>ja-JP</language>
