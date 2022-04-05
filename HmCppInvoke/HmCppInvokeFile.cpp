@@ -138,6 +138,7 @@ wstring THm::TFile::IHidemaruStreamReader::read()
 				GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 				return text;
 			}
+			GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 		}
 	}
 

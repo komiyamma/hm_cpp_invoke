@@ -86,6 +86,7 @@ std::wstring THm::TEdit::getTotalText()
 			GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 			return text;
 		}
+		GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 	}
 	return L"";
 }
@@ -128,6 +129,7 @@ std::wstring THm::TEdit::getSelectedText()
 			GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 			return text;
 		}
+		GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 	}
 	return L"";
 }
@@ -171,6 +173,7 @@ std::wstring THm::TEdit::getLineText()
 			GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 			return text;
 		}
+		GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 	}
 
 	return L"";

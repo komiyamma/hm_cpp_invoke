@@ -73,6 +73,7 @@ std::wstring THm::TMacro::getStaticVar(std::wstring varname, int shared_flag)
 			GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 			return text;
 		}
+		GlobalFree(hGlobal); // Œ³‚Ì‚Í‰ð•ú
 	}
 	return L"";
 }
