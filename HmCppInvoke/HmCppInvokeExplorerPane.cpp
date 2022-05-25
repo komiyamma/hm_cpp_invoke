@@ -13,6 +13,9 @@ using namespace Hidemaru;
 // この結果のバイト列(vector.data())を HmOutputPane.dllのOutput関数になげれば、Unicodeでも再現できる
 extern std::vector<BYTE> EncodeWStringToOriginalEncodeVector(std::wstring original_string);
 
+// 上の反対のデコード側
+std::wstring DecodeOriginalEncodeVector(BYTE* original_encode_string);
+
 
 // ファイルマネージャパネル
 THm::TExplorerPane::PFNHmExplorerPane_SetMode THm::TExplorerPane::HmExplorerPane_SetMode = NULL;
@@ -117,6 +120,18 @@ bool THm::TExplorerPane::saveProject(std::wstring filepath)
 
 std::wstring THm::TExplorerPane::getProject()
 {
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmExplorerPane_GetProject) {
+			BYTE* byte_result = HmExplorerPane_GetProject(hHidemaruWindow);
+
+			wstring wszReturn = DecodeOriginalEncodeVector(byte_result);
+			return wszReturn;
+		}
+	}
+
+	/*
 	if (HmExplorerPane_GetProject) {
 		if (Hm.Macro.isExecuting()) {
 			auto ret = Hm.Macro.getVar(LR"RAW(dllfuncstr(loaddll("HmExplorerPane"), "GetProject", hidemaruhandle(0)))RAW");
@@ -128,6 +143,7 @@ std::wstring THm::TExplorerPane::getProject()
 			return ret.getMessage();
 		}
 	}
+	*/
 
 	return L"";
 }
@@ -173,6 +189,18 @@ bool THm::TExplorerPane::getUpdated()
 
 wstring THm::TExplorerPane::getCurrentDir()
 {
+	// ちゃんと関数がある時だけ
+	if (Hidemaru_GetCurrentWindowHandle) {
+		HWND hHidemaruWindow = Hidemaru_GetCurrentWindowHandle();
+		if (HmExplorerPane_GetCurrentDir) {
+			BYTE* byte_result = HmExplorerPane_GetCurrentDir(hHidemaruWindow);
+
+			wstring wszReturn = DecodeOriginalEncodeVector(byte_result);
+			return wszReturn;
+		}
+	}
+
+	/*
 	if (HmExplorerPane_GetCurrentDir) {
 		if (Hm.Macro.isExecuting()) {
 			auto ret = Hm.Macro.getVar(LR"RAW(dllfuncstr(loaddll("HmExplorerPane"), "GetCurrentDir", hidemaruhandle(0)))RAW");
@@ -184,6 +212,7 @@ wstring THm::TExplorerPane::getCurrentDir()
 			return ret.getMessage();
 		}
 	}
+	*/
 
 	return L"";
 }

@@ -31,6 +31,9 @@
     <ClCompile Include="HmCppInvokeExplorerPane.cpp">
       <Filter>hidemaru</Filter>
     </ClCompile>
+    <ClCompile Include="HmCppInvokeOriginalDecode.cpp">
+      <Filter>hidemaru</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hidemaru">

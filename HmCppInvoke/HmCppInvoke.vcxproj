@@ -161,6 +161,7 @@
     <ClCompile Include="HmCppInvokeExplorerPane.cpp" />
     <ClCompile Include="HmCppInvokeFile.cpp" />
     <ClCompile Include="HmCppInvokeMacro.cpp" />
+    <ClCompile Include="HmCppInvokeOriginalDecode.cpp" />
     <ClCompile Include="HmCppInvokeOriginalEncode.cpp" />
     <ClCompile Include="HmCppInvokeOutputPane.cpp" />
     <ClCompile Include="HmCppInvokeDllBindType.cpp" />
