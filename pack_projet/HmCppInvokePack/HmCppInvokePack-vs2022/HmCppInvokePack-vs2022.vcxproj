@@ -27,6 +27,7 @@
     <ClCompile Include="..\..\..\HmCppInvoke\HmCppInvokeExplorerPane.cpp" />
     <ClCompile Include="..\..\..\HmCppInvoke\HmCppInvokeFile.cpp" />
     <ClCompile Include="..\..\..\HmCppInvoke\HmCppInvokeMacro.cpp" />
+    <ClCompile Include="..\..\..\HmCppInvoke\HmCppInvokeOriginalDecode.cpp" />
     <ClCompile Include="..\..\..\HmCppInvoke\HmCppInvokeOriginalEncode.cpp" />
     <ClCompile Include="..\..\..\HmCppInvoke\HmCppInvokeOutputPane.cpp" />
   </ItemGroup>
@@ -60,7 +61,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -73,7 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
