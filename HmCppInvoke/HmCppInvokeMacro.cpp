@@ -252,15 +252,30 @@ THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatementHelper(std::wstr
 	wstring arg_varname_list = StringJoin(varname_list, L", ");
 	wstring utf16_expression = statement_name + L" " + arg_varname_list;
 	wstring cmd = statement_name + L" " + arg_varname_list + L";\n";
+	// GetVar相当-------------------------
+	TestDynamicVar = nullptr;
+	auto dll_invocant = TDllBindType::getInvocantString();
+	wstring cmd_expression =
+		cmd + 
+		L"##_tmp_dll_id_ret = dllfuncw( " + dll_invocant + L"\"SetDynamicVar\", result ); \n"
+		L"##_tmp_dll_id_ret = 0;\n";
 
-	auto ret = doEval(cmd);
-
+	auto ret = doEval(cmd_expression);
+	auto retDynamicVal = TestDynamicVar;
 	vector<THmMacroVariable> updated_value_args;
 	clearMacroVarAndUpdateArgs(value_args, varname_list, updated_value_args);
 
 	if (ret.getResult() > 0) {
-		IStatementResult r = IStatementResult(ret.getResult(), updated_value_args, std::nullopt, L"");
-		return r;
+		THmNumber result = std::get<THmNumber>(retDynamicVal);
+		if (result <= 0) {
+			exception e = exception("Hidemaru_MacroResultZeroException");
+			IStatementResult r = IStatementResult((THmNumber)result, updated_value_args, e, L"");
+			return r;
+		}
+		else {
+			IStatementResult r = IStatementResult(ret.getResult(), updated_value_args, std::nullopt, L"");
+			return r;
+		}
 	}
 	else {
 		OutputDebugString(L"マクロの実行に失敗しました。\n");

@@ -3,7 +3,7 @@
   <metadata>
     <id>HmCppInvoke-vs2019</id>
     <title>Hm.CppInvoke for Visual Studio 2019</title>
-    <version>2.1.1.4</version>
+    <version>2.1.1.5</version>
     <authors>Akitsugu Komiyama</authors>
     <owners>Akitsugu Komiyama</owners>
     <icon>icon.png</icon>
@@ -16,7 +16,7 @@
     ★ コード生成：Release=マルチスレッド(/MT)｜Debug=マルチスレッド(/MTd)
     ★ x86｜x64
     </description>
-    <releaseNotes>/GLや/LTCGを有効にしてコンパイルしていたものをアップしていた問題</releaseNotes>
+    <releaseNotes>Hm.Macro.Statement()の実行で例外が発生しなかった時、秀丸マクロのresultの値をgetResult()で取得できるようにした。その際はexception("Hidemaru_MacroResultZeroException")がgetException()で取得できるようになった。</releaseNotes>
     <copyright>Copyright (C) 2021-2022 Akitsugu Komiyama</copyright>
     <tags>C++ Hidemaru 秀丸 Library Macros</tags>
     <language>ja-JP</language>
