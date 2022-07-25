@@ -267,15 +267,8 @@ THm::TMacro::IStatementResult Hidemaru::THm::TMacro::doStatementHelper(std::wstr
 
 	if (ret.getResult() > 0) {
 		THmNumber result = std::get<THmNumber>(retDynamicVal);
-		if (result <= 0) {
-			exception e = exception("Hidemaru_MacroResultZeroException");
-			IStatementResult r = IStatementResult((THmNumber)result, updated_value_args, e, L"");
-			return r;
-		}
-		else {
-			IStatementResult r = IStatementResult(ret.getResult(), updated_value_args, std::nullopt, L"");
-			return r;
-		}
+		IStatementResult r = IStatementResult((THmNumber)result, updated_value_args, std::nullopt, L"");
+		return r;
 	}
 	else {
 		OutputDebugString(L"マクロの実行に失敗しました。\n");
