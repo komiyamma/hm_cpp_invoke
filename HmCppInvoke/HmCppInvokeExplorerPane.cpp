@@ -10,7 +10,7 @@
 using namespace std;
 using namespace Hidemaru;
 
-// この結果のバイト列(vector.data())を HmOutputPane.dllのOutput関数になげれば、Unicodeでも再現できる
+// 秀丸独自のスタートユニコードと言われるバイト列への変換
 extern std::vector<BYTE> EncodeWStringToOriginalEncodeVector(std::wstring original_string);
 
 // 上の反対のデコード側

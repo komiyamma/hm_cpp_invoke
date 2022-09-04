@@ -16,7 +16,7 @@
     ★ コード生成：Release=マルチスレッド(/MT)｜Debug=マルチスレッド(/MTd)
     ★ x86｜x64
     </description>
-    <releaseNotes>exception("Hidemaru_MacroResultZeroException")はErrorに格納しないようにした。</releaseNotes>
+    <releaseNotes>ファイルサイズが小さくなるようにした。</releaseNotes>
     <copyright>Copyright (C) 2021-2022 Akitsugu Komiyama</copyright>
     <tags>C++ Hidemaru 秀丸 Library Macros</tags>
     <language>ja-JP</language>
