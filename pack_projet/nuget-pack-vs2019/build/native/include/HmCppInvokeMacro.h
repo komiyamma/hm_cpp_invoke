@@ -225,5 +225,124 @@ public:
     /// 「マクロが実行されていない時限定で、改めてマクロを実行できる」系のメソッド群このクラスにある。名前空間の代替。
     /// </summary>
     TExec Exec;
+
+public:
+    /// <summary>
+    /// 秀丸マクロで用いられる特定の関数でのみ使用可能なフラグ値。主に検索・置換・Grep系、そしてエンコード系。
+    /// </summary>
+    class TFlags {
+    public:
+
+        /// <summary>
+        /// openfile等のencode相当
+        /// </summary>
+        class TEncode {
+        public:
+            static const int Sjis = 0x01;
+            static const int Utf16 = 0x02;
+            static const int Euc = 0x03;
+            static const int Jis = 0x04;
+            static const int Utf7 = 0x05;
+            static const int Utf8 = 0x06;
+            static const int Utf16_be = 0x07;
+            static const int Euro = 0x08;
+            static const int Gb2312 = 0x09;
+            static const int Big5 = 0x0a;
+            static const int Euckr = 0x0b;
+            static const int Johab = 0x0c;
+            static const int Easteuro = 0x0d;
+            static const int Baltic = 0x0e;
+            static const int Greek = 0x0f;
+            static const int Russian = 0x10;
+            static const int Symbol = 0x11;
+            static const int Turkish = 0x12;
+            static const int Hebrew = 0x13;
+            static const int Arabic = 0x14;
+            static const int Thai = 0x15;
+            static const int Vietnamese = 0x16;
+            static const int Mac = 0x17;
+            static const int Oem = 0x18;
+            static const int Default = 0x19;
+            static const int Utf32 = 0x1b;
+            static const int Utf32_be = 0x1c;
+            static const int Binary = 0x1a;
+            static const int LF = 0x40;
+            static const int CR = 0x80;
+
+            //SAVEASの他のオプションの数値指定
+            static const int Bom = 0x0600;
+            static const int NoBom = 0x0400;
+            static const int Selection = 0x2000;
+
+            //OPENFILEの他のオプションの数値指定
+            static const int NoAddHist = 0x0100;
+            static const int WS = 0x0800;
+            static const int WB = 0x1000;
+        };
+
+        TEncode Encode;
+
+        class TSearchOption {
+        public:
+            //searchoption(検索関係)
+            static const int Word = 0x00000001;
+            static const int Casesense = 0x00000002;
+            static const int NoCasesense = 0x00000000;
+            static const int Regular = 0x00000010;
+            static const int NoRegular = 0x00000000;
+            static const int Fuzzy = 0x00000020;
+            static const int Hilight = 0x00003800;
+            static const int NoHilight = 0x00002000;
+            static const int LinkNext = 0x00000080;
+            static const int Loop = 0x01000000;
+
+            //searchoption(マスク関係)
+            static const int MaskComment = 0x00020000;
+            static const int MaskIfdef = 0x00040000;
+            static const int MaskNormal = 0x00010000;
+            static const int MaskScript = 0x00080000;
+            static const int MaskString = 0x00100000;
+            static const int MaskTag = 0x00200000;
+            static const int MaskOnly = 0x00400000;
+            static const int FEnableMaskFlags = 0x00800000;
+
+            //searchoption(置換関係)
+            static const int FEnableReplace = 0x00000004;
+            static const int Ask = 0x00000008;
+            static const int NoClose = 0x02000000;
+
+            //searchoption(grep関係)
+            static const int SubDir = 0x00000100;
+            static const int Icon = 0x00000200;
+            static const int Filelist = 0x00000040;
+            static const int FullPath = 0x00000400;
+            static const int OutputSingle = 0x10000000;
+            static const int OutputSameTab = 0x20000000;
+
+            //searchoption(grepして置換関係)
+            static const int BackUp = 0x04000000;
+            static const int Preview = 0x08000000;
+
+            // searchoption2を使うよ、というフラグ。なんと、int32_maxを超えているので、特殊な処理が必要。
+            const THmNumber FEnableSearchOption2 = (THmNumber)0x80000000;
+
+        };
+
+        TSearchOption SearchOption;
+
+        class TSearchOption2 {
+        public:
+            //searchoption2
+            static const int UnMatch = 0x00000001;
+            static const int InColorMarker = 0x00000002;
+            static const int FGrepFormColumn = 0x00000008;
+            static const int FGrepFormHitOnly = 0x00000010;
+            static const int FGrepFormSortDate = 0x00000020;
+        };
+
+        TSearchOption2 SearchOption2;
+    };
+
+    TFlags Flags;
 };
 
