@@ -324,7 +324,7 @@ public:
             static const int Preview = 0x08000000;
 
             // searchoption2を使うよ、というフラグ。なんと、int32_maxを超えているので、特殊な処理が必要。
-            const THmNumber FEnableSearchOption2 = (THmNumber)0x80000000;
+            static const THmNumber FEnableSearchOption2 = (THmNumber)0x80000000;
 
         };
 
