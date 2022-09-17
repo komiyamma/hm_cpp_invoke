@@ -3,7 +3,7 @@
   <metadata>
     <id>HmCppInvoke-vs2022</id>
     <title>Hm.CppInvoke for Visual Studio 2022</title>
-    <version>2.1.1.9</version>
+    <version>2.1.2.0</version>
     <authors>Akitsugu Komiyama</authors>
     <owners>Akitsugu Komiyama</owners>
     <icon>icon.png</icon>
@@ -16,7 +16,7 @@
     ★ コード生成：Release=マルチスレッド(/MT)｜Debug=マルチスレッド(/MTd)
     ★ x86｜x64
     </description>
-    <releaseNotes>Hm.Macro.Flags.****以下を追加した</releaseNotes>
+    <releaseNotes>Hm.Macro.Flags.****以下の大文字小文字を小文字スタートのキャメルケースに変更した。</releaseNotes>
     <copyright>Copyright (C) 2021-2022 Akitsugu Komiyama</copyright>
     <tags>C++ Hidemaru 秀丸 Library Macros</tags>
     <language>ja-JP</language>
