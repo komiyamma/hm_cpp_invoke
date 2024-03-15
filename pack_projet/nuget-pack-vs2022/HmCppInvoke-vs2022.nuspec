@@ -3,7 +3,7 @@
   <metadata>
     <id>HmCppInvoke-vs2022</id>
     <title>Hm.CppInvoke for Visual Studio 2022</title>
-    <version>2.1.2.2</version>
+    <version>2.1.2.3</version>
     <authors>Akitsugu Komiyama</authors>
     <owners>Akitsugu Komiyama</owners>
     <icon>icon.png</icon>
@@ -16,8 +16,8 @@
     ★ コード生成：Release=マルチスレッド(/MT)｜Debug=マルチスレッド(/MTd)
     ★ x86｜x64
     </description>
-    <releaseNotes>Hm.Macro.Flags.****以下の変数名を元へと戻した</releaseNotes>
-    <copyright>Copyright (C) 2021-2022 Akitsugu Komiyama</copyright>
+    <releaseNotes>範囲編集モードでHm.Edit.setTotalTextにて値を設定した場合の不具合の修正</releaseNotes>
+    <copyright>Copyright (C) 2021-2024 Akitsugu Komiyama</copyright>
     <tags>C++ Hidemaru 秀丸 Library Macros</tags>
     <language>ja-JP</language>
   </metadata>

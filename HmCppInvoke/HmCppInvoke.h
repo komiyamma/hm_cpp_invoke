@@ -1,7 +1,7 @@
 #pragma once
 /*
  * Hm.CppInvoke ver 2.122
- * Copyright (c) 2021-2022 Akitsugu Komiyama
+ * Copyright (c) 2021-2024 Akitsugu Komiyama
  * under the MIT License
  */
 
@@ -16,6 +16,7 @@
 #include <functional>
 #include <set>
 #include <optional>
+#include <memory>
 
 #include "HmCppInvokeConvertString.h"
 
