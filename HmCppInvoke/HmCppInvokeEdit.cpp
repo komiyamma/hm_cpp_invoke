@@ -98,12 +98,19 @@ bool THm::TEdit::setTotalText(std::wstring text)
 	auto dll_invocant = TDllBindType::getInvocantString();
 
 	PushStrVar(text.data());
-	wstring cmd =
-		L"begingroupundo;\n"
-		L"rangeeditout;\n"
-		L"selectall;\n"
-		L"insert dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n"
-		L"endgroupundo;\n";
+	wstring cmd = L"";
+	if (hm_version >= 935.06) {
+		cmd =
+			L"settotaltext dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n";
+	}
+	else {
+		cmd =
+			L"begingroupundo;\n"
+			L"rangeeditout;\n"
+			L"selectall;\n"
+			L"insert dllfuncstrw( " + dll_invocant + L"\"PopStrVar\" );\n"
+			L"endgroupundo;\n";
+	}
 	if (Hm.Macro.isExecuting()) {
 		auto ret = Hm.Macro.doEval(cmd.c_str());
 		return (bool)ret.getResult();
