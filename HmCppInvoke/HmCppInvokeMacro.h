@@ -11,6 +11,10 @@ class TMacro {
     using PFNEvalMacro = BOOL(WINAPI*)(const wchar_t* pwsz);
     static PFNEvalMacro Hidemaru_EvalMacro;
 
+    // dllの中から秀丸マクロを実行する
+    using PFNDebugInfo = BOOL(WINAPI*)(const wchar_t* pwsz);
+    static PFNDebugInfo Hidemaru_DebugInfo;
+
     using PFNGetStaticVariable = HGLOBAL(WINAPI*)(const wchar_t* pwszName, int sharedFlag);
     static PFNGetStaticVariable Hidemaru_GetStaticVariable;
 
@@ -54,6 +58,16 @@ public:
 
         IResult(THmNumber result, THmMacroResultError error, std::wstring message);
     };
+
+    /// <summary>
+    /// マクロの debuginfo と同じ関数だが、マクロ実行中以外でも扱える。
+    /// <para>必要かどうかは微妙なところだが、マクロの debuginfo(0)～debuginfo(2) など、表示設定の反映の恩恵を受けられる点が異なる</para>
+    /// <para>マクロの debuginfo とは異なり、マクロの実行が終えたからといって、自動的に debuginfo(0)にリセットされたりはしない。</para>
+    /// <para>非表示にするためには、明示的に debuginfo(0)を、マクロ側もしくはプログラム側から明示的に実行する必要がある。</para>
+    /// <returns>成功したときは0以外、失敗したときは0を返す。</returns>
+    /// </summary>
+    /// <param name = "message">送信する文字列</param>
+    bool debugInfo(std::wstring message);
 
     /// <summary>
     /// 現在の「マクロ実行中」に、プログラム中で、マクロを文字列で実行。

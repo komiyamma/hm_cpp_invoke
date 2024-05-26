@@ -71,7 +71,6 @@ bool THm::TMacro::debugInfo(std::wstring expression)
 		throw e;
 	}
 
-    // この関数はそもそも例外などが発生した時に使うので、ここでさらに0だと例外とかやると使い悪すぎるので、例外は発生させず、成否だけ返す
 	return Hidemaru_DebugInfo(expression.c_str());
 }
 
