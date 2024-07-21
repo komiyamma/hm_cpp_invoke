@@ -1,6 +1,6 @@
 #pragma once
 /*
- * Hm.CppInvoke ver 2.122
+ * Hm.CppInvoke ver 2.124
  * Copyright (c) 2021-2024 Akitsugu Komiyama
  * under the MIT License
  */
