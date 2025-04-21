@@ -19,7 +19,7 @@ THm::TEdit::PFNGetLineTextUnicode THm::TEdit::Hidemaru_GetLineTextUnicode = NULL
 THm::TEdit::PFNGetCursorPosUnicode THm::TEdit::Hidemaru_GetCursorPosUnicode = NULL;
 THm::TEdit::PFNGetCursorPosUnicodeFromMousePos THm::TEdit::Hidemaru_GetCursorPosUnicodeFromMousePos = NULL;
 THm::TEdit::PFNCheckQueueStatus THm::TEdit::Hidemaru_CheckQueueStatus = NULL;
-
+THm::TEdit::PFNGetInputStates THm::TEdit::Hidemaru_GetInputStates = NULL;
 
 
 THm::TEdit::TEdit()
@@ -31,6 +31,7 @@ THm::TEdit::TEdit()
 		Hidemaru_GetCursorPosUnicode = (PFNGetCursorPosUnicode)GetProcAddress(hHideExeHandle, "Hidemaru_GetCursorPosUnicode");
 		Hidemaru_GetCursorPosUnicodeFromMousePos = (PFNGetCursorPosUnicodeFromMousePos)GetProcAddress(hHideExeHandle, "Hidemaru_GetCursorPosUnicodeFromMousePos");
 		Hidemaru_CheckQueueStatus = (PFNCheckQueueStatus)GetProcAddress(hHideExeHandle, "Hidemaru_CheckQueueStatus");
+		Hidemaru_GetInputStates = (PFNGetInputStates)GetProcAddress(hHideExeHandle, "Hidemaru_GetInputStates");
 	}
 }
 
@@ -220,6 +221,14 @@ bool THm::TEdit::isQueueStatus()
 		return (bool)Hidemaru_CheckQueueStatus();
 	}
 	return false;
+}
+
+int THm::TEdit::getInputStates()
+{
+	if (Hidemaru_GetInputStates) {
+		return Hidemaru_GetInputStates();
+	}
+	return 0;
 }
 
 THm::TEdit::ICursorPos THm::TEdit::getCursorPos()

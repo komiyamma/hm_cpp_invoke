@@ -1,0 +1,9 @@
+﻿  HmCppInvoke.cpp
+  HmCppInvokeDllBindType.cpp
+  HmCppInvokeDllFuncCalledType.cpp
+  HmCppInvokeEdit.cpp
+  HmCppInvokeExplorerPane.cpp
+  HmCppInvokeFile.cpp
+  HmCppInvokeMacro.cpp
+  HmCppInvokeOutputPane.cpp
+  HmCppInvoke.vcxproj -> G:\repogitory\hm_cpp_invoke\x64\Debug\HmCppInvoke.dll

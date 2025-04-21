@@ -1,0 +1,14 @@
+﻿  HmCppInvokeConvertString.cpp
+  HmCppInvoke.cpp
+  HmCppInvokeEdit.cpp
+  HmCppInvokeDllFuncCalledType.cpp
+  HmCppInvokeExplorerPane.cpp
+  HmCppInvokeFile.cpp
+  HmCppInvokeMacro.cpp
+  HmCppInvokeOriginalDecode.cpp
+  HmCppInvokeOriginalEncode.cpp
+  HmCppInvokeOutputPane.cpp
+  HmCppInvokeDllBindType.cpp
+     ライブラリ G:\repogitory\hm_cpp_invoke\Release\HmCppInvoke.lib とオブジェクト G:\repogitory\hm_cpp_invoke\Release\HmCppInvoke.exp を作成中
+HmCppInvokeEdit.obj : error LNK2001: 外部シンボル "private: static int (__stdcall* Hidemaru::THm::TEdit::Hidemaru_GetInputStates)(void)" (?Hidemaru_GetInputStates@TEdit@THm@Hidemaru@@0P6GHXZA) は未解決です
+G:\repogitory\hm_cpp_invoke\Release\HmCppInvoke.exe : fatal error LNK1120: 1 件の未解決の外部参照

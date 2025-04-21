@@ -25,6 +25,9 @@ class TEdit {
     // キー入力があるなどの理由で処理を中断するべきかを返します。
     using PFNCheckQueueStatus = BOOL(WINAPI*)();
     static PFNCheckQueueStatus Hidemaru_CheckQueueStatus;
+    // 各種の入力ができるかどうかを判断するための状態を表します。
+	using PFNGetInputStates = int(WINAPI*)();
+	static PFNGetInputStates Hidemaru_GetInputStates;
 
 public:
     TEdit();
@@ -85,6 +88,12 @@ public:
     /// </summary>
     /// <returns>中断するべきならtrue、そうでなければfalse</returns>
     bool isQueueStatus();
+
+	/// <summary>
+	/// 各種の入力ができるかどうかを判断するための状態を表します。
+	/// </summary>
+	/// <returns>マクロのinputstatesと同じ値</returns>
+	int getInputStates();
 
 public:
     /// <summary>
