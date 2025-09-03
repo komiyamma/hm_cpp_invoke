@@ -12,3 +12,43 @@ https://秀丸マクロ.net/?page=nobu_tool_hm_cpp_invoke
 https://www.nuget.org/packages/HmCppInvoke-vs2022/
 
 https://www.nuget.org/packages/HmCppInvoke-vs2019/
+
+## プロジェクト構造
+
+主要なファイルとディレクトリの構造は以下の通りです。
+
+```
+.
+├── HmCppInvoke/              # DLL本体のソースコードとプロジェクト
+│   ├── HmCppInvoke.h
+│   ├── HmCppInvoke.cpp
+│   ├── HmCppInvokeConvertString.h
+│   ├── HmCppInvokeConvertString.cpp
+│   ├── HmCppInvokeDllBindType.h
+│   ├── HmCppInvokeDllBindType.cpp
+│   ├── HmCppInvokeDllExport.h
+│   ├── HmCppInvokeDllFuncCalledType.h
+│   ├── HmCppInvokeDllFuncCalledType.cpp
+│   ├── HmCppInvokeEdit.h
+│   ├── HmCppInvokeEdit.cpp
+│   ├── HmCppInvokeExplorerPane.h
+│   ├── HmCppInvokeExplorerPane.cpp
+│   ├── HmCppInvokeFile.h
+│   ├── HmCppInvokeFile.cpp
+│   ├── HmCppInvokeMacro.h
+│   ├── HmCppInvokeMacro.cpp
+│   ├── HmCppInvokeOutputPane.h
+│   └── HmCppInvokeOutputPane.cpp
+│
+├── pack_projet/              # NuGetパッケージ作成用のスクリプトと設定
+│   ├── copy_to_nuget-pack-vs2019.bat
+│   ├── copy_to_nuget-pack-vs2022.bat
+│   ├── nuget-pack-vs2019/
+│   │   └── HmCppInvoke-vs2019.nuspec
+│   └── nuget-pack-vs2022/
+│       └── HmCppInvoke-vs2022.nuspec
+│
+├── HmCppInvoke.sln           # Visual Studio ソリューションファイル
+├── License.txt
+└── README.md
+```
