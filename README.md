@@ -1,6 +1,6 @@
 # HmCppInvoke
 
-[![Hm.CppInvoke v2.1.2](https://img.shields.io/badge/Hm.CppInvoke-v2.1.2-6479ff.svg)](https://github.com/komiyamma/hidemaru_cpp_invoke/releases) ← releaseのバージョンから取得しては？
+[![Hm.CppInvoke](https://img.shields.io/github/v/release/komiyamma/hidemaru_cpp_invoke?sort=semver&label=Hm.CppInvoke&color=6479ff)](https://github.com/komiyamma/hidemaru_cpp_invoke/releases/latest)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 ![Hidemaru 8.98](https://img.shields.io/badge/Hidemaru-v8.73-6479ff.svg)
 ![C++ 17,20](https://img.shields.io/badge/C++-v17_|_v20-6479ff.svg?logo=Cplusplus&logoColor=white)
